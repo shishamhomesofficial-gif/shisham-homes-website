@@ -3759,7 +3759,7 @@
 </div>
 
 <!-- EmailJS SDK: client-only -->
-<script src="https://cdn.emailjs.com/sdk/3.2.0/email.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
@@ -3771,7 +3771,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   try {
     if (EMAILJS_USER_ID && EMAILJS_USER_ID !== 'YOUR_EMAILJS_USER_ID') {
-      emailjs.init(EMAILJS_USER_ID);
+      emailjs.init({ publicKey: EMAILJS_USER_ID });
       console.log('EmailJS initialized');
     } else {
       console.warn('EmailJS not initialized (placeholders detected). Replace IDs to enable emails.');
