@@ -3208,3 +3208,85 @@ footer {
   }
 
 }
+/*-----------------------------------*\
+  #STORE LOCATION
+\*-----------------------------------*/
+
+.store-location {
+  margin-bottom: 50px;
+}
+
+.store-location .container {
+  display: grid;
+  gap: 24px;
+}
+
+.location-content {
+  background: hsl(0, 0%, 100%);
+  border: 1px solid hsl(0, 0%, 93%);
+  border-radius: 10px;
+  padding: 24px;
+}
+
+.location-subtitle {
+  color: hsl(353, 100%, 78%);
+  font-size: var(--fs-7);
+  font-weight: var(--weight-600);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.location-title {
+  color: hsl(0, 0%, 13%);
+  font-size: var(--fs-3);
+  margin-bottom: 12px;
+}
+
+.location-text {
+  color: hsl(0, 0%, 47%);
+  font-size: var(--fs-6);
+  line-height: 1.7;
+  margin-bottom: 10px;
+}
+
+.location-text a {
+  color: hsl(353, 100%, 78%);
+  display: inline-block;
+  font-weight: var(--weight-600);
+}
+
+.location-btn {
+  background: hsl(353, 100%, 78%);
+  border-radius: 6px;
+  color: hsl(0, 0%, 100%);
+  display: inline-block;
+  font-size: var(--fs-7);
+  font-weight: var(--weight-600);
+  margin-top: 8px;
+  padding: 10px 20px;
+  text-transform: uppercase;
+}
+
+.location-btn:hover {
+  background: hsl(0, 0%, 13%);
+}
+
+.location-map {
+  border: 1px solid hsl(0, 0%, 93%);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.location-map iframe {
+  border: 0;
+  display: block;
+  min-height: 320px;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .store-location .container {
+    grid-template-columns: 1fr 1.3fr;
+    align-items: stretch;
+  }
+}
