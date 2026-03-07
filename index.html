@@ -215,7 +215,7 @@
 
           <button class="action-btn">
             <ion-icon name="bag-handle-outline"></ion-icon>
-            <span class="count">0</span>
+            <span class="count" data-cart-count>0</span>
           </button>
 
         </div>
@@ -498,7 +498,7 @@
       <button class="action-btn">
         <ion-icon name="bag-handle-outline"></ion-icon>
 
-        <span class="count">0</span>
+        <span class="count" data-cart-count>0</span>
       </button>
 
       <button class="action-btn">
@@ -3277,6 +3277,34 @@
       </div>
 
     </div>
+
+
+    <section class="ecommerce-section" data-product-detail-section>
+      <div class="container">
+        <h2 class="title">Product Details</h2>
+        <div class="ecommerce-card">
+          <div class="detail-images" data-product-detail-images>
+            <p class="empty-detail-message">Click the eye icon on a product to view details.</p>
+          </div>
+          <div class="detail-content">
+            <h3 data-product-detail-name>Select a product</h3>
+            <p class="detail-price" data-product-detail-price>--</p>
+            <button class="add-cart-btn" type="button" data-continue-checkout-btn>Continue to Checkout</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="ecommerce-section">
+      <div class="container">
+        <h2 class="title">Shopping Cart</h2>
+        <div class="ecommerce-card cart-wrapper">
+          <p data-cart-empty>Your cart is empty. Add products using the cart icon on any item.</p>
+          <ul class="cart-items" data-cart-items></ul>
+          <button class="add-cart-btn" type="button" data-cart-checkout-btn>Buy</button>
+        </div>
+      </div>
+    </section>
 
   </main>
 

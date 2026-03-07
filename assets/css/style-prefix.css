@@ -3290,3 +3290,141 @@ footer {
     align-items: stretch;
   }
 }
+
+/*-----------------------------------*\
+  #ECOMMERCE + CHECKOUT
+\*-----------------------------------*/
+
+.ecommerce-section,
+.checkout-section {
+  margin-bottom: 50px;
+}
+
+.ecommerce-card,
+.checkout-card {
+  background: hsl(0, 0%, 100%);
+  border: 1px solid hsl(0, 0%, 93%);
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.ecommerce-card {
+  display: grid;
+  gap: 16px;
+}
+
+.detail-images {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.detail-image {
+  border: 1px solid hsl(0, 0%, 93%);
+  border-radius: 8px;
+  height: auto;
+  object-fit: cover;
+}
+
+.detail-price {
+  color: hsl(353, 100%, 78%);
+  font-size: var(--fs-3);
+  font-weight: var(--weight-700);
+  margin: 8px 0 16px;
+}
+
+.empty-detail-message {
+  color: hsl(0, 0%, 47%);
+}
+
+.cart-items {
+  display: grid;
+  gap: 12px;
+  margin: 12px 0;
+}
+
+.cart-item {
+  align-items: center;
+  border: 1px solid hsl(0, 0%, 93%);
+  border-radius: 8px;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: auto 1fr auto;
+  padding: 10px;
+}
+
+.cart-item-thumb {
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.cart-item-name {
+  color: hsl(0, 0%, 13%);
+  font-weight: var(--weight-600);
+}
+
+.cart-item-price {
+  color: hsl(353, 100%, 78%);
+  font-size: var(--fs-6);
+}
+
+.cart-remove-btn {
+  background: hsl(0, 0%, 93%);
+  border-radius: 6px;
+  color: hsl(0, 0%, 27%);
+  font-size: var(--fs-8);
+  font-weight: var(--weight-500);
+  padding: 8px 10px;
+  text-transform: uppercase;
+}
+
+.cart-remove-btn:hover {
+  background: hsl(353, 100%, 78%);
+  color: hsl(0, 0%, 100%);
+}
+
+.checkout-card {
+  display: grid;
+  gap: 20px;
+}
+
+.checkout-list {
+  display: grid;
+  gap: 8px;
+}
+
+.checkout-label {
+  color: hsl(0, 0%, 27%);
+  display: block;
+  font-size: var(--fs-7);
+  font-weight: var(--weight-600);
+  margin-bottom: 6px;
+}
+
+.checkout-input,
+.checkout-textarea,
+.checkout-select {
+  border: 1px solid hsl(0, 0%, 80%);
+  border-radius: 6px;
+  color: hsl(0, 0%, 13%);
+  font-size: var(--fs-6);
+  padding: 10px;
+  width: 100%;
+}
+
+.checkout-textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+@media (min-width: 768px) {
+  .ecommerce-card {
+    grid-template-columns: 1.2fr 1fr;
+    align-items: center;
+  }
+
+  .checkout-card {
+    grid-template-columns: 1fr 1.3fr;
+  }
+}
