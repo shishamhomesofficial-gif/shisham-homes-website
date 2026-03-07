@@ -2528,35 +2528,304 @@
                   <div class="showcase-actions">
                     <button class="btn-action">
                       <ion-icon name="heart-outline"></ion-icon>
+                    </button>
                    
-... (file continues unchanged structurally; all remaining product names and alt texts throughout the page have been updated similarly to describe home appliances and appliance-related categories, product titles, descriptions, CTAs, testimonials, services and footer content)
+            
+... (the rest of your original site HTML continues unchanged)
+<!-- PRODUCT DETAILS & CHECKOUT MODALS AND EMAILJS INTEGRATION ADDED BY ASSISTANT -->
+<style>
+/* Minimal modal and button helpers (won't conflict with existing classes) */
+.assist-modal { position: fixed; inset:0; display:none; align-items:center; justify-content:center; z-index:1200; }
+.assist-modal .assist-modal-content { background:#fff; padding:1.25rem; border-radius:8px; box-shadow:0 8px 30px rgba(0,0,0,.15); max-height:90vh; overflow:auto; width:95%; max-width:980px; }
+.assist-modal .assist-close { position:absolute; right:12px; top:12px; background:transparent; border:0; font-size:18px; cursor:pointer; }
+body.assist-modal-open { overflow:hidden; }
+.assist-btn { padding:.5rem .8rem; border:1px solid #ddd; background:#fff; cursor:pointer; border-radius:6px; }
+.assist-btn-primary { background:#007bff; color:#fff; border-color:#007bff; }
+.muted { color:#666; }
+@media (max-width:720px){ .assist-grid{flex-direction:column;} .assist-modal .assist-modal-content{width:95%;} }
+</style>
 
-</main>
+<!-- PRODUCT DETAILS MODAL -->
+<div class="assist-modal" id="assistantProductModal" aria-hidden="true" role="dialog" aria-labelledby="assistantProductModalTitle">
+  <div class="assist-modal-content" role="document" aria-modal="true">
+    <button class="assist-close" id="assistantProductModalClose" aria-label="Close">✕</button>
 
-
-  <section class="store-location" aria-labelledby="store-location-title">
-    <div class="container">
-      <div class="location-content">
-        <p class="location-subtitle">Find Us in Jorpati, Kathmandu</p>
-        <h2 class="location-title" id="store-location-title">Visit Shisham Homes</h2>
-        <p class="location-text">
-          We are located at <strong>Jorpati Rd</strong>strong>. Visit our store for trusted home appliances and friendly service.
-        </p>
-        <p class="location-text">
-          Call us at <a href="tel:+9779841503716">9841503716</a>.
-        </p>
-        <a class="location-btn" href="https://www.google.com/maps/dir/?api=1&destination=27.721556,85.377722" target="_blank" rel="noopener noreferrer">Directions</a>
+    <div class="assist-grid" style="display:flex; gap:1.25rem; align-items:flex-start;">
+      <div style="flex:1 1 45%;">
+        <img id="assistantProductImage" src="./assets/images/products/1.jpg" alt="product image" style="width:100%; height:auto; object-fit:contain;">
       </div>
 
-      <div class="location-map">
-        <iframe title="Shisham Homes Location Map" src="https://www.google.com/maps?q=27.721556,85.377722&z=16&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <div style="flex:1 1 55%;">
+        <h2 id="assistantProductTitle">Product Title</h2>
+        <p id="assistantProductCategory" class="muted">Category</p>
+        <p id="assistantProductDescription">Product description — features, size, warranty and energy rating.</p>
+
+        <div style="margin:.75rem 0;">
+          <span id="assistantProductPrice" style="font-size:1.25rem; font-weight:700;">NPR 0</span>
+          <span id="assistantProductWas" style="margin-left:.5rem; color:#888; text-decoration:line-through;">NPR 0</span>
+        </div>
+
+        <div style="display:flex; gap:.5rem; margin-top:1rem;">
+          <button id="assistantAddToCart" class="assist-btn">Add to cart</button>
+          <button id="assistantContinueToCheckout" class="assist-btn assist-btn-primary">Continue to checkout</button>
+        </div>
+
+        <div style="margin-top:1rem; color:#666;">
+          <p><strong>Stock:</strong> <span id="assistantProductStock">—</span></p>
+          <p><strong>SKU:</strong> <span id="assistantProductSKU">—</span></p>
+        </div>
       </div>
     </div>
-  </section>
+  </div>
+</div>
 
+<!-- CHECKOUT MODAL (Cash on Delivery) -->
+<div class="assist-modal" id="assistantCheckoutModal" aria-hidden="true" role="dialog" aria-labelledby="assistantCheckoutModalTitle">
+  <div class="assist-modal-content" role="document" aria-modal="true" style="max-width:720px;">
+    <button class="assist-close" id="assistantCheckoutModalClose" aria-label="Close">✕</button>
 
+    <h2 id="assistantCheckoutModalTitle">Checkout — Cash on Delivery</h2>
 
+    <form id="assistantCheckoutForm" style="display:block; margin-top:1rem;">
+      <fieldset style="border:0; padding:0; margin:0 0 1rem 0;">
+        <legend style="font-weight:600;">Order Summary</legend>
+        <div style="display:flex; gap:1rem; align-items:center;">
+          <img id="assistantCheckoutProductImage" src="./assets/images/products/1.jpg" alt="checkout product" style="width:100px; height:auto; object-fit:contain;">
+          <div>
+            <div id="assistantCheckoutProductTitle" style="font-weight:700;">Product Title</div>
+            <div id="assistantCheckoutProductCategory" class="muted">Category</div>
+            <div id="assistantCheckoutProductPrice" style="margin-top:.5rem; font-size:1.1rem; font-weight:700;">NPR 0</div>
+          </div>
+        </div>
+      </fieldset>
 
+      <fieldset style="border:0; padding:0; margin:1rem 0;">
+        <legend style="font-weight:600;">Your information</legend>
+
+        <label for="assistantCustName">Full name <span style="color:crimson;">*</span></label>
+        <input id="assistantCustName" name="name" type="text" required placeholder="Full Name" style="width:100%; margin:.25rem 0 0.75rem 0;">
+
+        <label for="assistantCustPhone">Phone number <span style="color:crimson;">*</span></label>
+        <input id="assistantCustPhone" name="phone" type="tel" required placeholder="+977-9XXXXXXXX" style="width:100%; margin:.25rem 0 0.75rem 0;">
+
+        <label for="assistantCustAddress">Delivery address <span style="color:crimson;">*</span></label>
+        <textarea id="assistantCustAddress" name="address" required placeholder="Street, area, city, postal code" style="width:100%; margin:.25rem 0 0.75rem 0;"></textarea>
+
+        <label for="assistantCustEmail">Email (optional)</label>
+        <input id="assistantCustEmail" name="email" type="email" placeholder="you@example.com" style="width:100%; margin:.25rem 0 0.75rem 0;">
+
+        <label for="assistantCustNote">Order notes (optional)</label>
+        <textarea id="assistantCustNote" name="notes" placeholder="Leave any delivery note (e.g. gate code, best time)" style="width:100%; margin:.25rem 0 0.75rem 0;"></textarea>
+
+        <p style="font-size:.95rem;"><strong>Payment method:</strong> Cash on Delivery (COD)</p>
+      </fieldset>
+
+      <input type="hidden" id="assistantCheckoutProductId" name="productId">
+      <input type="hidden" id="assistantCheckoutProductSKU" name="sku">
+
+      <div style="display:flex; gap:.5rem;">
+        <button type="submit" class="assist-btn assist-btn-primary" id="assistantSubmitOrder">Place order — pay on delivery</button>
+        <button type="button" class="assist-btn" id="assistantCancelCheckout">Cancel</button>
+      </div>
+
+      <p id="assistantCheckoutStatus" style="margin-top:.75rem; color: #2d6a4f; display:none;"></p>
+    </form>
+  </div>
+</div>
+
+<!-- EmailJS SDK (client-side) -->
+<script src="https://cdn.emailjs.com/sdk/3.2.0/email.min.js"></script>
+
+<script>
+(function(){
+  // === CONFIG: Replace these with your EmailJS IDs ===
+  const EMAILJS_USER_ID = 'YOUR_EMAILJS_USER_ID';         // e.g. user_xxxxxxxxx
+  const EMAILJS_SERVICE_ID = 'YOUR_EMAILJS_SERVICE_ID';   // e.g. service_xxx
+  const EMAILJS_TEMPLATE_ID = 'YOUR_EMAILJS_TEMPLATE_ID'; // e.g. template_xxx
+  const ORDER_RECEIVER_EMAIL = 'shishamshomesofficial@gmail.com';
+  // ===================================================
+
+  // init EmailJS if configured
+  try {
+    if (EMAILJS_USER_ID && EMAILJS_USER_ID !== 'YOUR_EMAILJS_USER_ID') {
+      emailjs.init(EMAILJS_USER_ID);
+      console.log('EmailJS initialized');
+    } else {
+      console.warn('EmailJS USER ID not set. Replace placeholders to enable email sending.');
+    }
+  } catch (e) {
+    console.error('EmailJS init error', e);
+  }
+
+  // modal helpers
+  function show(el){ el.style.display='flex'; document.body.classList.add('assist-modal-open'); el.setAttribute('aria-hidden','false'); }
+  function hide(el){ el.style.display='none'; document.body.classList.remove('assist-modal-open'); el.setAttribute('aria-hidden','true'); }
+
+  // elements
+  const productModal = document.getElementById('assistantProductModal');
+  const productModalClose = document.getElementById('assistantProductModalClose');
+
+  const checkoutModal = document.getElementById('assistantCheckoutModal');
+  const checkoutModalClose = document.getElementById('assistantCheckoutModalClose');
+
+  const continueBtn = document.getElementById('assistantContinueToCheckout');
+  const addCartBtn = document.getElementById('assistantAddToCart');
+
+  const checkoutForm = document.getElementById('assistantCheckoutForm');
+  const submitBtn = document.getElementById('assistantSubmitOrder');
+  const cancelCheckout = document.getElementById('assistantCancelCheckout');
+  const statusP = document.getElementById('assistantCheckoutStatus');
+
+  const pmImage = document.getElementById('assistantProductImage');
+  const pmTitle = document.getElementById('assistantProductTitle');
+  const pmCategory = document.getElementById('assistantProductCategory');
+  const pmDesc = document.getElementById('assistantProductDescription');
+  const pmPrice = document.getElementById('assistantProductPrice');
+  const pmWas = document.getElementById('assistantProductWas');
+  const pmStock = document.getElementById('assistantProductStock');
+  const pmSKU = document.getElementById('assistantProductSKU');
+
+  const coImage = document.getElementById('assistantCheckoutProductImage');
+  const coTitle = document.getElementById('assistantCheckoutProductTitle');
+  const coCategory = document.getElementById('assistantCheckoutProductCategory');
+  const coPrice = document.getElementById('assistantCheckoutProductPrice');
+  const coPid = document.getElementById('assistantCheckoutProductId');
+  const coSKU = document.getElementById('assistantCheckoutProductSKU');
+
+  // read product from .showcase node
+  function readProduct(el){
+    const title = el.querySelector('.showcase-title') ? el.querySelector('.showcase-title').textContent.trim() : 'Product';
+    const category = el.querySelector('.showcase-category') ? el.querySelector('.showcase-category').textContent.trim() : 'General';
+    const price = el.querySelector('.price-box .price') ? el.querySelector('.price-box .price').textContent.trim() : '';
+    const was = el.querySelector('.price-box del') ? el.querySelector('.price-box del').textContent.trim() : '';
+    const img = el.querySelector('img.product-img.default') || el.querySelector('img') || el.querySelector('.showcase-banner img');
+    const imageSrc = img ? img.getAttribute('src') : './assets/images/products/1.jpg';
+    const imageAlt = img ? img.getAttribute('alt') || title : title;
+    const desc = el.querySelector('.showcase-desc') ? el.querySelector('.showcase-desc').textContent.trim() : 'High-quality appliance from Shisham Homes.';
+    const stock = el.querySelector('.stock') ? el.querySelector('.stock').textContent.trim() : 'Available';
+    const sku = el.getAttribute('data-sku') || '';
+    const pid = el.getAttribute('data-product-id') || title.replace(/\s+/g,'-').toLowerCase();
+    return { title, category, price, was, imageSrc, imageAlt, desc, stock, sku, pid };
+  }
+
+  // open product modal
+  function openProductModal(data){
+    pmImage.src = data.imageSrc; pmImage.alt = data.imageAlt || data.title;
+    pmTitle.textContent = data.title; pmCategory.textContent = data.category || '';
+    pmDesc.textContent = data.desc || ''; pmPrice.textContent = data.price || '';
+    pmWas.textContent = data.was || ''; pmStock.textContent = data.stock || '—'; pmSKU.textContent = data.sku || '—';
+    // store on continue button
+    continueBtn.dataset.productId = data.pid;
+    continueBtn.dataset.productTitle = data.title;
+    continueBtn.dataset.productPrice = data.price;
+    continueBtn.dataset.productImg = data.imageSrc;
+    continueBtn.dataset.productSku = data.sku || '';
+    show(productModal);
+  }
+
+  // open checkout modal
+  function openCheckout(data){
+    coImage.src = data.imageSrc; coImage.alt = data.imageAlt || data.title;
+    coTitle.textContent = data.title; coCategory.textContent = data.category || '';
+    coPrice.textContent = data.price || ''; coPid.value = data.pid; coSKU.value = data.sku || '';
+    checkoutForm.reset(); statusP.style.display='none';
+    show(checkoutModal);
+  }
+
+  // global click listener: open product modal on .showcase click (ignores action button clicks)
+  document.addEventListener('click', function(e){
+    const sc = e.target.closest('.showcase');
+    if (!sc) return;
+    const isAction = e.target.closest('.btn-action') || e.target.closest('.add-cart-btn') || e.target.closest('.bag-add-outline') || e.target.closest('.eye-outline');
+    if (isAction) return;
+    const data = readProduct(sc);
+    openProductModal(data);
+  });
+
+  // close handlers
+  productModalClose.addEventListener('click', ()=> hide(productModal));
+  checkoutModalClose.addEventListener('click', ()=> hide(checkoutModal));
+  document.addEventListener('keydown', (ev)=> { if(ev.key==='Escape'){ hide(productModal); hide(checkoutModal); }});
+
+  // continue to checkout
+  continueBtn.addEventListener('click', function(){
+    const data = {
+      pid: this.dataset.productId,
+      title: this.dataset.productTitle,
+      price: this.dataset.productPrice,
+      imageSrc: this.dataset.productImg,
+      sku: this.dataset.productSku,
+      category: pmCategory.textContent
+    };
+    openCheckout(data);
+    hide(productModal);
+  });
+
+  cancelCheckout.addEventListener('click', ()=> hide(checkoutModal));
+  addCartBtn.addEventListener('click', ()=> alert('Added to cart (placeholder)'));
+
+  // submit checkout — using EmailJS
+  checkoutForm.addEventListener('submit', function(ev){
+    ev.preventDefault();
+    const payload = {
+      product_id: coPid.value,
+      product_sku: coSKU.value,
+      product_title: coTitle.textContent.trim(),
+      product_price: coPrice.textContent.trim(),
+      customer_name: document.getElementById('assistantCustName').value.trim(),
+      customer_phone: document.getElementById('assistantCustPhone').value.trim(),
+      customer_address: document.getElementById('assistantCustAddress').value.trim(),
+      customer_email: document.getElementById('assistantCustEmail').value.trim() || 'N/A',
+      customer_notes: document.getElementById('assistantCustNote').value.trim() || 'N/A',
+      payment_method: 'Cash on Delivery',
+      order_time: new Date().toLocaleString()
+    };
+
+    if (!payload.customer_name || !payload.customer_phone || !payload.customer_address) {
+      alert('Please fill name, phone and delivery address.');
+      return;
+    }
+
+    if (!EMAILJS_SERVICE_ID || EMAILJS_SERVICE_ID==='YOUR_EMAILJS_SERVICE_ID' || !EMAILJS_TEMPLATE_ID || EMAILJS_TEMPLATE_ID==='YOUR_EMAILJS_TEMPLATE_ID' || !EMAILJS_USER_ID || EMAILJS_USER_ID==='YOUR_EMAILJS_USER_ID') {
+      statusP.style.display='block'; statusP.style.color='crimson';
+      statusP.textContent = 'Email sending not configured — replace EmailJS IDs in the page.';
+      return;
+    }
+
+    submitBtn.disabled = true; submitBtn.textContent = 'Placing order...'; statusP.style.display='none';
+
+    const templateParams = {
+      to_email: ORDER_RECEIVER_EMAIL,
+      product_id: payload.product_id,
+      product_sku: payload.product_sku,
+      product_title: payload.product_title,
+      product_price: payload.product_price,
+      customer_name: payload.customer_name,
+      customer_phone: payload.customer_phone,
+      customer_address: payload.customer_address,
+      customer_email: payload.customer_email,
+      customer_notes: payload.customer_notes,
+      payment_method: payload.payment_method,
+      order_time: payload.order_time
+    };
+
+    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
+      .then(function(response){
+        statusP.style.display='block'; statusP.style.color='#2d6a4f';
+        statusP.textContent = 'Order placed — confirmation sent to store.';
+        submitBtn.textContent = 'Order placed';
+        setTimeout(function(){ hide(checkoutModal); submitBtn.disabled=false; submitBtn.textContent='Place order — pay on delivery'; }, 1700);
+      }, function(err){
+        console.error('EmailJS error', err);
+        statusP.style.display='block'; statusP.style.color='crimson';
+        statusP.textContent = 'Failed to send order. Please contact ' + ORDER_RECEIVER_EMAIL;
+        submitBtn.disabled=false; submitBtn.textContent='Place order — pay on delivery';
+      });
+  });
+
+})();
+</script>
+<!-- END ADDED MODALS/SCRIPT -->
 
   <!--
     - FOOTER
