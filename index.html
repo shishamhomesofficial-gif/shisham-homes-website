@@ -3886,8 +3886,6 @@ document.addEventListener('DOMContentLoaded', function () {
     if (titleNode) titleNode.textContent = product.title;
     if (categoryNode) categoryNode.textContent = product.category;
     if (priceNode) priceNode.textContent = product.price;
-    const compareAtNode = showcaseEl.querySelector('.price-box del');
-    if (compareAtNode) compareAtNode.textContent = '';
     if (stockNode) stockNode.textContent = 'In stock';
 
     if (descNode) {
@@ -3906,30 +3904,6 @@ document.addEventListener('DOMContentLoaded', function () {
     showcaseEl.setAttribute('data-sku', product.sku);
     showcaseEl.setAttribute('data-product-id', product.sku.toLowerCase());
   });
-
-  const sidebarAndMobileProductNames = Array.from(
-    document.querySelectorAll('.sidebar-submenu-title .product-name, .mobile-menu-category-list .submenu-title')
-  );
-  sidebarAndMobileProductNames.forEach(function (nameNode, index) {
-    const product = productCatalog[index % productCatalog.length];
-    nameNode.textContent = product.title;
-  });
-
-  const desktopDropdownProductLinks = Array.from(
-    document.querySelectorAll('.desktop-menu-category-list .dropdown-panel a, .desktop-menu-category-list .dropdown-list a')
-  );
-  desktopDropdownProductLinks.forEach(function (linkNode, index) {
-    const product = productCatalog[index % productCatalog.length];
-    linkNode.textContent = product.title;
-  });
-
-  const popupProductTitle = document.querySelector('.modal-content .product-title');
-  const popupProductPrice = document.querySelector('.modal-content .price');
-  const popupProductDescription = document.querySelector('.modal-content .product-description');
-
-  if (popupProductTitle) popupProductTitle.textContent = productCatalog[0].title;
-  if (popupProductPrice) popupProductPrice.textContent = productCatalog[0].price;
-  if (popupProductDescription) popupProductDescription.textContent = productCatalog[0].description;
 
   function openModal(modal) {
     modal.classList.add('open');
