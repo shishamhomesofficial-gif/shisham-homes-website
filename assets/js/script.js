@@ -136,7 +136,10 @@ const handleProceedToCheckout = function (product) {
   } else {
     localStorage.removeItem(CHECKOUT_PRODUCT_KEY);
   }
-  window.location.href = './checkout.html';
+
+  const currentPath = window.location.pathname || '';
+  const checkoutPath = currentPath.includes('/products/') ? '../checkout.html' : './checkout.html';
+  window.location.href = checkoutPath;
 };
 
 if (detailSection && detailName && detailPrice && detailImages && detailCheckoutBtn) {
