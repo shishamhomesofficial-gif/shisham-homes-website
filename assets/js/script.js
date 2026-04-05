@@ -70,21 +70,7 @@ if (accordionBtn.length && accordion.length) {
 }
 
 // ecommerce helpers
-const CART_STORAGE_KEY = 'shishamHomesCart';
 const CHECKOUT_PRODUCT_KEY = 'shishamHomesDirectCheckoutItem';
-const SELECTED_PRODUCT_KEY = 'shishamHomesSelectedProduct';
-
-const readCart = function () {
-  try {
-    return JSON.parse(localStorage.getItem(CART_STORAGE_KEY)) || [];
-  } catch (error) {
-    return [];
-  }
-};
-
-const writeCart = function (cartItems) {
-  localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartItems));
-};
 
 const normalisePrice = function (rawPrice) {
   return (rawPrice || '').replace(/\s+/g, ' ').trim();
@@ -110,37 +96,23 @@ const createProductFromCard = function (cardElement) {
   };
 };
 
-const addToCart = function (product) {
-  const cartItems = readCart();
-  cartItems.push(product);
-  writeCart(cartItems);
-  return cartItems;
-};
-
 const updateCartCount = function () {
   const cartCountElements = document.querySelectorAll('[data-cart-count]');
-  const cartItems = readCart();
 
   cartCountElements.forEach(function (element) {
-    element.textContent = cartItems.length;
+    element.textContent = '0';
   });
 };
 
-const saveSelectedProduct = function (product) {
-  if (!product) {
-    return;
-  }
-
-  localStorage.setItem(SELECTED_PRODUCT_KEY, JSON.stringify(product));
+const slugifyProductName = function (name) {
+  return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 };
 
 const getProductPageUrl = function (product) {
-  return `./product.html?product=${encodeURIComponent(product.id)}`;
+  return `./products/${slugifyProductName(product.name)}.html`;
 };
 
 const openProductPage = function (product) {
-  saveSelectedProduct(product);
-
   mobileMenu.forEach(function (menuElement) {
     menuElement.classList.remove('active');
   });
@@ -157,39 +129,6 @@ const detailName = document.querySelector('[data-product-detail-name]');
 const detailPrice = document.querySelector('[data-product-detail-price]');
 const detailImages = document.querySelector('[data-product-detail-images]');
 const detailCheckoutBtn = document.querySelector('[data-continue-checkout-btn]');
-const cartItemsList = document.querySelector('[data-cart-items]');
-const cartEmptyMessage = document.querySelector('[data-cart-empty]');
-const cartCheckoutBtn = document.querySelector('[data-cart-checkout-btn]');
-
-const renderCart = function () {
-  if (!cartItemsList || !cartEmptyMessage) {
-    return;
-  }
-
-  const cartItems = readCart();
-  cartItemsList.innerHTML = '';
-
-  if (!cartItems.length) {
-    cartEmptyMessage.hidden = false;
-    return;
-  }
-
-  cartEmptyMessage.hidden = true;
-
-  cartItems.forEach(function (item, index) {
-    const listItem = document.createElement('li');
-    listItem.className = 'cart-item';
-    listItem.innerHTML = `
-      <img src="${item.images[0]}" alt="${item.name}" class="cart-item-thumb" width="60" height="60">
-      <div class="cart-item-content">
-        <p class="cart-item-name">${item.name}</p>
-        <p class="cart-item-price">${item.price}</p>
-      </div>
-      <button type="button" class="cart-remove-btn" data-remove-cart-item="${index}">Remove</button>
-    `;
-    cartItemsList.appendChild(listItem);
-  });
-};
 
 const handleProceedToCheckout = function (product) {
   if (product) {
@@ -211,7 +150,7 @@ if (detailSection && detailName && detailPrice && detailImages && detailCheckout
 
     const actionButtons = cardElement.querySelectorAll('.btn-action');
     const viewButton = actionButtons[1];
-    const addToCartButton = actionButtons[3];
+    const checkoutButton = actionButtons[3];
 
     if (viewButton) {
       viewButton.addEventListener('click', function (event) {
@@ -221,12 +160,10 @@ if (detailSection && detailName && detailPrice && detailImages && detailCheckout
       });
     }
 
-    if (addToCartButton) {
-      addToCartButton.addEventListener('click', function (event) {
+    if (checkoutButton) {
+      checkoutButton.addEventListener('click', function (event) {
         event.preventDefault();
-        addToCart(product);
-        updateCartCount();
-        renderCart();
+        handleProceedToCheckout(product);
       });
     }
   });
@@ -252,37 +189,14 @@ if (detailSection && detailName && detailPrice && detailImages && detailCheckout
       images: [imageElement.getAttribute('src')],
     };
 
+    buttonElement.textContent = 'Continue to checkout';
+
     buttonElement.addEventListener('click', function () {
-      addToCart(featuredProduct);
-      updateCartCount();
-      renderCart();
+      handleProceedToCheckout(featuredProduct);
     });
   });
 
-  if (cartItemsList) {
-    cartItemsList.addEventListener('click', function (event) {
-      const removeButton = event.target.closest('[data-remove-cart-item]');
-      if (!removeButton) {
-        return;
-      }
-
-      const removeIndex = Number(removeButton.getAttribute('data-remove-cart-item'));
-      const cartItems = readCart();
-      cartItems.splice(removeIndex, 1);
-      writeCart(cartItems);
-      updateCartCount();
-      renderCart();
-    });
-  }
-
-  if (cartCheckoutBtn) {
-    cartCheckoutBtn.addEventListener('click', function () {
-      handleProceedToCheckout(null);
-    });
-  }
-
   updateCartCount();
-  renderCart();
 }
 
 const allProductCards = document.querySelectorAll('.showcase');
@@ -302,64 +216,23 @@ allProductCards.forEach(function (cardElement) {
   });
 });
 
-const productPageRoot = document.querySelector('[data-product-page]');
-if (productPageRoot) {
-  const params = new URLSearchParams(window.location.search);
-  const selectedId = params.get('product');
-  let selectedProduct = null;
+const productCheckoutButton = document.querySelector('[data-product-page-checkout]');
+if (productCheckoutButton) {
+  productCheckoutButton.addEventListener('click', function () {
+    const product = {
+      id: productCheckoutButton.dataset.productId || slugifyProductName(productCheckoutButton.dataset.productName || 'product'),
+      name: productCheckoutButton.dataset.productName || 'Selected Product',
+      price: productCheckoutButton.dataset.productPrice || 'Rs 0',
+      category: productCheckoutButton.dataset.productCategory || 'Home Appliance',
+      description: productCheckoutButton.dataset.productDescription || '',
+      sku: productCheckoutButton.dataset.productSku || 'N/A',
+      warranty: productCheckoutButton.dataset.productWarranty || '1 year',
+      delivery: productCheckoutButton.dataset.productDelivery || '2-4 days',
+      images: [productCheckoutButton.dataset.productImage || './assets/images/products/Samsung-CE76JD-B1.jpg'],
+    };
 
-  try {
-    const savedProduct = JSON.parse(localStorage.getItem(SELECTED_PRODUCT_KEY));
-    if (savedProduct && (!selectedId || savedProduct.id === selectedId)) {
-      selectedProduct = savedProduct;
-    }
-  } catch (error) {
-    selectedProduct = null;
-  }
-
-  if (!selectedProduct) {
-    const cartMatch = readCart().find(function (item) {
-      return item.id === selectedId;
-    });
-    if (cartMatch) {
-      selectedProduct = cartMatch;
-    }
-  }
-
-  const pageName = productPageRoot.querySelector('[data-product-page-name]');
-  const pageCategory = productPageRoot.querySelector('[data-product-page-category]');
-  const pagePrice = productPageRoot.querySelector('[data-product-page-price]');
-  const pageDescription = productPageRoot.querySelector('[data-product-page-description]');
-  const pageImages = productPageRoot.querySelector('[data-product-page-images]');
-  const pageAddToCart = productPageRoot.querySelector('[data-product-page-add-cart]');
-  const pageCheckout = productPageRoot.querySelector('[data-product-page-checkout]');
-
-  if (selectedProduct && pageName && pageCategory && pagePrice && pageDescription && pageImages) {
-    pageName.textContent = selectedProduct.name;
-    pageCategory.textContent = selectedProduct.category || 'Home Appliance';
-    pagePrice.textContent = selectedProduct.price;
-    pageDescription.textContent = selectedProduct.description || `Find complete information, support, and quick checkout for ${selectedProduct.name}.`;
-    const primaryImage = selectedProduct.images && selectedProduct.images.length
-      ? selectedProduct.images[0]
-      : './assets/images/products/Samsung-CE76JD-B1.jpg';
-
-    pageImages.innerHTML = `<img src="${primaryImage}" alt="${selectedProduct.name}" class="detail-image" width="260" height="260">`;
-  }
-
-  if (selectedProduct && pageAddToCart) {
-    pageAddToCart.addEventListener('click', function () {
-      addToCart(selectedProduct);
-      updateCartCount();
-    });
-  }
-
-  if (selectedProduct && pageCheckout) {
-    pageCheckout.addEventListener('click', function () {
-      handleProceedToCheckout(selectedProduct);
-    });
-  }
-
-  updateCartCount();
+    handleProceedToCheckout(product);
+  });
 }
 
 
@@ -476,17 +349,46 @@ const checkoutForm = document.querySelector('[data-checkout-form]');
 
 if (checkoutSummary && checkoutForm) {
   const directProduct = localStorage.getItem(CHECKOUT_PRODUCT_KEY);
-  const cartItems = readCart();
-  const checkoutProducts = directProduct ? [JSON.parse(directProduct)] : cartItems;
+  const checkoutProducts = directProduct ? [JSON.parse(directProduct)] : [];
+  const checkoutSubtotalElement = document.querySelector('[data-checkout-subtotal]');
+  const checkoutDeliveryElement = document.querySelector('[data-checkout-delivery]');
+  const checkoutTaxElement = document.querySelector('[data-checkout-tax]');
+  const checkoutTotalElement = document.querySelector('[data-checkout-total]');
+  const checkoutEtaElement = document.querySelector('[data-checkout-eta]');
+
+  const parsePriceToNumber = function (rawPrice) {
+    const numericValue = Number(String(rawPrice || '').replace(/[^0-9.]/g, ''));
+    return Number.isNaN(numericValue) ? 0 : numericValue;
+  };
 
   if (checkoutProducts.length) {
+    const subtotal = checkoutProducts.reduce(function (sum, item) {
+      return sum + parsePriceToNumber(item.price);
+    }, 0);
+    const deliveryCharge = subtotal >= 15000 ? 0 : 350;
+    const estimatedTax = Math.round(subtotal * 0.13);
+    const grandTotal = subtotal + deliveryCharge + estimatedTax;
+
     checkoutSummary.innerHTML = checkoutProducts
-      .map(function (item) {
-        return `<li><strong>${item.name}</strong> - ${item.price}</li>`;
+      .map(function (item, index) {
+        return `<li>
+          <strong>${index + 1}. ${item.name}</strong><br>
+          Price: ${item.price}<br>
+          SKU: ${item.sku || 'N/A'}<br>
+          Category: ${item.category || 'Home Appliance'}<br>
+          Warranty: ${item.warranty || '1 year'}<br>
+          Delivery Window: ${item.delivery || '2-4 business days'}
+        </li>`;
       })
       .join('');
+
+    if (checkoutSubtotalElement) checkoutSubtotalElement.textContent = `Rs ${subtotal.toLocaleString()}`;
+    if (checkoutDeliveryElement) checkoutDeliveryElement.textContent = deliveryCharge ? `Rs ${deliveryCharge.toLocaleString()}` : 'Free';
+    if (checkoutTaxElement) checkoutTaxElement.textContent = `Rs ${estimatedTax.toLocaleString()}`;
+    if (checkoutTotalElement) checkoutTotalElement.textContent = `Rs ${grandTotal.toLocaleString()}`;
+    if (checkoutEtaElement) checkoutEtaElement.textContent = 'Estimated delivery: 2-4 business days in Kathmandu Valley';
   } else {
-    checkoutSummary.innerHTML = '<li>No products selected yet. Please add products from the home page.</li>';
+    checkoutSummary.innerHTML = '<li>No product selected yet. Please open a product page and choose "Continue to Checkout".</li>';
   }
 
   checkoutForm.addEventListener('submit', function (event) {
@@ -496,17 +398,24 @@ if (checkoutSummary && checkoutForm) {
     const fullName = formData.get('fullName');
     const address = formData.get('address');
     const phone = formData.get('phone');
+    const city = formData.get('city');
+    const landmark = formData.get('landmark');
+    const deliveryDate = formData.get('deliveryDate') || 'No specific date';
+    const deliveryTime = formData.get('deliveryTime') || 'No specific time slot';
+    const orderNotes = formData.get('orderNotes') || 'No additional notes';
     const email = formData.get('email') || 'Not provided';
 
     const productsText = checkoutProducts.length
-      ? checkoutProducts.map(function (item, index) { return `${index + 1}. ${item.name} (${item.price})`; }).join('%0D%0A')
+      ? checkoutProducts.map(function (item, index) {
+        return `${index + 1}. ${item.name} | Price: ${item.price} | SKU: ${item.sku || 'N/A'} | Category: ${item.category || 'Home Appliance'} | Warranty: ${item.warranty || '1 year'} | Delivery: ${item.delivery || '2-4 business days'}`;
+      }).join('%0D%0A')
       : 'No products selected';
 
-    const emailBody = `Full Name: ${fullName}%0D%0AShipping Address: ${address}%0D%0APhone Number: ${phone}%0D%0AEmail: ${email}%0D%0APayment Method: Cash on Delivery%0D%0A%0D%0AProducts:%0D%0A${productsText}`;
+    const orderReference = `SH-${Date.now().toString().slice(-8)}`;
+    const emailBody = `Order Reference: ${orderReference}%0D%0AFull Name: ${fullName}%0D%0APhone Number: ${phone}%0D%0AEmail: ${email}%0D%0AShipping Address: ${address}%0D%0ACity: ${city}%0D%0ANearest Landmark: ${landmark}%0D%0APreferred Delivery Date: ${deliveryDate}%0D%0APreferred Delivery Time: ${deliveryTime}%0D%0AOrder Notes: ${orderNotes}%0D%0APayment Method: Cash on Delivery%0D%0AOrder Date: ${new Date().toLocaleDateString('en-GB')}%0D%0A%0D%0AProducts:%0D%0A${productsText}`;
 
     window.location.href = `mailto:shishamhomesofficial@gmail.com?subject=New Order from Shisham Homes Website&body=${emailBody}`;
 
     localStorage.removeItem(CHECKOUT_PRODUCT_KEY);
-    localStorage.removeItem(CART_STORAGE_KEY);
   });
 }

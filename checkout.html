@@ -52,7 +52,6 @@
         <ul class="desktop-menu-category-list">
           <li class="menu-category"><a href="./index.html" class="menu-title">Home</a></li>
           <li class="menu-category"><a href="./index.html" class="menu-title">Products</a></li>
-          <li class="menu-category"><a href="./product.html" class="menu-title">Product Page</a></li>
           <li class="menu-category"><a href="./checkout.html" class="menu-title">Checkout</a></li>
         </ul>
       </div>
@@ -79,7 +78,6 @@
       <ul class="mobile-menu-category-list">
         <li class="menu-category"><a href="./index.html" class="menu-title">Home</a></li>
         <li class="menu-category"><a href="./index.html" class="menu-title">Products</a></li>
-        <li class="menu-category"><a href="./product.html" class="menu-title">Product Page</a></li>
         <li class="menu-category"><a href="./checkout.html" class="menu-title">Checkout</a></li>
       </ul>
     </nav>
@@ -95,6 +93,14 @@
             <ul class="checkout-list" data-checkout-summary></ul>
             <p class="checkout-label checkout-payment-label">Payment Method</p>
             <p>Cash on Delivery</p>
+            <p class="checkout-label checkout-payment-label">Order Cost Breakdown</p>
+            <ul class="checkout-list">
+              <li>Subtotal: <strong data-checkout-subtotal>Rs 0</strong></li>
+              <li>Delivery Charge: <strong data-checkout-delivery>Rs 0</strong></li>
+              <li>Estimated VAT (13%): <strong data-checkout-tax>Rs 0</strong></li>
+              <li>Total Payable: <strong data-checkout-total>Rs 0</strong></li>
+            </ul>
+            <p data-checkout-eta>Estimated delivery will be shown after selecting a product.</p>
           </div>
 
           <form data-checkout-form>
@@ -111,6 +117,35 @@
             <div class="checkout-field">
               <label class="checkout-label" for="phone">Phone Number</label>
               <input class="checkout-input" id="phone" name="phone" type="tel" required>
+            </div>
+
+            <div class="checkout-field">
+              <label class="checkout-label" for="city">City</label>
+              <input class="checkout-input" id="city" name="city" type="text" value="Kathmandu" required>
+            </div>
+
+            <div class="checkout-field">
+              <label class="checkout-label" for="landmark">Nearest Landmark</label>
+              <input class="checkout-input" id="landmark" name="landmark" type="text" placeholder="e.g. Near Jorpati Chowk" required>
+            </div>
+
+            <div class="checkout-field">
+              <label class="checkout-label" for="deliveryDate">Preferred Delivery Date</label>
+              <input class="checkout-input" id="deliveryDate" name="deliveryDate" type="date">
+            </div>
+
+            <div class="checkout-field">
+              <label class="checkout-label" for="deliveryTime">Preferred Delivery Time</label>
+              <select class="checkout-input" id="deliveryTime" name="deliveryTime">
+                <option value="Morning (8AM - 12PM)">Morning (8AM - 12PM)</option>
+                <option value="Afternoon (12PM - 4PM)">Afternoon (12PM - 4PM)</option>
+                <option value="Evening (4PM - 8PM)">Evening (4PM - 8PM)</option>
+              </select>
+            </div>
+
+            <div class="checkout-field">
+              <label class="checkout-label" for="orderNotes">Order Notes (optional)</label>
+              <textarea class="checkout-textarea" id="orderNotes" name="orderNotes" placeholder="Installation request, floor number, delivery instructions..."></textarea>
             </div>
 
             <div class="checkout-field checkout-field-last">
