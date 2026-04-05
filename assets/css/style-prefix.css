@@ -3445,3 +3445,33 @@ footer {
     grid-template-columns: 1fr 1.3fr;
   }
 }
+
+.product-page-layout {
+  align-items: start;
+  display: grid;
+  gap: 24px;
+  grid-template-columns: minmax(280px, 1fr) minmax(280px, 1fr);
+}
+
+.product-page-description {
+  color: hsl(0, 0%, 47%);
+  line-height: 1.8;
+  margin-top: 14px;
+}
+
+.product-page-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.product-page-actions .add-cart-btn {
+  text-decoration: none;
+}
+
+@media (max-width: 767px) {
+  .product-page-layout {
+    grid-template-columns: 1fr;
+  }
+}

@@ -72,6 +72,7 @@ if (accordionBtn.length && accordion.length) {
 // ecommerce helpers
 const CART_STORAGE_KEY = 'shishamHomesCart';
 const CHECKOUT_PRODUCT_KEY = 'shishamHomesDirectCheckoutItem';
+const SELECTED_PRODUCT_KEY = 'shishamHomesSelectedProduct';
 
 const readCart = function () {
   try {
@@ -104,6 +105,8 @@ const createProductFromCard = function (cardElement) {
     name: titleElement.textContent.trim(),
     price: normalisePrice(priceElement.textContent),
     images: [defaultImage.getAttribute('src'), hoverImage ? hoverImage.getAttribute('src') : defaultImage.getAttribute('src')].filter(Boolean),
+    category: cardElement.querySelector('.showcase-category') ? cardElement.querySelector('.showcase-category').textContent.trim() : 'Home Appliance',
+    description: `Get ${titleElement.textContent.trim()} at Shisham Homes with trusted local support and fast checkout.`,
   };
 };
 
@@ -121,6 +124,23 @@ const updateCartCount = function () {
   cartCountElements.forEach(function (element) {
     element.textContent = cartItems.length;
   });
+};
+
+const saveSelectedProduct = function (product) {
+  if (!product) {
+    return;
+  }
+
+  localStorage.setItem(SELECTED_PRODUCT_KEY, JSON.stringify(product));
+};
+
+const getProductPageUrl = function (product) {
+  return `./product.html?product=${encodeURIComponent(product.id)}`;
+};
+
+const openProductPage = function (product) {
+  saveSelectedProduct(product);
+  window.location.href = getProductPageUrl(product);
 };
 
 const detailSection = document.querySelector('[data-product-detail-section]');
@@ -187,19 +207,7 @@ if (detailSection && detailName && detailPrice && detailImages && detailCheckout
     if (viewButton) {
       viewButton.addEventListener('click', function (event) {
         event.preventDefault();
-        detailName.textContent = product.name;
-        detailPrice.textContent = product.price;
-        detailImages.innerHTML = product.images
-          .map(function (imagePath) {
-            return `<img src="${imagePath}" alt="${product.name}" class="detail-image" width="200" height="200">`;
-          })
-          .join('');
-
-        detailCheckoutBtn.onclick = function () {
-          handleProceedToCheckout(product);
-        };
-
-        detailSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        openProductPage(product);
       });
     }
 
@@ -265,6 +273,82 @@ if (detailSection && detailName && detailPrice && detailImages && detailCheckout
 
   updateCartCount();
   renderCart();
+}
+
+const allProductCards = document.querySelectorAll('.showcase');
+allProductCards.forEach(function (cardElement) {
+  const product = createProductFromCard(cardElement);
+  if (!product) {
+    return;
+  }
+
+  const detailTriggers = cardElement.querySelectorAll('.showcase-img-box, .showcase-content a:not(.showcase-category), .showcase-category');
+  detailTriggers.forEach(function (triggerElement) {
+    triggerElement.addEventListener('click', function (event) {
+      event.preventDefault();
+      openProductPage(product);
+    });
+  });
+});
+
+const productPageRoot = document.querySelector('[data-product-page]');
+if (productPageRoot) {
+  const params = new URLSearchParams(window.location.search);
+  const selectedId = params.get('product');
+  let selectedProduct = null;
+
+  try {
+    const savedProduct = JSON.parse(localStorage.getItem(SELECTED_PRODUCT_KEY));
+    if (savedProduct && (!selectedId || savedProduct.id === selectedId)) {
+      selectedProduct = savedProduct;
+    }
+  } catch (error) {
+    selectedProduct = null;
+  }
+
+  if (!selectedProduct) {
+    const cartMatch = readCart().find(function (item) {
+      return item.id === selectedId;
+    });
+    if (cartMatch) {
+      selectedProduct = cartMatch;
+    }
+  }
+
+  const pageName = productPageRoot.querySelector('[data-product-page-name]');
+  const pageCategory = productPageRoot.querySelector('[data-product-page-category]');
+  const pagePrice = productPageRoot.querySelector('[data-product-page-price]');
+  const pageDescription = productPageRoot.querySelector('[data-product-page-description]');
+  const pageImages = productPageRoot.querySelector('[data-product-page-images]');
+  const pageAddToCart = productPageRoot.querySelector('[data-product-page-add-cart]');
+  const pageCheckout = productPageRoot.querySelector('[data-product-page-checkout]');
+
+  if (selectedProduct && pageName && pageCategory && pagePrice && pageDescription && pageImages) {
+    pageName.textContent = selectedProduct.name;
+    pageCategory.textContent = selectedProduct.category || 'Home Appliance';
+    pagePrice.textContent = selectedProduct.price;
+    pageDescription.textContent = selectedProduct.description || `Find complete information, support, and quick checkout for ${selectedProduct.name}.`;
+    pageImages.innerHTML = selectedProduct.images
+      .map(function (imagePath) {
+        return `<img src="${imagePath}" alt="${selectedProduct.name}" class="detail-image" width="260" height="260">`;
+      })
+      .join('');
+  }
+
+  if (selectedProduct && pageAddToCart) {
+    pageAddToCart.addEventListener('click', function () {
+      addToCart(selectedProduct);
+      updateCartCount();
+    });
+  }
+
+  if (selectedProduct && pageCheckout) {
+    pageCheckout.addEventListener('click', function () {
+      handleProceedToCheckout(selectedProduct);
+    });
+  }
+
+  updateCartCount();
 }
 
 
