@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TV | Shisham Homes</title>
+  <link rel="shortcut icon" href="./assets/images/logo/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="./assets/css/style-prefix.css">
+  <style>
+    .category-page-wrapper { padding: 40px 0; }
+    .category-page-subtitle { margin-bottom: 18px; color: hsl(0, 0%, 47%); }
+    .category-empty-state { margin-top: 20px; font-size: 24px; font-weight: 600; color: hsl(0, 0%, 27%); }
+  </style>
+</head>
+<body>
+  <div class="overlay" data-overlay></div>
+
+  <header>
+    <div class="header-main">
+      <div class="container">
+        <a href="./index.html" class="header-logo">
+          <img src="./assets/images/logo/logo.svg" alt="Shisham Homes logo" width="120" height="36">
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main data-category-page data-category-key="tv" data-category-name="TV">
+    <section class="category-page-wrapper">
+      <div class="container">
+        <div class="product-main">
+          <h1 class="title" data-category-heading>TV Products</h1>
+          <p class="category-page-subtitle">Browse products filtered by TV.</p>
+          <div class="product-grid" data-category-grid></div>
+          <p class="category-empty-state" data-empty-state hidden>No results found</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="./assets/js/script.js"></script>
+  <script src="./assets/js/category-products.js"></script>
+</body>
+</html>

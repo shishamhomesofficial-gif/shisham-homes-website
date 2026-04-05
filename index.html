@@ -885,7 +885,7 @@
                 <p class="category-item-amount">(53)</p>
               </div>
 
-              <a href="#" class="category-btn">Show all</a>
+              <a href="./category-refrigerators.html" class="category-btn">Show all</a>
 
             </div>
 
@@ -905,7 +905,7 @@
                 <p class="category-item-amount">(58)</p>
               </div>
 
-              <a href="#" class="category-btn">Show all</a>
+              <a href="./category-tv.html" class="category-btn">Show all</a>
 
             </div>
 
@@ -925,7 +925,7 @@
                 <p class="category-item-amount">(68)</p>
               </div>
 
-              <a href="#" class="category-btn">Show all</a>
+              <a href="./category-microwaves-ovens.html" class="category-btn">Show all</a>
 
             </div>
 
@@ -945,7 +945,7 @@
                 <p class="category-item-amount">(84)</p>
               </div>
 
-              <a href="#" class="category-btn">Show all</a>
+              <a href="./category-smart-kitchen-appliances.html" class="category-btn">Show all</a>
 
             </div>
 
@@ -965,7 +965,7 @@
                 <p class="category-item-amount">(35)</p>
               </div>
 
-              <a href="#" class="category-btn">Show all</a>
+              <a href="./category-smart-household-appliances.html" class="category-btn">Show all</a>
 
             </div>
 
@@ -986,7 +986,7 @@
                 <p class="category-item-amount">(39)</p>
               </div>
 
-              <a href="#" class="category-btn">Show all</a>
+              <a href="./category-other-products.html" class="category-btn">Show all</a>
 
             </div>
 
@@ -3166,6 +3166,9 @@ document.addEventListener('DOMContentLoaded', function () {
   categoryTriggers.forEach(function (trigger) {
     trigger.addEventListener('click', function (event) {
       if (trigger.closest('.product-grid > .showcase')) return;
+      if (trigger.classList.contains('category-btn') && trigger.getAttribute('href') && trigger.getAttribute('href') !== '#') {
+        return;
+      }
       const categoryText = findCategoryText(trigger);
       const categoryKey = getCategoryKey(categoryText);
 
