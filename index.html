@@ -2786,6 +2786,10 @@ document.addEventListener('DOMContentLoaded', function () {
   const EMAILJS_SERVICE_ID = 'service_t7ls3th';
   const EMAILJS_TEMPLATE_ID = 'template_5xtv29f';
   const ORDER_RECEIVER_EMAIL = 'shishamshomesofficial@gmail.com';
+  const ensureText = function (value, fallback) {
+    const normalised = String(value || '').trim();
+    return normalised || fallback;
+  };
 
   try {
     if (typeof emailjs !== 'undefined' && EMAILJS_USER_ID && EMAILJS_USER_ID !== 'YOUR_EMAILJS_USER_ID') {
@@ -3122,11 +3126,11 @@ document.addEventListener('DOMContentLoaded', function () {
       const emailEl = document.getElementById('assistantEmail');
       const notesEl = document.getElementById('assistantNotes');
 
-      const name = nameEl ? nameEl.value.trim() : '';
-      const phone = phoneEl ? phoneEl.value.trim() : '';
-      const address = addressEl ? addressEl.value.trim() : '';
-      const email = emailEl ? emailEl.value.trim() || 'N/A' : 'N/A';
-      const notes = notesEl ? notesEl.value.trim() || 'N/A' : 'N/A';
+      const name = nameEl ? ensureText(nameEl.value, '') : '';
+      const phone = phoneEl ? ensureText(phoneEl.value, '') : '';
+      const address = addressEl ? ensureText(addressEl.value, '') : '';
+      const email = emailEl ? ensureText(emailEl.value, 'N/A') : 'N/A';
+      const notes = notesEl ? ensureText(notesEl.value, 'N/A') : 'N/A';
 
       const product_id = coPid ? coPid.value : '';
       const product_sku = coSku ? coSku.value : '';
@@ -3153,6 +3157,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
       }
 
+      const orderSummary = `Order Reference: ${product_id || 'N/A'}\nCustomer: ${name}\nPhone: ${phone}\nEmail: ${email}\nAddress: ${address}\nProduct: ${product_title}\nPrice: ${product_price}\nSKU: ${product_sku || 'N/A'}\nPayment: ${payment_method}\nTime: ${order_time}\nNotes: ${notes}`;
       const templateParams = {
         to_email: ORDER_RECEIVER_EMAIL,
         product_id,
@@ -3165,7 +3170,16 @@ document.addEventListener('DOMContentLoaded', function () {
         customer_email: email,
         customer_notes: notes,
         payment_method,
-        order_time
+        order_time,
+        // compatibility aliases for common EmailJS template variable names
+        name,
+        from_name: name,
+        phone,
+        email,
+        address,
+        message: orderSummary,
+        reply_to: email,
+        subject: `New order request from ${name}`
       };
 
       if (placeOrderBtn) {

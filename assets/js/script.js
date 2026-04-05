@@ -76,6 +76,62 @@ const EMAILJS_SERVICE_ID = 'service_t7ls3th';
 const EMAILJS_TEMPLATE_ID = 'template_5xtv29f';
 const ORDER_RECEIVER_EMAIL = 'shishamshomesofficial@gmail.com';
 
+const ensureText = function (value, fallback) {
+  const normalised = String(value || '').trim();
+  return normalised || fallback;
+};
+
+const buildEmailTemplateParams = function (orderData) {
+  const orderDate = new Date().toLocaleString('en-GB');
+  const safeOrderData = {
+    toEmail: ensureText(orderData.toEmail, ORDER_RECEIVER_EMAIL),
+    orderReference: ensureText(orderData.orderReference, `SH-${Date.now().toString().slice(-8)}`),
+    fullName: ensureText(orderData.fullName, 'Not provided'),
+    phone: ensureText(orderData.phone, 'Not provided'),
+    email: ensureText(orderData.email, 'Not provided'),
+    address: ensureText(orderData.address, 'Not provided'),
+    city: ensureText(orderData.city, 'Not provided'),
+    landmark: ensureText(orderData.landmark, 'Not provided'),
+    deliveryDate: ensureText(orderData.deliveryDate, 'No specific date'),
+    deliveryTime: ensureText(orderData.deliveryTime, 'No specific time slot'),
+    orderNotes: ensureText(orderData.orderNotes, 'No additional notes'),
+    paymentMethod: ensureText(orderData.paymentMethod, 'Cash on Delivery'),
+    productsText: ensureText(orderData.productsText, 'No products selected'),
+    orderDate,
+  };
+
+  const emailBody = `Order Reference: ${safeOrderData.orderReference}\nFull Name: ${safeOrderData.fullName}\nPhone Number: ${safeOrderData.phone}\nEmail: ${safeOrderData.email}\nShipping Address: ${safeOrderData.address}\nCity: ${safeOrderData.city}\nNearest Landmark: ${safeOrderData.landmark}\nPreferred Delivery Date: ${safeOrderData.deliveryDate}\nPreferred Delivery Time: ${safeOrderData.deliveryTime}\nOrder Notes: ${safeOrderData.orderNotes}\nPayment Method: ${safeOrderData.paymentMethod}\nOrder Date: ${safeOrderData.orderDate}\n\nProducts:\n${safeOrderData.productsText}`;
+
+  return {
+    // current template keys
+    to_email: safeOrderData.toEmail,
+    order_reference: safeOrderData.orderReference,
+    full_name: safeOrderData.fullName,
+    phone: safeOrderData.phone,
+    email: safeOrderData.email,
+    address: safeOrderData.address,
+    city: safeOrderData.city,
+    landmark: safeOrderData.landmark,
+    delivery_date: safeOrderData.deliveryDate,
+    delivery_time: safeOrderData.deliveryTime,
+    order_notes: safeOrderData.orderNotes,
+    payment_method: safeOrderData.paymentMethod,
+    order_date: safeOrderData.orderDate,
+    products: safeOrderData.productsText,
+    message: emailBody,
+    // compatibility keys for common EmailJS templates
+    name: safeOrderData.fullName,
+    from_name: safeOrderData.fullName,
+    customer_name: safeOrderData.fullName,
+    customer_phone: safeOrderData.phone,
+    customer_email: safeOrderData.email,
+    customer_address: `${safeOrderData.address}, ${safeOrderData.city}`,
+    customer_notes: safeOrderData.orderNotes,
+    reply_to: safeOrderData.email,
+    subject: `New order ${safeOrderData.orderReference} - ${safeOrderData.fullName}`,
+  };
+};
+
 const normalisePrice = function (rawPrice) {
   return (rawPrice || '').replace(/\s+/g, ' ').trim();
 };
@@ -448,15 +504,15 @@ if (checkoutSummary && checkoutForm) {
     event.preventDefault();
 
     const formData = new FormData(checkoutForm);
-    const fullName = formData.get('fullName');
-    const address = formData.get('address');
-    const phone = formData.get('phone');
-    const city = formData.get('city');
-    const landmark = formData.get('landmark');
-    const deliveryDate = formData.get('deliveryDate') || 'No specific date';
-    const deliveryTime = formData.get('deliveryTime') || 'No specific time slot';
-    const orderNotes = formData.get('orderNotes') || 'No additional notes';
-    const email = formData.get('email') || 'Not provided';
+    const fullName = ensureText(formData.get('fullName'), 'Not provided');
+    const address = ensureText(formData.get('address'), 'Not provided');
+    const phone = ensureText(formData.get('phone'), 'Not provided');
+    const city = ensureText(formData.get('city'), 'Not provided');
+    const landmark = ensureText(formData.get('landmark'), 'Not provided');
+    const deliveryDate = ensureText(formData.get('deliveryDate'), 'No specific date');
+    const deliveryTime = ensureText(formData.get('deliveryTime'), 'No specific time slot');
+    const orderNotes = ensureText(formData.get('orderNotes'), 'No additional notes');
+    const email = ensureText(formData.get('email'), 'Not provided');
 
     const productsText = checkoutProducts.length
       ? checkoutProducts.map(function (item, index) {
@@ -465,7 +521,22 @@ if (checkoutSummary && checkoutForm) {
       : 'No products selected';
 
     const orderReference = `SH-${Date.now().toString().slice(-8)}`;
-    const emailBody = `Order Reference: ${orderReference}\nFull Name: ${fullName}\nPhone Number: ${phone}\nEmail: ${email}\nShipping Address: ${address}\nCity: ${city}\nNearest Landmark: ${landmark}\nPreferred Delivery Date: ${deliveryDate}\nPreferred Delivery Time: ${deliveryTime}\nOrder Notes: ${orderNotes}\nPayment Method: Cash on Delivery\nOrder Date: ${new Date().toLocaleDateString('en-GB')}\n\nProducts:\n${productsText}`;
+    const templateParams = buildEmailTemplateParams({
+      toEmail: ORDER_RECEIVER_EMAIL,
+      orderReference,
+      fullName,
+      phone,
+      email,
+      address,
+      city,
+      landmark,
+      deliveryDate,
+      deliveryTime,
+      orderNotes,
+      paymentMethod: 'Cash on Delivery',
+      productsText,
+    });
+    const emailBody = templateParams.message;
     const submitButton = checkoutForm.querySelector('button[type="submit"]');
 
     if (submitButton) {
@@ -478,23 +549,7 @@ if (checkoutSummary && checkoutForm) {
         throw new Error('EmailJS is not available.');
       }
 
-      await window.emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-        to_email: ORDER_RECEIVER_EMAIL,
-        order_reference: orderReference,
-        full_name: fullName,
-        phone: phone,
-        email: email,
-        address: address,
-        city: city,
-        landmark: landmark,
-        delivery_date: deliveryDate,
-        delivery_time: deliveryTime,
-        order_notes: orderNotes,
-        payment_method: 'Cash on Delivery',
-        order_date: new Date().toLocaleString('en-GB'),
-        products: productsText,
-        message: emailBody,
-      });
+      await window.emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
 
       checkoutForm.reset();
       localStorage.removeItem(CHECKOUT_PRODUCT_KEY);
