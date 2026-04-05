@@ -2803,21 +2803,20 @@
 
 <!-- EmailJS SDK: client-only -->
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-  // EmailJS placeholders - replace with real values to enable email sending
-  const EMAILJS_USER_ID = '1wIn1t-E9_XTOQ0pG';         // e.g. user_xxxx
-  const EMAILJS_SERVICE_ID = 'service_t7ls3th';   // e.g. service_xxx
-  const EMAILJS_TEMPLATE_ID = 'template_5xtv29f'; // e.g. template_xxx
+  // EmailJS settings
+  const EMAILJS_USER_ID = '1wIn1t-E9_XTOQ0pG';
+  const EMAILJS_SERVICE_ID = 'service_t7ls3th';
+  const EMAILJS_TEMPLATE_ID = 'template_5xtv29f';
   const ORDER_RECEIVER_EMAIL = 'shishamshomesofficial@gmail.com';
 
   try {
-    if (EMAILJS_USER_ID && EMAILJS_USER_ID !== 'YOUR_EMAILJS_USER_ID') {
+    if (typeof emailjs !== 'undefined' && EMAILJS_USER_ID && EMAILJS_USER_ID !== 'YOUR_EMAILJS_USER_ID') {
       emailjs.init({ publicKey: EMAILJS_USER_ID });
       console.log('EmailJS initialized');
     } else {
-      console.warn('EmailJS not initialized (placeholders detected). Replace IDs to enable emails.');
+      console.warn('EmailJS not initialized. Check your EmailJS setup.');
     }
   } catch (err) {
     console.error('EmailJS init error:', err);
@@ -2857,79 +2856,193 @@ document.addEventListener('DOMContentLoaded', function () {
       category: 'Microwave Oven',
       price: 'Rs 24,450',
       description: 'A 21-litre convection microwave engineered for modern kitchens, featuring Samsung’s dedicated Curd Making Technology, integrated grill and convection modes, and auto-cook presets for baking, roasting, reheating, and daily meal preparation with consistent, even results.',
-      sku: 'SAM-CE76JD-B1-IM'
+      sku: 'SAM-CE76JD-B1-IM',
+      image: './assets/images/products/Samsung-CE76JD-B1.jpg'
     },
     {
       title: 'Panasonic NN-ST266BYTE Solo Microwave',
       category: 'Microwave Oven',
       price: 'Rs 13,250',
       description: 'A practical solo microwave designed for efficient reheating, defrosting, and everyday cooking tasks, with intuitive controls, reliable heating performance, and a compact footprint that fits well in apartments, family kitchens, and office pantry spaces.',
-      sku: 'PAN-NN-ST266BYTE'
+      sku: 'PAN-NN-ST266BYTE',
+      image: './assets/images/products/Panasonic-NN-ST266BYTE.webp'
     },
     {
       title: 'Sansui SS-VC16M37 1600W Bag Type Vacuum Cleaner',
       category: 'Vacuum Cleaner',
       price: 'Rs 7,500',
       description: 'A high-power 1600W bag-type vacuum cleaner built for deep home cleaning, delivering strong and stable suction, multi-surface nozzle support, and effective dust capture to help maintain cleaner floors, corners, upholstery, and indoor air quality.',
-      sku: 'SAN-SS-VC16M37'
+      sku: 'SAN-SS-VC16M37',
+      image: './assets/images/products/Sansui-SS-VC16M37.jpg'
     },
     {
       title: 'Electric Kettle WB-EK188 (1.8L)',
       category: 'Electric Kettle',
       price: 'Rs 1,200',
       description: 'A 1.8-litre electric kettle with rapid boiling performance, user-friendly grip and pouring design, and built-in safety protection such as automatic shut-off for convenient preparation of tea, coffee, instant noodles, soups, and hot water on demand.',
-      sku: 'WB-EK188-18L'
+      sku: 'WB-EK188-18L',
+      image: './assets/images/products/Webor-WB-EK188.jpg'
     },
     {
       title: 'Orbit Infrared Cooker OK-20P46ICA/YA',
       category: 'Infrared Cooker',
       price: 'Rs 4,880',
       description: 'A versatile infrared cooker with quick thermal response, simple touch-friendly operation, and broad cookware compatibility, making it suitable for frying, boiling, simmering, and controlled daily cooking where portability and speed are important.',
-      sku: 'ORB-OK-20P46ICA-YA'
+      sku: 'ORB-OK-20P46ICA-YA',
+      image: './assets/images/products/orbit-OK-20P46ICA.png'
     },
     {
       title: 'Panasonic NN-CT645BYTE Convection/Grill Microwave',
       category: 'Microwave Oven',
       price: 'Rs 23,500',
       description: 'A convection and grill microwave crafted for multi-style cooking, combining baking, grilling, and reheating capabilities with preset programs, efficient heat circulation, and flexible controls that support both quick snacks and complete family meals.',
-      sku: 'PAN-NN-CT645BYTE'
+      sku: 'PAN-NN-CT645BYTE',
+      image: './assets/images/products/Panasonic-NN-CT645BYTE.jpg'
     },
     {
       title: 'Himstar HK-20D1ICI/YE Induction Cooker',
       category: 'Induction Cooker',
       price: 'Rs 4,400',
       description: 'A portable induction cooker that delivers fast and energy-efficient heating, with adjustable power levels and safety-focused operation to support controlled cooking in home kitchens, rental spaces, dorm setups, and backup cooking arrangements.',
-      sku: 'HIM-HK-20D1ICI-YE'
+      sku: 'HIM-HK-20D1ICI-YE',
+      image: './assets/images/products/Himstar-HK-20D1ICI.jpeg'
     },
     {
       title: 'Himstar HV-22703WDJ/SE Vacuum Cleaner',
       category: 'Vacuum Cleaner',
       price: 'Rs 12,450',
       description: 'A premium-performance vacuum cleaner designed for thorough home maintenance, offering dependable suction strength, practical cleaning attachments, and efficient dust collection for floors, furnishings, and larger living areas that need regular deep cleaning.',
-      sku: 'HIM-HV-22703WDJ-SE'
+      sku: 'HIM-HV-22703WDJ-SE',
+      image: './assets/images/products/Himstar-HV-22703WDJ.png'
     },
     {
       title: 'Panasonic NN-CT36HBYTE Convection/Grill Microwave',
       category: 'Microwave Oven',
       price: 'Rs 24,600',
       description: 'A feature-rich convection and grill microwave built for high flexibility, with balanced multi-directional heating, convenient preset cooking menus, and reliable controls that help produce consistent baking, grilling, reheating, and combination-cooking results.',
-      sku: 'PAN-NN-CT36HBYTE'
+      sku: 'PAN-NN-CT36HBYTE',
+      image: './assets/images/products/Panasonic-NN-CT36HBYTE.png'
     }
   ];
 
-  const showcaseCards = Array.from(document.querySelectorAll('.showcase'));
+  function openModal(modal) {
+    if (!modal) return;
+    modal.classList.add('open');
+    document.body.classList.add('assistant-modal-open');
+    modal.setAttribute('aria-hidden', 'false');
+  }
+
+  function closeModal(modal) {
+    if (!modal) return;
+    modal.classList.remove('open');
+    document.body.classList.remove('assistant-modal-open');
+    modal.setAttribute('aria-hidden', 'true');
+  }
+
+  function readProduct(showcaseEl) {
+    const titleNode = showcaseEl.querySelector('.showcase-title') || showcaseEl.querySelector('h3, h4, h2');
+    const title = titleNode ? titleNode.textContent.trim() : 'Product';
+
+    const catNode = showcaseEl.querySelector('.showcase-category');
+    const category = catNode ? catNode.textContent.trim() : 'General';
+
+    const priceNode = showcaseEl.querySelector('.price-box .price') || showcaseEl.querySelector('.price');
+    const price = priceNode ? priceNode.textContent.trim() : '';
+
+    const wasNode = showcaseEl.querySelector('.price-box del');
+    const was = wasNode ? wasNode.textContent.trim() : '';
+
+    const imgNode =
+      showcaseEl.querySelector('img.product-img.default') ||
+      showcaseEl.querySelector('img.product-img') ||
+      showcaseEl.querySelector('.showcase-banner img') ||
+      showcaseEl.querySelector('img');
+
+    const imageSrc = imgNode ? imgNode.getAttribute('src') : './assets/images/products/1.jpg';
+    const imageAlt = imgNode ? (imgNode.getAttribute('alt') || title) : title;
+
+    const descNode = showcaseEl.querySelector('.showcase-desc');
+    const description = descNode ? descNode.textContent.trim() : 'High-quality appliance from Shisham Homes.';
+
+    const stockNode = showcaseEl.querySelector('.stock');
+    const stock = stockNode ? stockNode.textContent.trim() : 'Available';
+
+    const sku = showcaseEl.getAttribute('data-sku') || '';
+    const pid = showcaseEl.getAttribute('data-product-id') || title.replace(/\s+/g, '-').toLowerCase();
+
+    return { title, category, price, was, imageSrc, imageAlt, description, stock, sku, pid };
+  }
+
+  function openProductModalForShowcase(showcaseEl) {
+    const data = readProduct(showcaseEl);
+
+    if (pImage) {
+      pImage.src = data.imageSrc;
+      pImage.alt = data.imageAlt || data.title;
+    }
+    if (pTitle) pTitle.textContent = data.title;
+    if (pCategory) pCategory.textContent = data.category;
+    if (pDesc) pDesc.textContent = data.description;
+    if (pPrice) pPrice.textContent = data.price;
+    if (pWas) pWas.textContent = data.was;
+    if (pStock) pStock.textContent = data.stock;
+    if (pSKU) pSKU.textContent = data.sku || '—';
+
+    if (continueBtn) {
+      continueBtn.dataset.pid = data.pid;
+      continueBtn.dataset.title = data.title;
+      continueBtn.dataset.price = data.price;
+      continueBtn.dataset.image = data.imageSrc;
+      continueBtn.dataset.sku = data.sku || '';
+    }
+
+    openModal(productModal);
+  }
+
+  function openCheckoutFromProductData(data) {
+    if (coImage) {
+      coImage.src = data.image;
+      coImage.alt = data.title;
+    }
+    if (coTitle) coTitle.textContent = data.title;
+    if (coCategory) coCategory.textContent = data.category || '';
+    if (coPrice) coPrice.textContent = data.price || '';
+    if (coPid) coPid.value = data.pid || '';
+    if (coSku) coSku.value = data.sku || '';
+    if (checkoutForm) checkoutForm.reset();
+    if (checkoutStatus) checkoutStatus.style.display = 'none';
+    openModal(checkoutModal);
+  }
+
+  // Only target product cards inside the product grid
+  const showcaseCards = Array.from(document.querySelectorAll('.product-grid > .showcase'));
+
   showcaseCards.forEach(function (showcaseEl, index) {
-    const product = productCatalog[index % productCatalog.length];
+    const product = productCatalog[index];
+    if (!product) return;
+
     const titleNode = showcaseEl.querySelector('.showcase-title');
     const categoryNode = showcaseEl.querySelector('.showcase-category');
     const priceNode = showcaseEl.querySelector('.price-box .price') || showcaseEl.querySelector('.price');
     const descNode = showcaseEl.querySelector('.showcase-desc');
     const stockNode = showcaseEl.querySelector('.stock');
 
+    const defaultImg = showcaseEl.querySelector('img.product-img.default');
+    const hoverImg = showcaseEl.querySelector('img.product-img.hover');
+
     if (titleNode) titleNode.textContent = product.title;
     if (categoryNode) categoryNode.textContent = product.category;
     if (priceNode) priceNode.textContent = product.price;
     if (stockNode) stockNode.textContent = 'In stock';
+
+    if (defaultImg) {
+      defaultImg.src = product.image;
+      defaultImg.alt = product.title;
+    }
+    if (hoverImg) {
+      hoverImg.src = product.image;
+      hoverImg.alt = product.title;
+    }
 
     if (descNode) {
       descNode.textContent = product.description;
@@ -2948,172 +3061,188 @@ document.addEventListener('DOMContentLoaded', function () {
     showcaseEl.setAttribute('data-product-id', product.sku.toLowerCase());
   });
 
-  function openModal(modal) {
-    modal.classList.add('open');
-    document.body.classList.add('assistant-modal-open');
-    modal.setAttribute('aria-hidden', 'false');
-  }
-  function closeModal(modal) {
-    modal.classList.remove('open');
-    document.body.classList.remove('assistant-modal-open');
-    modal.setAttribute('aria-hidden', 'true');
-  }
-
-  function readProduct(showcaseEl) {
-    const titleNode = showcaseEl.querySelector('.showcase-title') || showcaseEl.querySelector('h3, h4, h2');
-    const title = titleNode ? titleNode.textContent.trim() : 'Product';
-    const catNode = showcaseEl.querySelector('.showcase-category');
-    const category = catNode ? catNode.textContent.trim() : 'General';
-    const priceNode = showcaseEl.querySelector('.price-box .price') || showcaseEl.querySelector('.price');
-    const price = priceNode ? priceNode.textContent.trim() : '';
-    const wasNode = showcaseEl.querySelector('.price-box del');
-    const was = wasNode ? wasNode.textContent.trim() : '';
-    const imgNode = showcaseEl.querySelector('img.product-img.default') || showcaseEl.querySelector('img.showcase-img') || showcaseEl.querySelector('img') || showcaseEl.querySelector('.showcase-banner img');
-    const imageSrc = imgNode ? imgNode.getAttribute('src') : './assets/images/products/1.jpg';
-    const imageAlt = imgNode ? (imgNode.getAttribute('alt') || title) : title;
-    const descNode = showcaseEl.querySelector('.showcase-desc');
-    const description = descNode ? descNode.textContent.trim() : 'High-quality appliance from Shisham Homes.';
-    const stockNode = showcaseEl.querySelector('.stock');
-    const stock = stockNode ? stockNode.textContent.trim() : 'Available';
-    const sku = showcaseEl.getAttribute('data-sku') || '';
-    const pid = showcaseEl.getAttribute('data-product-id') || title.replace(/\s+/g,'-').toLowerCase();
-    return { title, category, price, was, imageSrc, imageAlt, description, stock, sku, pid };
-  }
-
-  function openProductModalForShowcase(showcaseEl) {
-    const data = readProduct(showcaseEl);
-    pImage.src = data.imageSrc; pImage.alt = data.imageAlt || data.title;
-    pTitle.textContent = data.title;
-    pCategory.textContent = data.category;
-    pDesc.textContent = data.description;
-    pPrice.textContent = data.price;
-    pWas.textContent = data.was;
-    pStock.textContent = data.stock;
-    pSKU.textContent = data.sku || '—';
-    continueBtn.dataset.pid = data.pid;
-    continueBtn.dataset.title = data.title;
-    continueBtn.dataset.price = data.price;
-    continueBtn.dataset.image = data.imageSrc;
-    continueBtn.dataset.sku = data.sku || '';
-    openModal(productModal);
-  }
-
-  function openCheckoutFromProductData(data) {
-    coImage.src = data.image;
-    coImage.alt = data.title;
-    coTitle.textContent = data.title;
-    coCategory.textContent = data.category || '';
-    coPrice.textContent = data.price || '';
-    coPid.value = data.pid;
-    coSku.value = data.sku || '';
-    checkoutForm.reset();
-    checkoutStatus.style.display = 'none';
-    openModal(checkoutModal);
-  }
-
+  // Click handling
   document.addEventListener('click', function (ev) {
-    const showcase = ev.target.closest('.showcase');
+    const showcase = ev.target.closest('.product-grid > .showcase');
     if (!showcase) return;
-    if (ev.target.closest('.btn-action') || ev.target.closest('.add-cart-btn') || ev.target.closest('.bag-add-outline') || ev.target.closest('.eye-outline')) {
+
+    if (ev.target.closest('.btn-action')) {
       return;
     }
+
     if (ev.target.closest('a')) {
       ev.preventDefault();
     }
+
     openProductModalForShowcase(showcase);
-  }, { passive: false });
-
-  productClose.addEventListener('click', () => closeModal(productModal));
-  checkoutClose.addEventListener('click', () => closeModal(checkoutModal));
-  productModal.addEventListener('click', (e) => { if (e.target === productModal) closeModal(productModal); });
-  checkoutModal.addEventListener('click', (e) => { if (e.target === checkoutModal) closeModal(checkoutModal); });
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeModal(productModal); closeModal(checkoutModal); } });
-
-  continueBtn.addEventListener('click', function () {
-    const data = {
-      pid: this.dataset.pid,
-      title: this.dataset.title,
-      price: this.dataset.price,
-      image: this.dataset.image,
-      sku: this.dataset.sku,
-      category: pCategory.textContent
-    };
-    openCheckoutFromProductData(data);
-    closeModal(productModal);
   });
 
-  addToCartBtn.addEventListener('click', function () {
-    alert('Added to cart (placeholder). Hook this into your cart logic if needed.');
-  });
+  if (productClose) {
+    productClose.addEventListener('click', function () {
+      closeModal(productModal);
+    });
+  }
 
-  cancelCheckoutBtn.addEventListener('click', function () { closeModal(checkoutModal); });
+  if (checkoutClose) {
+    checkoutClose.addEventListener('click', function () {
+      closeModal(checkoutModal);
+    });
+  }
 
-  checkoutForm.addEventListener('submit', function (ev) {
-    ev.preventDefault();
+  if (productModal) {
+    productModal.addEventListener('click', function (e) {
+      if (e.target === productModal) closeModal(productModal);
+    });
+  }
 
-    const name = document.getElementById('assistantName').value.trim();
-    const phone = document.getElementById('assistantPhone').value.trim();
-    const address = document.getElementById('assistantAddress').value.trim();
-    const email = document.getElementById('assistantEmail').value.trim() || 'N/A';
-    const notes = document.getElementById('assistantNotes').value.trim() || 'N/A';
-    const product_id = coPid.value;
-    const product_sku = coSku.value;
-    const product_title = coTitle.textContent.trim();
-    const product_price = coPrice.textContent.trim();
-    const payment_method = 'Cash on Delivery';
-    const order_time = new Date().toLocaleString();
+  if (checkoutModal) {
+    checkoutModal.addEventListener('click', function (e) {
+      if (e.target === checkoutModal) closeModal(checkoutModal);
+    });
+  }
 
-    if (!name || !phone || !address) {
-      alert('Please fill name, phone and delivery address.');
-      return;
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      closeModal(productModal);
+      closeModal(checkoutModal);
     }
+  });
 
-    if (!EMAILJS_SERVICE_ID || EMAILJS_SERVICE_ID === 'YOUR_EMAILJS_SERVICE_ID' ||
+  if (continueBtn) {
+    continueBtn.addEventListener('click', function () {
+      const data = {
+        pid: this.dataset.pid || '',
+        title: this.dataset.title || '',
+        price: this.dataset.price || '',
+        image: this.dataset.image || '',
+        sku: this.dataset.sku || '',
+        category: pCategory ? pCategory.textContent : ''
+      };
+
+      openCheckoutFromProductData(data);
+      closeModal(productModal);
+    });
+  }
+
+  if (addToCartBtn) {
+    addToCartBtn.addEventListener('click', function () {
+      alert('Added to cart (placeholder). Hook this into your cart logic if needed.');
+    });
+  }
+
+  if (cancelCheckoutBtn) {
+    cancelCheckoutBtn.addEventListener('click', function () {
+      closeModal(checkoutModal);
+    });
+  }
+
+  if (checkoutForm) {
+    checkoutForm.addEventListener('submit', function (ev) {
+      ev.preventDefault();
+
+      const nameEl = document.getElementById('assistantName');
+      const phoneEl = document.getElementById('assistantPhone');
+      const addressEl = document.getElementById('assistantAddress');
+      const emailEl = document.getElementById('assistantEmail');
+      const notesEl = document.getElementById('assistantNotes');
+
+      const name = nameEl ? nameEl.value.trim() : '';
+      const phone = phoneEl ? phoneEl.value.trim() : '';
+      const address = addressEl ? addressEl.value.trim() : '';
+      const email = emailEl ? emailEl.value.trim() || 'N/A' : 'N/A';
+      const notes = notesEl ? notesEl.value.trim() || 'N/A' : 'N/A';
+
+      const product_id = coPid ? coPid.value : '';
+      const product_sku = coSku ? coSku.value : '';
+      const product_title = coTitle ? coTitle.textContent.trim() : '';
+      const product_price = coPrice ? coPrice.textContent.trim() : '';
+      const payment_method = 'Cash on Delivery';
+      const order_time = new Date().toLocaleString();
+
+      if (!name || !phone || !address) {
+        alert('Please fill name, phone and delivery address.');
+        return;
+      }
+
+      if (
+        !EMAILJS_SERVICE_ID || EMAILJS_SERVICE_ID === 'YOUR_EMAILJS_SERVICE_ID' ||
         !EMAILJS_TEMPLATE_ID || EMAILJS_TEMPLATE_ID === 'YOUR_EMAILJS_TEMPLATE_ID' ||
-        !EMAILJS_USER_ID || EMAILJS_USER_ID === 'YOUR_EMAILJS_USER_ID') {
-      checkoutStatus.style.display = 'block';
-      checkoutStatus.style.color = 'crimson';
-      checkoutStatus.textContent = 'Email sending is not configured — replace EmailJS IDs in the page to enable. (Form validated.)';
-      return;
-    }
+        !EMAILJS_USER_ID || EMAILJS_USER_ID === 'YOUR_EMAILJS_USER_ID'
+      ) {
+        if (checkoutStatus) {
+          checkoutStatus.style.display = 'block';
+          checkoutStatus.style.color = 'crimson';
+          checkoutStatus.textContent = 'Email sending is not configured — replace EmailJS IDs in the page to enable. (Form validated.)';
+        }
+        return;
+      }
 
-    const templateParams = {
-      to_email: ORDER_RECEIVER_EMAIL,
-      product_id,
-      product_sku,
-      product_title,
-      product_price,
-      customer_name: name,
-      customer_phone: phone,
-      customer_address: address,
-      customer_email: email,
-      customer_notes: notes,
-      payment_method,
-      order_time
-    };
+      const templateParams = {
+        to_email: ORDER_RECEIVER_EMAIL,
+        product_id,
+        product_sku,
+        product_title,
+        product_price,
+        customer_name: name,
+        customer_phone: phone,
+        customer_address: address,
+        customer_email: email,
+        customer_notes: notes,
+        payment_method,
+        order_time
+      };
 
-    placeOrderBtn.disabled = true;
-    placeOrderBtn.textContent = 'Placing order...';
-    checkoutStatus.style.display = 'none';
+      if (placeOrderBtn) {
+        placeOrderBtn.disabled = true;
+        placeOrderBtn.textContent = 'Placing order...';
+      }
+      if (checkoutStatus) checkoutStatus.style.display = 'none';
 
-    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
-      .then(function (response) {
-        checkoutStatus.style.display = 'block';
-        checkoutStatus.style.color = '#2d6a4f';
-        checkoutStatus.textContent = 'Order placed successfully. Store has been notified.';
-        placeOrderBtn.textContent = 'Order placed';
-        setTimeout(function () { closeModal(checkoutModal); placeOrderBtn.disabled = false; placeOrderBtn.textContent = 'Place order — pay on delivery'; }, 1500);
-      }, function (error) {
-        console.error('EmailJS send error:', error);
-        checkoutStatus.style.display = 'block';
-        checkoutStatus.style.color = 'crimson';
-        checkoutStatus.textContent = 'Failed to send order. Please contact ' + ORDER_RECEIVER_EMAIL;
-        placeOrderBtn.disabled = false;
-        placeOrderBtn.textContent = 'Place order — pay on delivery';
-      });
-  });
+      if (typeof emailjs === 'undefined') {
+        if (checkoutStatus) {
+          checkoutStatus.style.display = 'block';
+          checkoutStatus.style.color = 'crimson';
+          checkoutStatus.textContent = 'EmailJS library is missing.';
+        }
+        if (placeOrderBtn) {
+          placeOrderBtn.disabled = false;
+          placeOrderBtn.textContent = 'Place order — pay on delivery';
+        }
+        return;
+      }
 
-}); // end DOMContentLoaded
+      emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
+        .then(function () {
+          if (checkoutStatus) {
+            checkoutStatus.style.display = 'block';
+            checkoutStatus.style.color = '#2d6a4f';
+            checkoutStatus.textContent = 'Order placed successfully. Store has been notified.';
+          }
+          if (placeOrderBtn) placeOrderBtn.textContent = 'Order placed';
+
+          setTimeout(function () {
+            closeModal(checkoutModal);
+            if (placeOrderBtn) {
+              placeOrderBtn.disabled = false;
+              placeOrderBtn.textContent = 'Place order — pay on delivery';
+            }
+          }, 1500);
+        })
+        .catch(function (error) {
+          console.error('EmailJS send error:', error);
+          if (checkoutStatus) {
+            checkoutStatus.style.display = 'block';
+            checkoutStatus.style.color = 'crimson';
+            checkoutStatus.textContent = 'Failed to send order. Please contact ' + ORDER_RECEIVER_EMAIL;
+          }
+          if (placeOrderBtn) {
+            placeOrderBtn.disabled = false;
+            placeOrderBtn.textContent = 'Place order — pay on delivery';
+          }
+        });
+    });
+  }
+});
 </script>
 
 <!-- END ASSISTANT ADDED BLOCK -->
