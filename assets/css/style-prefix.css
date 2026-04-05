@@ -3435,6 +3435,41 @@ footer {
   resize: vertical;
 }
 
+
+.checkout-page-shell {
+  margin-top: 30px;
+}
+
+.checkout-field {
+  margin-bottom: 12px;
+}
+
+.checkout-field-last {
+  margin-bottom: 16px;
+}
+
+.checkout-payment-label {
+  margin-top: 16px;
+}
+
+.primary-action-btn {
+  background: hsl(0, 0%, 13%);
+  border: 1px solid hsl(0, 0%, 13%);
+  border-radius: 8px;
+  color: hsl(0, 0%, 100%);
+  font-weight: var(--weight-600);
+  letter-spacing: 0.2px;
+  padding: 11px 18px;
+  text-transform: uppercase;
+  transition: var(--transition-timing);
+}
+
+.primary-action-btn:hover,
+.primary-action-btn:focus-visible {
+  background: hsl(0, 0%, 21%);
+  color: hsl(0, 0%, 100%);
+}
+
 @media (min-width: 768px) {
   .ecommerce-card {
     grid-template-columns: 1.2fr 1fr;

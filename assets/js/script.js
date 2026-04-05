@@ -104,7 +104,7 @@ const createProductFromCard = function (cardElement) {
     id: `${titleElement.textContent.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${normalisePrice(priceElement.textContent)}`,
     name: titleElement.textContent.trim(),
     price: normalisePrice(priceElement.textContent),
-    images: [defaultImage.getAttribute('src'), hoverImage ? hoverImage.getAttribute('src') : defaultImage.getAttribute('src')].filter(Boolean),
+    images: Array.from(new Set([defaultImage.getAttribute('src'), hoverImage ? hoverImage.getAttribute('src') : null].filter(Boolean))),
     category: cardElement.querySelector('.showcase-category') ? cardElement.querySelector('.showcase-category').textContent.trim() : 'Home Appliance',
     description: `Get ${titleElement.textContent.trim()} at Shisham Homes with trusted local support and fast checkout.`,
   };
@@ -140,6 +140,15 @@ const getProductPageUrl = function (product) {
 
 const openProductPage = function (product) {
   saveSelectedProduct(product);
+
+  mobileMenu.forEach(function (menuElement) {
+    menuElement.classList.remove('active');
+  });
+
+  if (overlay) {
+    overlay.classList.remove('active');
+  }
+
   window.location.href = getProductPageUrl(product);
 };
 
@@ -207,6 +216,7 @@ if (detailSection && detailName && detailPrice && detailImages && detailCheckout
     if (viewButton) {
       viewButton.addEventListener('click', function (event) {
         event.preventDefault();
+        event.stopPropagation();
         openProductPage(product);
       });
     }
@@ -286,6 +296,7 @@ allProductCards.forEach(function (cardElement) {
   detailTriggers.forEach(function (triggerElement) {
     triggerElement.addEventListener('click', function (event) {
       event.preventDefault();
+      event.stopPropagation();
       openProductPage(product);
     });
   });
@@ -328,11 +339,11 @@ if (productPageRoot) {
     pageCategory.textContent = selectedProduct.category || 'Home Appliance';
     pagePrice.textContent = selectedProduct.price;
     pageDescription.textContent = selectedProduct.description || `Find complete information, support, and quick checkout for ${selectedProduct.name}.`;
-    pageImages.innerHTML = selectedProduct.images
-      .map(function (imagePath) {
-        return `<img src="${imagePath}" alt="${selectedProduct.name}" class="detail-image" width="260" height="260">`;
-      })
-      .join('');
+    const primaryImage = selectedProduct.images && selectedProduct.images.length
+      ? selectedProduct.images[0]
+      : './assets/images/products/Samsung-CE76JD-B1.jpg';
+
+    pageImages.innerHTML = `<img src="${primaryImage}" alt="${selectedProduct.name}" class="detail-image" width="260" height="260">`;
   }
 
   if (selectedProduct && pageAddToCart) {
