@@ -69,6 +69,103 @@ if (accordionBtn.length && accordion.length) {
   }
 }
 
+// navigation link helpers
+const getSiteRelativePath = function (targetPath) {
+  const currentPath = window.location.pathname || '';
+  const isProductDetailPage = currentPath.includes('/products/');
+  return `${isProductDetailPage ? '../' : './'}${targetPath}`;
+};
+
+const resolveNavigationTarget = function (labelText) {
+  const normalisedLabel = String(labelText || '').trim().toLowerCase();
+
+  if (!normalisedLabel) {
+    return null;
+  }
+
+  if (normalisedLabel.includes('home')) return getSiteRelativePath('index.html');
+  if (normalisedLabel.includes('checkout') || normalisedLabel.includes('cart') || normalisedLabel.includes('bag')) return getSiteRelativePath('checkout.html');
+  if (normalisedLabel.includes('category') || normalisedLabel.includes('shop')) return getSiteRelativePath('index.html');
+  if (normalisedLabel.includes('refrigerator') || normalisedLabel.includes('refrigeration')) return getSiteRelativePath('category-refrigerators.html');
+  if (normalisedLabel.includes('tv')) return getSiteRelativePath('category-tv.html');
+  if (normalisedLabel.includes('microwave') || normalisedLabel.includes('oven')) return getSiteRelativePath('category-microwaves-ovens.html');
+  if (normalisedLabel.includes('kitchen') || normalisedLabel.includes('cooking') || normalisedLabel.includes('induction')) return getSiteRelativePath('category-smart-kitchen-appliances.html');
+  if (normalisedLabel.includes('laundry') || normalisedLabel.includes('washing') || normalisedLabel.includes('household')) return getSiteRelativePath('category-smart-household-appliances.html');
+  if (normalisedLabel.includes('other product') || normalisedLabel.includes('other appliance')) return getSiteRelativePath('category-other-products.html');
+  if (normalisedLabel.includes('blog') || normalisedLabel.includes('offer')) return getSiteRelativePath('index.html');
+
+  return null;
+};
+
+const setGlobalNavigationLinks = function () {
+  const placeholderLinks = document.querySelectorAll('a[href="#"], a[href=""], a[href="javascript:void(0)"]');
+
+  placeholderLinks.forEach(function (linkElement) {
+    if (linkElement.classList.contains('social-link')) {
+      return;
+    }
+
+    const labelText = linkElement.getAttribute('aria-label')
+      || linkElement.getAttribute('title')
+      || linkElement.textContent;
+    const targetPath = resolveNavigationTarget(labelText);
+
+    if (targetPath) {
+      linkElement.setAttribute('href', targetPath);
+      return;
+    }
+
+    if (linkElement.classList.contains('header-logo') || linkElement.closest('.header-logo')) {
+      linkElement.setAttribute('href', getSiteRelativePath('index.html'));
+      return;
+    }
+
+    if (linkElement.classList.contains('banner-btn')) {
+      linkElement.setAttribute('href', getSiteRelativePath('index.html'));
+    }
+  });
+};
+
+const setGlobalNavigationButtons = function () {
+  const iconButtons = document.querySelectorAll('button.action-btn, button.search-btn');
+
+  iconButtons.forEach(function (buttonElement) {
+    if (buttonElement.dataset.mobileMenuOpenBtn !== undefined || buttonElement.dataset.mobileMenuCloseBtn !== undefined) {
+      return;
+    }
+
+    const iconElement = buttonElement.querySelector('ion-icon');
+    const iconName = (iconElement && iconElement.getAttribute('name')) ? iconElement.getAttribute('name').toLowerCase() : '';
+    let redirectPath = null;
+
+    if (buttonElement.classList.contains('search-btn')) {
+      const linkedSearchField = buttonElement.parentElement ? buttonElement.parentElement.querySelector('.search-field') : null;
+      if (linkedSearchField) {
+        buttonElement.addEventListener('click', function () {
+          linkedSearchField.focus();
+        });
+        return;
+      }
+      redirectPath = getSiteRelativePath('index.html');
+    } else if (iconName.includes('home')) {
+      redirectPath = getSiteRelativePath('index.html');
+    } else if (iconName.includes('bag')) {
+      redirectPath = getSiteRelativePath('checkout.html');
+    } else if (iconName.includes('person') || iconName.includes('heart')) {
+      redirectPath = getSiteRelativePath('index.html');
+    }
+
+    if (redirectPath) {
+      buttonElement.addEventListener('click', function () {
+        window.location.href = redirectPath;
+      });
+    }
+  });
+};
+
+setGlobalNavigationLinks();
+setGlobalNavigationButtons();
+
 // ecommerce helpers
 const CHECKOUT_PRODUCT_KEY = 'shishamHomesDirectCheckoutItem';
 const EMAILJS_USER_ID = '1wIn1t-E9_XTOQ0pG';
