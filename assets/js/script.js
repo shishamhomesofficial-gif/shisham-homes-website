@@ -267,6 +267,114 @@ if (detailSection && detailName && detailPrice && detailImages && detailCheckout
   renderCart();
 }
 
+
+// product search
+const searchField = document.querySelector('.header-search-container .search-field');
+const searchButton = document.querySelector('.header-search-container .search-btn');
+const homeMain = document.querySelector('main');
+const homeProductMain = document.querySelector('.product-main');
+
+if (searchField && searchButton && homeMain && homeProductMain) {
+  const productCards = Array.from(homeProductMain.querySelectorAll('.product-grid > .showcase'));
+  const productGrid = homeProductMain.querySelector('.product-grid');
+  const searchSummary = document.createElement('div');
+  searchSummary.className = 'search-results-status';
+  searchSummary.setAttribute('aria-live', 'polite');
+  searchSummary.hidden = true;
+
+  if (productGrid) {
+    homeProductMain.insertBefore(searchSummary, productGrid);
+  }
+
+  const hideSiblingBranches = function (targetElement, stopElement) {
+    let node = targetElement;
+
+    while (node && node.parentElement && node !== stopElement) {
+      const parentNode = node.parentElement;
+
+      Array.from(parentNode.children).forEach(function (siblingNode) {
+        if (siblingNode !== node) {
+          siblingNode.classList.add('search-hidden-section');
+        }
+      });
+
+      node = parentNode;
+    }
+  };
+
+  const resetSearchView = function () {
+    document.body.classList.remove('search-active');
+    document.querySelectorAll('.search-hidden-section').forEach(function (element) {
+      element.classList.remove('search-hidden-section');
+    });
+
+    productCards.forEach(function (cardElement) {
+      cardElement.classList.remove('search-card-hidden');
+    });
+
+    searchSummary.hidden = true;
+    searchSummary.textContent = '';
+  };
+
+  const searchProducts = function () {
+    const query = searchField.value.trim().toLowerCase();
+
+    if (!query) {
+      resetSearchView();
+      return;
+    }
+
+    document.body.classList.add('search-active');
+    hideSiblingBranches(homeProductMain, homeMain);
+
+    let matchedProducts = 0;
+
+    productCards.forEach(function (cardElement) {
+      const title = cardElement.querySelector('.showcase-title') ? cardElement.querySelector('.showcase-title').textContent : '';
+      const category = cardElement.querySelector('.showcase-category') ? cardElement.querySelector('.showcase-category').textContent : '';
+      const price = cardElement.querySelector('.price') ? cardElement.querySelector('.price').textContent : '';
+      const productText = `${title} ${category} ${price}`.toLowerCase();
+      const isMatch = productText.includes(query);
+
+      cardElement.classList.toggle('search-card-hidden', !isMatch);
+
+      if (isMatch) {
+        matchedProducts += 1;
+      }
+    });
+
+    searchSummary.hidden = false;
+    searchSummary.textContent = matchedProducts
+      ? `Showing ${matchedProducts} result${matchedProducts === 1 ? '' : 's'} for "${searchField.value.trim()}".`
+      : `No products found for "${searchField.value.trim()}". Clear search to return to the full homepage.`;
+  };
+
+  searchField.addEventListener('input', searchProducts);
+
+  searchField.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') {
+      searchField.value = '';
+      resetSearchView();
+      return;
+    }
+
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      searchProducts();
+      homeProductMain.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+
+  searchButton.addEventListener('click', function (event) {
+    event.preventDefault();
+    searchProducts();
+
+    if (searchField.value.trim()) {
+      homeProductMain.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+}
+
 // checkout page logic
 const checkoutSummary = document.querySelector('[data-checkout-summary]');
 const checkoutForm = document.querySelector('[data-checkout-form]');

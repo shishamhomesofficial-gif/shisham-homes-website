@@ -1519,6 +1519,23 @@ body::-webkit-scrollbar-thumb:hover { background: hsl(0, 0%, 70%); }
 
 .product-main { margin-bottom: 30px; }
 
+
+.search-results-status {
+  margin: 0 0 20px;
+  padding: 12px 14px;
+  border: 1px solid var(--cultured);
+  -webkit-border-radius: var(--border-radius-md);
+          border-radius: var(--border-radius-md);
+  color: var(--sonic-silver);
+  font-size: var(--fs-7);
+  background: var(--white);
+}
+
+.search-hidden-section,
+.search-card-hidden {
+  display: none !important;
+}
+
 .product-grid {
   display: -ms-grid;
   display: grid;
