@@ -71,6 +71,10 @@ if (accordionBtn.length && accordion.length) {
 
 // ecommerce helpers
 const CHECKOUT_PRODUCT_KEY = 'shishamHomesDirectCheckoutItem';
+const EMAILJS_USER_ID = '1wIn1t-E9_XTOQ0pG';
+const EMAILJS_SERVICE_ID = 'service_t7ls3th';
+const EMAILJS_TEMPLATE_ID = 'template_5xtv29f';
+const ORDER_RECEIVER_EMAIL = 'shishamshomesofficial@gmail.com';
 
 const normalisePrice = function (rawPrice) {
   return (rawPrice || '').replace(/\s+/g, ' ').trim();
@@ -122,6 +126,32 @@ const openProductPage = function (product) {
   }
 
   window.location.href = getProductPageUrl(product);
+};
+
+const setProductPageLinks = function () {
+  const allCards = document.querySelectorAll('.showcase');
+
+  allCards.forEach(function (cardElement) {
+    const product = createProductFromCard(cardElement);
+    if (!product) {
+      return;
+    }
+
+    const productUrl = getProductPageUrl(product);
+    const linkTargets = cardElement.querySelectorAll('.showcase-img-box, .showcase-content a');
+
+    linkTargets.forEach(function (linkElement) {
+      if (linkElement.tagName.toLowerCase() === 'a') {
+        linkElement.setAttribute('href', productUrl);
+      }
+    });
+
+    const actionButtons = cardElement.querySelectorAll('.btn-action');
+    const viewButton = actionButtons[1];
+    if (viewButton && viewButton.tagName.toLowerCase() === 'a') {
+      viewButton.setAttribute('href', productUrl);
+    }
+  });
 };
 
 const detailSection = document.querySelector('[data-product-detail-section]');
@@ -201,6 +231,8 @@ if (detailSection && detailName && detailPrice && detailImages && detailCheckout
 
   updateCartCount();
 }
+
+setProductPageLinks();
 
 const allProductCards = document.querySelectorAll('.showcase');
 allProductCards.forEach(function (cardElement) {
@@ -429,11 +461,11 @@ if (checkoutSummary && checkoutForm) {
     const productsText = checkoutProducts.length
       ? checkoutProducts.map(function (item, index) {
         return `${index + 1}. ${item.name} | Price: ${item.price} | SKU: ${item.sku || 'N/A'} | Category: ${item.category || 'Home Appliance'} | Warranty: ${item.warranty || '1 year'} | Delivery: ${item.delivery || '2-4 business days'}`;
-      }).join('%0D%0A')
+      }).join('\n')
       : 'No products selected';
 
     const orderReference = `SH-${Date.now().toString().slice(-8)}`;
-    const emailBody = `Order Reference: ${orderReference}\nFull Name: ${fullName}\nPhone Number: ${phone}\nEmail: ${email}\nShipping Address: ${address}\nCity: ${city}\nNearest Landmark: ${landmark}\nPreferred Delivery Date: ${deliveryDate}\nPreferred Delivery Time: ${deliveryTime}\nOrder Notes: ${orderNotes}\nPayment Method: Cash on Delivery\nOrder Date: ${new Date().toLocaleDateString('en-GB')}\n\nProducts:\n${productsText.replace(/%0D%0A/g, '\n')}`;
+    const emailBody = `Order Reference: ${orderReference}\nFull Name: ${fullName}\nPhone Number: ${phone}\nEmail: ${email}\nShipping Address: ${address}\nCity: ${city}\nNearest Landmark: ${landmark}\nPreferred Delivery Date: ${deliveryDate}\nPreferred Delivery Time: ${deliveryTime}\nOrder Notes: ${orderNotes}\nPayment Method: Cash on Delivery\nOrder Date: ${new Date().toLocaleDateString('en-GB')}\n\nProducts:\n${productsText}`;
     const submitButton = checkoutForm.querySelector('button[type="submit"]');
 
     if (submitButton) {
@@ -442,34 +474,27 @@ if (checkoutSummary && checkoutForm) {
     }
 
     try {
-      const response = await fetch('https://formsubmit.co/ajax/shishamhomesofficial@gmail.com', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify({
-          _subject: 'New Order from Shisham Homes Website',
-          orderReference: orderReference,
-          fullName: fullName,
-          phone: phone,
-          email: email,
-          address: address,
-          city: city,
-          landmark: landmark,
-          deliveryDate: deliveryDate,
-          deliveryTime: deliveryTime,
-          orderNotes: orderNotes,
-          paymentMethod: 'Cash on Delivery',
-          orderDate: new Date().toLocaleString('en-GB'),
-          products: productsText.replace(/%0D%0A/g, '\n'),
-          message: emailBody,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Unable to submit order at the moment.');
+      if (!window.emailjs || typeof window.emailjs.send !== 'function') {
+        throw new Error('EmailJS is not available.');
       }
+
+      await window.emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+        to_email: ORDER_RECEIVER_EMAIL,
+        order_reference: orderReference,
+        full_name: fullName,
+        phone: phone,
+        email: email,
+        address: address,
+        city: city,
+        landmark: landmark,
+        delivery_date: deliveryDate,
+        delivery_time: deliveryTime,
+        order_notes: orderNotes,
+        payment_method: 'Cash on Delivery',
+        order_date: new Date().toLocaleString('en-GB'),
+        products: productsText,
+        message: emailBody,
+      });
 
       checkoutForm.reset();
       localStorage.removeItem(CHECKOUT_PRODUCT_KEY);
@@ -477,7 +502,7 @@ if (checkoutSummary && checkoutForm) {
     } catch (error) {
       const fallbackSubject = encodeURIComponent('New Order from Shisham Homes Website');
       const fallbackBody = encodeURIComponent(emailBody);
-      window.location.href = `mailto:shishamhomesofficial@gmail.com?subject=${fallbackSubject}&body=${fallbackBody}`;
+      window.location.href = `mailto:${ORDER_RECEIVER_EMAIL}?subject=${fallbackSubject}&body=${fallbackBody}`;
       alert('We could not submit automatically. Your email app has been opened so you can complete the order message.');
     } finally {
       if (submitButton) {
@@ -486,4 +511,8 @@ if (checkoutSummary && checkoutForm) {
       }
     }
   });
+}
+
+if (window.emailjs && typeof window.emailjs.init === 'function') {
+  window.emailjs.init(EMAILJS_USER_ID);
 }
