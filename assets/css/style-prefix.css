@@ -3481,6 +3481,10 @@ footer {
   z-index: 20;
 }
 
+.order-confirmation-modal[hidden] {
+  display: none;
+}
+
 .order-confirmation-card {
   background: hsl(0, 0%, 100%);
   border-radius: 14px;
