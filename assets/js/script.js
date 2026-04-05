@@ -349,6 +349,8 @@ if (searchField && searchButton && homeMain && homeProductMain) {
 // checkout page logic
 const checkoutSummary = document.querySelector('[data-checkout-summary]');
 const checkoutForm = document.querySelector('[data-checkout-form]');
+const orderConfirmationModal = document.querySelector('[data-order-confirmation-modal]');
+const orderConfirmationCloseButton = document.querySelector('[data-order-confirmation-close]');
 
 if (checkoutSummary && checkoutForm) {
   const directProduct = localStorage.getItem(CHECKOUT_PRODUCT_KEY);
@@ -394,7 +396,23 @@ if (checkoutSummary && checkoutForm) {
     checkoutSummary.innerHTML = '<li>No product selected yet. Please open a product page and choose "Continue to Checkout".</li>';
   }
 
-  checkoutForm.addEventListener('submit', function (event) {
+  const toggleOrderConfirmationModal = function (shouldShow) {
+    if (!orderConfirmationModal) {
+      return;
+    }
+
+    orderConfirmationModal.hidden = !shouldShow;
+    document.body.style.overflow = shouldShow ? 'hidden' : '';
+  };
+
+  if (orderConfirmationCloseButton) {
+    orderConfirmationCloseButton.addEventListener('click', function () {
+      toggleOrderConfirmationModal(false);
+      window.location.href = './index.html';
+    });
+  }
+
+  checkoutForm.addEventListener('submit', async function (event) {
     event.preventDefault();
 
     const formData = new FormData(checkoutForm);
@@ -415,10 +433,57 @@ if (checkoutSummary && checkoutForm) {
       : 'No products selected';
 
     const orderReference = `SH-${Date.now().toString().slice(-8)}`;
-    const emailBody = `Order Reference: ${orderReference}%0D%0AFull Name: ${fullName}%0D%0APhone Number: ${phone}%0D%0AEmail: ${email}%0D%0AShipping Address: ${address}%0D%0ACity: ${city}%0D%0ANearest Landmark: ${landmark}%0D%0APreferred Delivery Date: ${deliveryDate}%0D%0APreferred Delivery Time: ${deliveryTime}%0D%0AOrder Notes: ${orderNotes}%0D%0APayment Method: Cash on Delivery%0D%0AOrder Date: ${new Date().toLocaleDateString('en-GB')}%0D%0A%0D%0AProducts:%0D%0A${productsText}`;
+    const emailBody = `Order Reference: ${orderReference}\nFull Name: ${fullName}\nPhone Number: ${phone}\nEmail: ${email}\nShipping Address: ${address}\nCity: ${city}\nNearest Landmark: ${landmark}\nPreferred Delivery Date: ${deliveryDate}\nPreferred Delivery Time: ${deliveryTime}\nOrder Notes: ${orderNotes}\nPayment Method: Cash on Delivery\nOrder Date: ${new Date().toLocaleDateString('en-GB')}\n\nProducts:\n${productsText.replace(/%0D%0A/g, '\n')}`;
+    const submitButton = checkoutForm.querySelector('button[type="submit"]');
 
-    window.location.href = `mailto:shishamhomesofficial@gmail.com?subject=New Order from Shisham Homes Website&body=${emailBody}`;
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.textContent = 'Submitting...';
+    }
 
-    localStorage.removeItem(CHECKOUT_PRODUCT_KEY);
+    try {
+      const response = await fetch('https://formsubmit.co/ajax/shishamhomesofficial@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          _subject: 'New Order from Shisham Homes Website',
+          orderReference: orderReference,
+          fullName: fullName,
+          phone: phone,
+          email: email,
+          address: address,
+          city: city,
+          landmark: landmark,
+          deliveryDate: deliveryDate,
+          deliveryTime: deliveryTime,
+          orderNotes: orderNotes,
+          paymentMethod: 'Cash on Delivery',
+          orderDate: new Date().toLocaleString('en-GB'),
+          products: productsText.replace(/%0D%0A/g, '\n'),
+          message: emailBody,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Unable to submit order at the moment.');
+      }
+
+      checkoutForm.reset();
+      localStorage.removeItem(CHECKOUT_PRODUCT_KEY);
+      toggleOrderConfirmationModal(true);
+    } catch (error) {
+      const fallbackSubject = encodeURIComponent('New Order from Shisham Homes Website');
+      const fallbackBody = encodeURIComponent(emailBody);
+      window.location.href = `mailto:shishamhomesofficial@gmail.com?subject=${fallbackSubject}&body=${fallbackBody}`;
+      alert('We could not submit automatically. Your email app has been opened so you can complete the order message.');
+    } finally {
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Submit Order';
+      }
+    }
   });
 }

@@ -3470,6 +3470,43 @@ footer {
   color: hsl(0, 0%, 100%);
 }
 
+.order-confirmation-modal {
+  align-items: center;
+  background: hsla(0, 0%, 0%, 0.55);
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  padding: 20px;
+  position: fixed;
+  z-index: 20;
+}
+
+.order-confirmation-card {
+  background: hsl(0, 0%, 100%);
+  border-radius: 14px;
+  box-shadow: 0 12px 36px hsla(0, 0%, 0%, 0.16);
+  max-width: 560px;
+  padding: 24px;
+  text-align: center;
+  width: 100%;
+}
+
+.order-confirmation-card h2 {
+  color: hsl(0, 0%, 13%);
+  font-size: var(--fs-2);
+  margin-bottom: 10px;
+}
+
+.order-confirmation-card p {
+  color: hsl(0, 0%, 27%);
+  line-height: 1.7;
+  margin-bottom: 18px;
+}
+
+.order-confirmation-btn {
+  min-width: 190px;
+}
+
 @media (min-width: 768px) {
   .ecommerce-card {
     grid-template-columns: 1.2fr 1fr;
