@@ -267,6 +267,56 @@ if (detailSection && detailName && detailPrice && detailImages && detailCheckout
   renderCart();
 }
 
+
+
+// product search
+const searchField = document.querySelector('[data-product-search]');
+const searchBtn = document.querySelector('[data-product-search-btn]');
+const searchCards = document.querySelectorAll('.product-main .showcase');
+const searchEmptyMessage = document.querySelector('[data-search-empty]');
+
+const runProductSearch = function () {
+  if (!searchField || !searchCards.length) {
+    return;
+  }
+
+  const query = searchField.value.trim().toLowerCase();
+  let visibleCount = 0;
+
+  searchCards.forEach(function (cardElement) {
+    const title = (cardElement.querySelector('.showcase-title')?.textContent || '').toLowerCase();
+    const category = (cardElement.querySelector('.showcase-category')?.textContent || '').toLowerCase();
+    const contentText = `${title} ${category}`;
+    const isMatch = !query || contentText.includes(query);
+
+    cardElement.style.display = isMatch ? '' : 'none';
+    if (isMatch) {
+      visibleCount += 1;
+    }
+  });
+
+  if (searchEmptyMessage) {
+    searchEmptyMessage.hidden = visibleCount !== 0;
+  }
+};
+
+if (searchField) {
+  searchField.addEventListener('input', runProductSearch);
+  searchField.addEventListener('keydown', function (event) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      runProductSearch();
+    }
+  });
+}
+
+if (searchBtn) {
+  searchBtn.addEventListener('click', function (event) {
+    event.preventDefault();
+    runProductSearch();
+  });
+}
+
 // checkout page logic
 const checkoutSummary = document.querySelector('[data-checkout-summary]');
 const checkoutForm = document.querySelector('[data-checkout-form]');
