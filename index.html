@@ -2996,6 +2996,112 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Only target product cards inside the product grid
   const showcaseCards = Array.from(document.querySelectorAll('.product-grid > .showcase'));
+  const productGrid = document.querySelector('.product-grid');
+  let noResultsMessage = null;
+
+  function normalizeValue(value) {
+    return (value || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+  }
+
+  function inferProductTags(product) {
+    const searchText = normalizeValue(`${product.title} ${product.category}`);
+    const tags = new Set([searchText, 'all']);
+
+    if (searchText.includes('microwave') || searchText.includes('oven')) {
+      tags.add('microwaves');
+      tags.add('cooking');
+    }
+    if (searchText.includes('induction')) {
+      tags.add('induction');
+      tags.add('cookers');
+      tags.add('cooking');
+    }
+    if (searchText.includes('infrared')) {
+      tags.add('infrared');
+      tags.add('cookers');
+      tags.add('cooking');
+    }
+    if (searchText.includes('kettle')) {
+      tags.add('kettle');
+      tags.add('cooking');
+      tags.add('kitchen');
+    }
+    if (searchText.includes('vacuum')) {
+      tags.add('vacuum');
+      tags.add('household');
+      tags.add('cleaning');
+    }
+    if (searchText.includes('refrigerator')) {
+      tags.add('refrigerator');
+    }
+    if (searchText.includes('tv')) {
+      tags.add('tv');
+    }
+    if (searchText.includes('washing')) {
+      tags.add('washing');
+      tags.add('laundry');
+    }
+
+    return Array.from(tags);
+  }
+
+  function getCategoryKey(label) {
+    const text = normalizeValue(label);
+    if (!text || text === 'categories' || text === 'home') return 'all';
+    if (text.includes('refrigerator')) return 'refrigerators';
+    if (text.includes('tv')) return 'tv';
+    if (text.includes('laundry') || text.includes('washing')) return 'laundry';
+    if (text.includes('microwave') || text.includes('oven')) return 'microwaves';
+    if (text.includes('induction')) return 'induction';
+    if (text.includes('infrared')) return 'infrared';
+    if (text.includes('kettle')) return 'kettle';
+    if (text.includes('vacuum') || text.includes('household')) return 'household';
+    if (text.includes('kitchen') || text.includes('cooking') || text.includes('cooker') || text.includes('appliance')) return 'cooking';
+    return 'all';
+  }
+
+  function matchesCategory(productTags, categoryKey) {
+    if (categoryKey === 'all') return true;
+    if (categoryKey === 'refrigerators') return productTags.includes('refrigerator');
+    if (categoryKey === 'tv') return productTags.includes('tv');
+    if (categoryKey === 'laundry') return productTags.includes('washing');
+    if (categoryKey === 'microwaves') return productTags.includes('microwaves');
+    if (categoryKey === 'induction') return productTags.includes('induction');
+    if (categoryKey === 'infrared') return productTags.includes('infrared');
+    if (categoryKey === 'kettle') return productTags.includes('kettle');
+    if (categoryKey === 'household') return productTags.includes('household') || productTags.includes('vacuum');
+    if (categoryKey === 'cooking') return productTags.includes('cooking') || productTags.includes('kitchen');
+    return true;
+  }
+
+  function toggleNoResultsMessage(visible) {
+    if (!productGrid) return;
+    if (!noResultsMessage) {
+      noResultsMessage = document.createElement('p');
+      noResultsMessage.textContent = 'No results found';
+      noResultsMessage.style.display = 'none';
+      noResultsMessage.style.margin = '16px 0';
+      noResultsMessage.style.fontWeight = '600';
+      noResultsMessage.style.color = 'var(--eerie-black)';
+      productGrid.insertAdjacentElement('afterend', noResultsMessage);
+    }
+    noResultsMessage.style.display = visible ? 'block' : 'none';
+  }
+
+  function filterProductsByCategory(categoryKey) {
+    let visibleCount = 0;
+
+    showcaseCards.forEach(function (card) {
+      const tags = (card.dataset.filterTags || '').split(',').map(function (entry) {
+        return normalizeValue(entry);
+      });
+      const show = matchesCategory(tags, categoryKey);
+      card.style.display = show ? '' : 'none';
+      if (show) visibleCount += 1;
+    });
+
+    toggleNoResultsMessage(visibleCount === 0);
+  }
 
   showcaseCards.forEach(function (showcaseEl, index) {
     const product = productCatalog[index];
@@ -3039,7 +3145,41 @@ document.addEventListener('DOMContentLoaded', function () {
 
     showcaseEl.setAttribute('data-sku', product.sku);
     showcaseEl.setAttribute('data-product-id', product.sku.toLowerCase());
+    showcaseEl.dataset.filterTags = inferProductTags(product).join(',');
   });
+
+  function findCategoryText(triggerEl) {
+    if (!triggerEl) return '';
+    if (triggerEl.classList.contains('category-btn')) {
+      const item = triggerEl.closest('.category-item');
+      const title = item ? item.querySelector('.category-item-title') : null;
+      return title ? title.textContent : triggerEl.textContent;
+    }
+
+    return triggerEl.textContent || '';
+  }
+
+  const categoryTriggers = document.querySelectorAll(
+    '.menu-title, .dropdown-item a, .panel-list-item a, .submenu-title, .category-btn'
+  );
+
+  categoryTriggers.forEach(function (trigger) {
+    trigger.addEventListener('click', function (event) {
+      if (trigger.closest('.product-grid > .showcase')) return;
+      const categoryText = findCategoryText(trigger);
+      const categoryKey = getCategoryKey(categoryText);
+
+      if (categoryKey !== 'all') {
+        event.preventDefault();
+      } else if (trigger.getAttribute('href') === '#') {
+        event.preventDefault();
+      }
+
+      filterProductsByCategory(categoryKey);
+    });
+  });
+
+  filterProductsByCategory('all');
 
   // Click handling
   document.addEventListener('click', function (ev) {
