@@ -2439,7 +2439,14 @@ document.addEventListener('DOMContentLoaded', function () {
   // Only target product cards inside the product grid
   const showcaseCards = Array.from(document.querySelectorAll('.product-grid > .showcase'));
   const productGrid = document.querySelector('.product-grid');
+  const mainElement = document.querySelector('main');
+  const productContainer = document.querySelector('.product-container');
+  const productSidebar = productContainer ? productContainer.querySelector('.sidebar') : null;
+  const productMinimal = productContainer ? productContainer.querySelector('.product-minimal') : null;
+  const productFeatured = productContainer ? productContainer.querySelector('.product-featured') : null;
+  const productMain = productContainer ? productContainer.querySelector('.product-main') : null;
   let noResultsMessage = null;
+  let searchResultsHeading = null;
 
   function normalizeValue(value) {
     return (value || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
@@ -2621,6 +2628,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function applyFilters() {
     let visibleCount = 0;
+    const isSearchModeEnabled = Boolean(activeSearchQuery);
+
+    toggleSearchModeUi(isSearchModeEnabled, activeSearchQuery);
 
     showcaseCards.forEach(function (card) {
       const tags = (card.dataset.filterTags || '').split(',').map(function (entry) {
