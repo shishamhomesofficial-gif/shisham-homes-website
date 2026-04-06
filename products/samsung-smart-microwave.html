@@ -1,58 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Samsung Smart Microwave | Shisham Homes</title>
-  <link rel="shortcut icon" href="../assets/images/logo/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="../assets/css/style-prefix.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-</head>
-<body>
-  <div class="overlay" data-overlay></div>
-
   <header>
     <div class="header-top">
       <div class="container">
-        <ul class="header-social-container">
-          <li><a href="#" class="social-link"><ion-icon name="logo-facebook"></ion-icon></a></li>
-          <li><a href="#" class="social-link"><ion-icon name="logo-twitter"></ion-icon></a></li>
-          <li><a href="#" class="social-link"><ion-icon name="logo-instagram"></ion-icon></a></li>
-          <li><a href="#" class="social-link"><ion-icon name="logo-linkedin"></ion-icon></a></li>
-        </ul>
-  
         <div class="header-alert-news">
           <p><b>Shisham Homes</b> Your trusted home appliances store in Jorpati, Kathmandu</p>
-        </div>
-  
-        <div class="header-top-actions">
-          <select name="currency">
-            <option value="npr">NPR</option>
-          </select>
-  
-          <select name="language">
-            <option value="en-US">English</option>
-          </select>
         </div>
       </div>
     </div>
   
     <div class="header-main">
       <div class="container">
-        <a href="https://www.shisham-homes-website.vercel.app/" class="header-logo"
-           onclick="window.location.href='https://www.shisham-homes-website.vercel.app/'; return false;">
-          <img src="./assets/images/logo/logo.svg" alt="Shisham Homes logo" width="120" height="36">
+        <a href="../index.html" class="header-logo">
+          <img src="../assets/images/logo/logo.svg" alt="Shisham Homes logo" width="120" height="36">
         </a>
   
-        <div class="header-search-container">
-          <input type="search" name="search" class="search-field" placeholder="Enter your product name...">
-          <button class="search-btn" type="button">
+        <a
+          href="https://shisham-homes-website.vercel.app/"
+          class="header-search-container search-redirect"
+          aria-label="Go to Shisham Homes homepage"
+        >
+          <div class="search-field" role="presentation">Enter your product name...</div>
+          <div class="search-btn" aria-hidden="true">
             <ion-icon name="search-outline"></ion-icon>
-          </button>
-        </div>
+          </div>
+        </a>
       </div>
     </div>
   
@@ -60,36 +30,28 @@
       <div class="container">
         <ul class="desktop-menu-category-list">
           <li class="menu-category">
-            <a href="https://shisham-homes-website.vercel.app/" class="menu-title"
-               onclick="window.location.href='https://shisham-homes-website.vercel.app/'; return false;">
-              Home
-            </a>
+            <a href="../index.html" class="menu-title">Home</a>
           </li>
   
           <li class="menu-category">
-            <a href="https://shisham-homes-website.vercel.app/category-refrigerators.html" class="menu-title"
-               onclick="window.location.href='https://shisham-homes-website.vercel.app/category-refrigerators.html'; return false;">
-              Refrigerators
-            </a>
+            <a href="../category-refrigerators.html" class="menu-title">Refrigerators</a>
           </li>
   
           <li class="menu-category">
-            <a href="https://shisham-homes-website.vercel.app/category-smart-kitchen-appliances.html" class="menu-title"
-               onclick="window.location.href='https://shisham-homes-website.vercel.app/category-smart-kitchen-appliances.html'; return false;">
-              Cooking
-            </a>
+            <a href="../category-smart-kitchen-appliances.html" class="menu-title">Cooking</a>
           </li>
   
           <li class="menu-category">
-            <a href="https://shisham-homes-website.vercel.app/category-microwaves-ovens.html" class="menu-title"
-               onclick="window.location.href='https://shisham-homes-website.vercel.app/category-microwaves-ovens.html'; return false;">
-              Induction cookers and Microwave Ovens
-            </a>
+            <a href="../category-microwaves-ovens.html" class="menu-title">Induction cookers and Microwave Ovens</a>
           </li>
   
           <li class="menu-category">
-            <a href="https://www.google.com/maps/dir/?api=1&destination=27.721556,85.377722"
-               class="menu-title" target="_blank" rel="noopener noreferrer">
+            <a
+              href="https://www.google.com/maps/dir/?api=1&destination=27.721556,85.377722"
+              class="menu-title"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Location
             </a>
           </li>
@@ -98,19 +60,17 @@
     </nav>
   
     <div class="mobile-bottom-navigation">
-      <a class="action-btn" href="#" data-mobile-menu-open-btn>
+      <button class="action-btn" type="button" data-mobile-menu-open-btn>
         <ion-icon name="menu-outline"></ion-icon>
-      </a>
-
+      </button>
   
-      <a class="action-btn" href="https://shisham-homes-website.vercel.app/"
-         onclick="window.location.href='https://shisham-homes-website.vercel.app/'; return false;">
+      <a class="action-btn" href="../index.html">
         <ion-icon name="home-outline"></ion-icon>
       </a>
-
-      <a class="action-btn" href="#" data-mobile-menu-open-btn>
+  
+      <button class="action-btn" type="button">
         <ion-icon name="grid-outline"></ion-icon>
-      </a>
+      </button>
     </div>
   
     <nav class="mobile-navigation-menu has-scrollbar" data-mobile-menu>
@@ -124,36 +84,28 @@
   
       <ul class="mobile-menu-category-list">
         <li class="menu-category">
-          <a href="https://shisham-homes-website.vercel.app/" class="menu-title"
-             onclick="window.location.href='https://shisham-homes-website.vercel.app/'; return false;">
-            Home
-          </a>
+          <a href="../index.html" class="menu-title">Home</a>
         </li>
   
         <li class="menu-category">
-          <a href="https://shisham-homes-website.vercel.app/category-refrigerators.html" class="menu-title"
-             onclick="window.location.href='https://shisham-homes-website.vercel.app/category-refrigerators.html'; return false;">
-            Refrigerators
-          </a>
+          <a href="../category-refrigerators.html" class="menu-title">Refrigerators</a>
         </li>
   
         <li class="menu-category">
-          <a href="https://shisham-homes-website.vercel.app/category-smart-kitchen-appliances.html" class="menu-title"
-             onclick="window.location.href='https://shisham-homes-website.vercel.app/category-smart-kitchen-appliances.html'; return false;">
-            Cooking
-          </a>
+          <a href="../category-smart-kitchen-appliances.html" class="menu-title">Cooking</a>
         </li>
   
         <li class="menu-category">
-          <a href="https://shisham-homes-website.vercel.app/category-microwaves-ovens.html" class="menu-title"
-             onclick="window.location.href='https://shisham-homes-website.vercel.app/category-microwaves-ovens.html'; return false;">
-            Induction cookers and Microwave Ovens
-          </a>
+          <a href="../category-microwaves-ovens.html" class="menu-title">Induction cookers and Microwave Ovens</a>
         </li>
   
         <li class="menu-category">
-          <a href="https://www.google.com/maps/dir/?api=1&destination=27.721556,85.377722" class="menu-title"
-             target="_blank" rel="noopener noreferrer">
+          <a
+            href="https://www.google.com/maps/dir/?api=1&destination=27.721556,85.377722"
+            class="menu-title"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             Location
           </a>
         </li>
@@ -168,7 +120,9 @@
             </button>
   
             <ul class="submenu-category-list" data-accordion>
-              <li class="submenu-category"><a href="#" class="submenu-title">English</a></li>
+              <li class="submenu-category">
+                <a href="#" class="submenu-title">English</a>
+              </li>
             </ul>
           </li>
   
@@ -179,43 +133,12 @@
             </button>
   
             <ul class="submenu-category-list" data-accordion>
-              <li class="submenu-category"><a href="#" class="submenu-title">NPR</a></li>
+              <li class="submenu-category">
+                <a href="#" class="submenu-title">NPR</a>
+              </li>
             </ul>
           </li>
         </ul>
       </div>
     </nav>
   </header>
-  <main>
-    <section class="ecommerce-section">
-      <div class="container product-page-layout" data-product-page>
-        <div class="detail-images" data-product-page-images>
-          <img src="../assets/images/products/Samsung-CE76JD-B1.jpg" alt="Samsung Smart Microwave" class="detail-image" width="260" height="260">
-        </div>
-        <div class="detail-info">
-          <p class="showcase-category" data-product-page-category>Smart Microwaves</p>
-          <h1 data-product-page-name>Samsung Smart Microwave</h1>
-          <p class="detail-price" data-product-page-price>Rs. 24,450</p>
-          <p class="product-page-description" data-product-page-description>Trusted Samsung smart microwave for consistent, user-friendly cooking in busy Kathmandu homes.</p>
-          <div class="product-page-actions">
-            <button class="add-cart-btn primary-action-btn" type="button" data-product-page-checkout
-              data-product-id="samsung-smart-microwave"
-              data-product-name="Samsung Smart Microwave"
-              data-product-price="Rs. 24,450"
-              data-product-category="Smart Microwaves"
-              data-product-description="Trusted Samsung smart microwave for consistent, user-friendly cooking in busy Kathmandu homes."
-              data-product-sku="SM-SMART-21L"
-              data-product-warranty="2 years service warranty"
-              data-product-delivery="2-3 business days"
-              data-product-image="../assets/images/products/Samsung-CE76JD-B1.jpg">Continue to Checkout</button>
-            <a class="add-cart-btn primary-action-btn" href="../index.html">Back to Products</a>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-  <script src="../assets/js/script.js"></script>
-</body>
-</html>
