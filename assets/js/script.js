@@ -166,6 +166,7 @@ const setGlobalNavigationButtons = function () {
 setGlobalNavigationLinks();
 setGlobalNavigationButtons();
 
+
 // ecommerce helpers
 const CHECKOUT_PRODUCT_KEY = 'shishamHomesDirectCheckoutItem';
 const EMAILJS_USER_ID = '1wIn1t-E9_XTOQ0pG';
