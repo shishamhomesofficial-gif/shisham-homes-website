@@ -277,6 +277,149 @@ const setGlobalSearch = function () {
   });
 };
 
+const normaliseSearchTokens = function (value) {
+  return String(value || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim().split(' ').filter(Boolean);
+};
+
+const getTokenDistance = function (a, b) {
+  if (a === b) return 0;
+  if (!a.length) return b.length;
+  if (!b.length) return a.length;
+
+  const matrix = Array.from({ length: b.length + 1 }, function (_, rowIndex) {
+    return Array.from({ length: a.length + 1 }, function (_, columnIndex) {
+      if (rowIndex === 0) return columnIndex;
+      if (columnIndex === 0) return rowIndex;
+      return 0;
+    });
+  });
+
+  for (let row = 1; row <= b.length; row++) {
+    for (let column = 1; column <= a.length; column++) {
+      const substitutionCost = b[row - 1] === a[column - 1] ? 0 : 1;
+      matrix[row][column] = Math.min(
+        matrix[row - 1][column] + 1,
+        matrix[row][column - 1] + 1,
+        matrix[row - 1][column - 1] + substitutionCost
+      );
+    }
+  }
+
+  return matrix[b.length][a.length];
+};
+
+const matchesSearchText = function (searchText, query) {
+  const normalisedSearchText = String(searchText || '').toLowerCase();
+  const normalisedQuery = String(query || '').toLowerCase().trim();
+
+  if (!normalisedQuery) {
+    return true;
+  }
+
+  if (normalisedSearchText.includes(normalisedQuery)) {
+    return true;
+  }
+
+  const searchTokens = normaliseSearchTokens(normalisedSearchText);
+  const queryTokens = normaliseSearchTokens(normalisedQuery);
+
+  if (!queryTokens.length) {
+    return true;
+  }
+
+  return queryTokens.every(function (queryToken) {
+    if (queryToken.length < 2) {
+      return searchTokens.includes(queryToken);
+    }
+
+    return searchTokens.some(function (searchToken) {
+      return searchToken.includes(queryToken)
+        || queryToken.includes(searchToken)
+        || (searchToken.length > 2 && getTokenDistance(searchToken, queryToken) <= 1);
+    });
+  });
+};
+
+const applyHomepageSearchResultsMode = function (query) {
+  const currentPath = window.location.pathname || '';
+  const isHomePage = /(^|\/)index\.html$/.test(currentPath) || currentPath === '/' || currentPath === '';
+
+  if (!isHomePage) {
+    return;
+  }
+
+  const trimmedQuery = String(query || '').trim();
+  const mainElement = document.querySelector('main');
+  const productContainer = document.querySelector('.product-container');
+  const productMain = productContainer ? productContainer.querySelector('.product-main') : null;
+
+  if (!mainElement || !productContainer || !productMain) {
+    return;
+  }
+
+  const isSearchMode = Boolean(trimmedQuery);
+
+  Array.from(mainElement.children).forEach(function (mainChild) {
+    if (mainChild === productContainer) {
+      mainChild.style.display = '';
+      return;
+    }
+
+    mainChild.style.display = isSearchMode ? 'none' : '';
+  });
+
+  const hiddenSelectors = ['.sidebar', '.product-minimal', '.product-featured'];
+  hiddenSelectors.forEach(function (selector) {
+    const sectionElement = productContainer.querySelector(selector);
+    if (sectionElement) {
+      sectionElement.style.display = isSearchMode ? 'none' : '';
+    }
+  });
+
+  const productCards = Array.from(productMain.querySelectorAll('.product-grid > .showcase'));
+  let matchedProductCount = 0;
+
+  productCards.forEach(function (cardElement) {
+    const text = cardElement.textContent || '';
+    const show = matchesSearchText(text, trimmedQuery);
+    cardElement.style.display = show ? '' : 'none';
+    if (show) {
+      matchedProductCount += 1;
+    }
+  });
+
+  let searchHeading = productMain.querySelector('[data-search-results-heading]');
+  if (!searchHeading) {
+    searchHeading = document.createElement('h2');
+    searchHeading.className = 'title';
+    searchHeading.setAttribute('data-search-results-heading', '');
+    searchHeading.style.display = 'none';
+    searchHeading.style.marginBottom = '16px';
+    productMain.insertAdjacentElement('afterbegin', searchHeading);
+  }
+
+  if (isSearchMode) {
+    searchHeading.textContent = `Search results for "${trimmedQuery}"`;
+    searchHeading.style.display = 'block';
+  } else {
+    searchHeading.style.display = 'none';
+    searchHeading.textContent = '';
+  }
+
+  let noResultsElement = productMain.querySelector('[data-search-no-results]');
+  if (!noResultsElement) {
+    noResultsElement = document.createElement('p');
+    noResultsElement.setAttribute('data-search-no-results', '');
+    noResultsElement.textContent = 'No results found';
+    noResultsElement.style.display = 'none';
+    noResultsElement.style.fontWeight = '600';
+    noResultsElement.style.marginTop = '12px';
+    productMain.appendChild(noResultsElement);
+  }
+
+  noResultsElement.style.display = isSearchMode && matchedProductCount === 0 ? 'block' : 'none';
+};
+
 const ensureProductPagesUseMainNavigation = function () {
   const currentPath = window.location.pathname || '';
   const isProductPage = currentPath.includes('/products/');
@@ -433,6 +576,16 @@ ensureProductPagesUseMainNavigation();
 setGlobalNavigationLinks();
 setGlobalSearch();
 setGlobalNavigationButtons();
+
+const searchQueryFromUrl = new URLSearchParams(window.location.search).get('search') || '';
+if (searchQueryFromUrl) {
+  applyHomepageSearchResultsMode(searchQueryFromUrl);
+}
+
+window.addEventListener('shisham-global-search', function (event) {
+  const query = event && event.detail ? event.detail.query : '';
+  applyHomepageSearchResultsMode(query);
+});
 
 const disableCartUi = function () {
   const cartCountElements = document.querySelectorAll('[data-cart-count]');
