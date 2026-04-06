@@ -2486,7 +2486,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   let activeCategoryKey = 'all';
   let activeSearchQuery = '';
-  let activeSearchLabel = '';
 
   function inferProductTags(product) {
     const searchText = normalizeValue(`${product.title} ${product.category}`);
@@ -2627,55 +2626,6 @@ document.addEventListener('DOMContentLoaded', function () {
     return normalizedCombined;
   }
 
-  function ensureSearchResultsHeading() {
-    if (!productMain) return null;
-    if (!searchResultsHeading) {
-      searchResultsHeading = document.createElement('h2');
-      searchResultsHeading.className = 'title';
-      searchResultsHeading.style.display = 'none';
-      searchResultsHeading.style.marginBottom = '16px';
-      productMain.insertAdjacentElement('afterbegin', searchResultsHeading);
-    }
-
-    return searchResultsHeading;
-  }
-
-  function toggleSearchModeUi(isSearchModeEnabled, queryText) {
-    if (!mainElement || !productContainer) return;
-
-    Array.from(mainElement.children).forEach(function (mainChild) {
-      if (mainChild === productContainer) {
-        mainChild.style.display = '';
-        return;
-      }
-
-      mainChild.style.display = isSearchModeEnabled ? 'none' : '';
-    });
-
-    if (productSidebar) {
-      productSidebar.style.display = isSearchModeEnabled ? 'none' : '';
-    }
-
-    if (productMinimal) {
-      productMinimal.style.display = isSearchModeEnabled ? 'none' : '';
-    }
-
-    if (productFeatured) {
-      productFeatured.style.display = isSearchModeEnabled ? 'none' : '';
-    }
-
-    const headingElement = ensureSearchResultsHeading();
-    if (!headingElement) return;
-
-    if (isSearchModeEnabled) {
-      headingElement.textContent = `Search results for "${activeSearchLabel || queryText}"`;
-      headingElement.style.display = 'block';
-    } else {
-      headingElement.style.display = 'none';
-      headingElement.textContent = '';
-    }
-  }
-
   function applyFilters() {
     let visibleCount = 0;
     const isSearchModeEnabled = Boolean(activeSearchQuery);
@@ -2787,7 +2737,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   window.addEventListener('shisham-global-search', function (event) {
     const query = event && event.detail ? event.detail.query : '';
-    activeSearchLabel = String(query || '').trim();
     activeSearchQuery = normalizeValue(query);
 
     if (searchField && query) {
@@ -2802,7 +2751,6 @@ document.addEventListener('DOMContentLoaded', function () {
   const initialSearch = searchParams.get('search') || '';
 
   if (initialSearch) {
-    activeSearchLabel = String(initialSearch || '').trim();
     activeSearchQuery = normalizeValue(initialSearch);
     if (searchField) {
       searchField.value = initialSearch;
