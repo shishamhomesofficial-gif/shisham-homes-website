@@ -101,6 +101,11 @@ const setGlobalNavigationLinks = function () {
   const placeholderLinks = document.querySelectorAll('a[href="#"], a[href=""], a[href="javascript:void(0)"]');
 
   placeholderLinks.forEach(function (linkElement) {
+    
+    if (linkElement.closest('.desktop-navigation-menu')) {
+      return;
+    }
+    
     if (linkElement.classList.contains('social-link')) {
       return;
     }
@@ -669,3 +674,12 @@ if (checkoutSummary && checkoutForm) {
 if (window.emailjs && typeof window.emailjs.init === 'function') {
   window.emailjs.init(EMAILJS_USER_ID);
 }
+
+
+document.querySelectorAll('.desktop-navigation-menu a').forEach(link => {
+  link.addEventListener('click', function (e) {
+    e.stopPropagation(); // prevent JS interference
+  });
+});
+
+
