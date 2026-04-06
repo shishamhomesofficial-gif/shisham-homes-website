@@ -76,12 +76,6 @@ const getSiteRelativePath = function (targetPath) {
   return `${isProductDetailPage ? '../' : './'}${targetPath}`;
 };
 
-const getProductDetailPath = function (productFileName) {
-  const currentPath = window.location.pathname || '';
-  const isProductDetailPage = currentPath.includes('/products/');
-  return `${isProductDetailPage ? './' : './products/'}${productFileName}`;
-};
-
 const resolveNavigationTarget = function (labelText) {
   const normalisedLabel = String(labelText || '').trim().toLowerCase();
 
@@ -90,423 +84,17 @@ const resolveNavigationTarget = function (labelText) {
   }
 
   if (normalisedLabel.includes('home')) return getSiteRelativePath('index.html');
-  if (normalisedLabel.includes('checkout')) return getSiteRelativePath('checkout.html');
-  if (normalisedLabel.includes('category') || normalisedLabel.includes('shop') || normalisedLabel.includes('all product')) return getSiteRelativePath('index.html');
+  if (normalisedLabel.includes('checkout') || normalisedLabel.includes('cart') || normalisedLabel.includes('bag')) return getSiteRelativePath('checkout.html');
+  if (normalisedLabel.includes('category') || normalisedLabel.includes('shop')) return getSiteRelativePath('index.html');
   if (normalisedLabel.includes('refrigerator') || normalisedLabel.includes('refrigeration')) return getSiteRelativePath('category-refrigerators.html');
   if (normalisedLabel.includes('tv')) return getSiteRelativePath('category-tv.html');
   if (normalisedLabel.includes('microwave') || normalisedLabel.includes('oven')) return getSiteRelativePath('category-microwaves-ovens.html');
-  if (normalisedLabel.includes('kitchen') || normalisedLabel.includes('cooking') || normalisedLabel.includes('induction') || normalisedLabel.includes('kettle')) return getSiteRelativePath('category-smart-kitchen-appliances.html');
+  if (normalisedLabel.includes('kitchen') || normalisedLabel.includes('cooking') || normalisedLabel.includes('induction')) return getSiteRelativePath('category-smart-kitchen-appliances.html');
   if (normalisedLabel.includes('laundry') || normalisedLabel.includes('washing') || normalisedLabel.includes('household')) return getSiteRelativePath('category-smart-household-appliances.html');
-  if (normalisedLabel.includes('other product') || normalisedLabel.includes('other appliance') || normalisedLabel.includes('accessor')) return getSiteRelativePath('category-other-products.html');
-  if (normalisedLabel.includes('vacuum') || normalisedLabel.includes('washer')) return getSiteRelativePath('category-smart-household-appliances.html');
-  if (normalisedLabel.includes('fridge') || normalisedLabel.includes('door refrigerator')) return getSiteRelativePath('category-refrigerators.html');
-  if (normalisedLabel.includes('smart tv') || normalisedLabel.includes('android smart tv') || normalisedLabel.includes('samsung tv') || normalisedLabel.includes('sony tv')) return getSiteRelativePath('category-tv.html');
+  if (normalisedLabel.includes('other product') || normalisedLabel.includes('other appliance')) return getSiteRelativePath('category-other-products.html');
   if (normalisedLabel.includes('blog') || normalisedLabel.includes('offer')) return getSiteRelativePath('index.html');
 
   return null;
-};
-
-const productSearchIndex = [
-  {
-    keywords: ['samsung ce76jd', 'ce76jd', 'curd making microwave', 'samsung convection microwave'],
-    path: getProductDetailPath('samsung-ce76jd-b1-im-21l-convection-microwave-with-curd-making-technology.html'),
-  },
-  {
-    keywords: ['panasonic nn-st266byte', 'nn-st266byte', 'solo microwave'],
-    path: getProductDetailPath('panasonic-nn-st266byte-solo-microwave.html'),
-  },
-  {
-    keywords: ['sansui ss-vc16m37', 'ss-vc16m37', 'sansui vacuum cleaner'],
-    path: getProductDetailPath('sansui-ss-vc16m37-1600w-bag-type-vacuum-cleaner.html'),
-  },
-  {
-    keywords: ['electric kettle wb-ek188', 'wb-ek188', 'webor kettle'],
-    path: getProductDetailPath('electric-kettle-wb-ek188-1-8l.html'),
-  },
-  {
-    keywords: ['orbit infrared cooker', 'ok-20p46ica', 'orbit cooker'],
-    path: getProductDetailPath('orbit-infrared-cooker-ok-20p46ica-ya.html'),
-  },
-  {
-    keywords: ['panasonic nn-ct645byte', 'nn-ct645byte', 'panasonic convection grill microwave'],
-    path: getProductDetailPath('panasonic-nn-ct645byte-convection-grill-microwave.html'),
-  },
-  {
-    keywords: ['himstar hk-20d1ici', 'hk-20d1ici', 'himstar induction cooker'],
-    path: getProductDetailPath('himstar-hk-20d1ici-ye-induction-cooker.html'),
-  },
-  {
-    keywords: ['himstar hv-22703wdj', 'hv-22703wdj', 'himstar vacuum cleaner'],
-    path: getProductDetailPath('himstar-hv-22703wdj-se-vacuum-cleaner.html'),
-  },
-  {
-    keywords: ['panasonic nn-ct36hbyte', 'nn-ct36hbyte', 'panasonic grill microwave'],
-    path: getProductDetailPath('panasonic-nn-ct36hbyte-convection-grill-microwave.html'),
-  },
-  {
-    keywords: ['samsung smart microwave'],
-    path: getProductDetailPath('samsung-smart-microwave.html'),
-  },
-  {
-    keywords: ['samsung smart microwave with curd making technology'],
-    path: getProductDetailPath('samsung-smart-microwave-with-curd-making-technology.html'),
-  },
-  {
-    keywords: ['panasonic smart microwave oven', 'panasonic smart microwave'],
-    path: getProductDetailPath('panasonic-smart-microwave-oven.html'),
-  },
-  {
-    keywords: ['panasonic nn-ct645byte convection grill microwave'],
-    path: getProductDetailPath('panasonic-nn-ct645byte-convection-grill-microwave.html'),
-  },
-  {
-    keywords: ['home appliance accessory bundle', 'appliance accessory bundle'],
-    path: getProductDetailPath('home-appliance-accessory-bundle.html'),
-  },
-  {
-    keywords: ['webor electric kettle'],
-    path: getProductDetailPath('webor-electric-kettle.html'),
-  },
-  {
-    keywords: ['sansui vacuum cleaner'],
-    path: getProductDetailPath('sansui-vacuum-cleaner.html'),
-  },
-];
-
-const resolveSearchTarget = function (query) {
-  const normalisedQuery = String(query || '').trim().toLowerCase();
-
-  if (!normalisedQuery) {
-    return null;
-  }
-
-  const navigationTarget = resolveNavigationTarget(normalisedQuery);
-  if (navigationTarget) {
-    return navigationTarget;
-  }
-
-  const queryTokens = normalisedQuery.split(/[^a-z0-9]+/).filter(Boolean);
-  let bestMatch = null;
-
-  productSearchIndex.forEach(function (productEntry) {
-    const joinedKeywords = productEntry.keywords.join(' ');
-
-    const directMatch = productEntry.keywords.some(function (keyword) {
-      return keyword.includes(normalisedQuery) || normalisedQuery.includes(keyword);
-    });
-
-    const tokenHits = queryTokens.reduce(function (count, token) {
-      return count + (joinedKeywords.includes(token) ? 1 : 0);
-    }, 0);
-
-    const score = directMatch ? 100 : tokenHits;
-
-    if (!bestMatch || score > bestMatch.score) {
-      bestMatch = {
-        score,
-        path: productEntry.path,
-      };
-    }
-  });
-
-  if (bestMatch && bestMatch.score > 0) {
-    return bestMatch.path;
-  }
-
-  return null;
-};
-
-const getSearchResultsPagePath = function (query) {
-  const trimmedQuery = String(query || '').trim();
-  const baseIndexPath = getSiteRelativePath('index.html');
-
-  if (!trimmedQuery) {
-    return baseIndexPath;
-  }
-
-  return `${baseIndexPath}?search=${encodeURIComponent(trimmedQuery)}`;
-};
-
-const setGlobalSearch = function () {
-  const searchContainers = document.querySelectorAll('.header-search-container');
-
-  searchContainers.forEach(function (searchContainer) {
-    const searchInput = searchContainer.querySelector('.search-field');
-    const searchButton = searchContainer.querySelector('.search-btn');
-
-    if (!searchInput || !searchButton) {
-      return;
-    }
-
-    const runSearch = function () {
-      const rawQuery = String(searchInput.value || '').trim();
-
-      if (!rawQuery) {
-        window.alert('Please enter a product or category to search.');
-        searchInput.focus();
-        return;
-      }
-
-      const currentPath = window.location.pathname || '';
-      const isHomePage = /(^|\/)index\.html$/.test(currentPath) || currentPath === '/' || currentPath === '';
-
-      if (isHomePage) {
-        window.dispatchEvent(new CustomEvent('shisham-global-search', {
-          detail: {
-            query: rawQuery,
-            directTarget: resolveSearchTarget(rawQuery),
-          },
-        }));
-
-        const nextUrl = new URL(window.location.href);
-        nextUrl.searchParams.set('search', rawQuery);
-        window.history.replaceState({}, '', nextUrl.toString());
-        return;
-      }
-
-      window.location.href = getSearchResultsPagePath(rawQuery);
-    };
-
-    searchButton.addEventListener('click', runSearch);
-    searchInput.addEventListener('keydown', function (event) {
-      if (event.key === 'Enter') {
-        event.preventDefault();
-        runSearch();
-      }
-    });
-  });
-};
-
-const normaliseSearchTokens = function (value) {
-  return String(value || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim().split(' ').filter(Boolean);
-};
-
-const getTokenDistance = function (a, b) {
-  if (a === b) return 0;
-  if (!a.length) return b.length;
-  if (!b.length) return a.length;
-
-  const matrix = Array.from({ length: b.length + 1 }, function (_, rowIndex) {
-    return Array.from({ length: a.length + 1 }, function (_, columnIndex) {
-      if (rowIndex === 0) return columnIndex;
-      if (columnIndex === 0) return rowIndex;
-      return 0;
-    });
-  });
-
-  for (let row = 1; row <= b.length; row++) {
-    for (let column = 1; column <= a.length; column++) {
-      const substitutionCost = b[row - 1] === a[column - 1] ? 0 : 1;
-      matrix[row][column] = Math.min(
-        matrix[row - 1][column] + 1,
-        matrix[row][column - 1] + 1,
-        matrix[row - 1][column - 1] + substitutionCost
-      );
-    }
-  }
-
-  return matrix[b.length][a.length];
-};
-
-const matchesSearchText = function (searchText, query) {
-  const normalisedSearchText = String(searchText || '').toLowerCase();
-  const normalisedQuery = String(query || '').toLowerCase().trim();
-
-  if (!normalisedQuery) {
-    return true;
-  }
-
-  if (normalisedSearchText.includes(normalisedQuery)) {
-    return true;
-  }
-
-  const searchTokens = normaliseSearchTokens(normalisedSearchText);
-  const queryTokens = normaliseSearchTokens(normalisedQuery);
-
-  if (!queryTokens.length) {
-    return true;
-  }
-
-  return queryTokens.every(function (queryToken) {
-    if (queryToken.length < 2) {
-      return searchTokens.includes(queryToken);
-    }
-
-    return searchTokens.some(function (searchToken) {
-      return searchToken.includes(queryToken)
-        || queryToken.includes(searchToken)
-        || (searchToken.length > 2 && getTokenDistance(searchToken, queryToken) <= 1);
-    });
-  });
-};
-
-const applyHomepageSearchResultsMode = function (query) {
-  const currentPath = window.location.pathname || '';
-  const isHomePage = /(^|\/)index\.html$/.test(currentPath) || currentPath === '/' || currentPath === '';
-
-  if (!isHomePage) {
-    return;
-  }
-
-  const trimmedQuery = String(query || '').trim();
-  const mainElement = document.querySelector('main');
-  const productContainer = document.querySelector('.product-container');
-  const productMain = productContainer ? productContainer.querySelector('.product-main') : null;
-
-  if (!mainElement || !productContainer || !productMain) {
-    return;
-  }
-
-  const isSearchMode = Boolean(trimmedQuery);
-
-  Array.from(mainElement.children).forEach(function (mainChild) {
-    if (mainChild === productContainer) {
-      mainChild.style.display = '';
-      return;
-    }
-
-    mainChild.style.display = isSearchMode ? 'none' : '';
-  });
-
-  const hiddenSelectors = ['.sidebar', '.product-minimal', '.product-featured'];
-  hiddenSelectors.forEach(function (selector) {
-    const sectionElement = productContainer.querySelector(selector);
-    if (sectionElement) {
-      sectionElement.style.display = isSearchMode ? 'none' : '';
-    }
-  });
-
-  const productCards = Array.from(productMain.querySelectorAll('.product-grid > .showcase'));
-  let matchedProductCount = 0;
-
-  productCards.forEach(function (cardElement) {
-    const text = cardElement.textContent || '';
-    const show = matchesSearchText(text, trimmedQuery);
-    cardElement.style.display = show ? '' : 'none';
-    if (show) {
-      matchedProductCount += 1;
-    }
-  });
-
-  let searchHeading = productMain.querySelector('[data-search-results-heading]');
-  if (!searchHeading) {
-    searchHeading = document.createElement('h2');
-    searchHeading.className = 'title';
-    searchHeading.setAttribute('data-search-results-heading', '');
-    searchHeading.style.display = 'none';
-    searchHeading.style.marginBottom = '16px';
-    productMain.insertAdjacentElement('afterbegin', searchHeading);
-  }
-
-  if (isSearchMode) {
-    searchHeading.textContent = `Search results for "${trimmedQuery}"`;
-    searchHeading.style.display = 'block';
-  } else {
-    searchHeading.style.display = 'none';
-    searchHeading.textContent = '';
-  }
-
-  let noResultsElement = productMain.querySelector('[data-search-no-results]');
-  if (!noResultsElement) {
-    noResultsElement = document.createElement('p');
-    noResultsElement.setAttribute('data-search-no-results', '');
-    noResultsElement.textContent = 'No results found';
-    noResultsElement.style.display = 'none';
-    noResultsElement.style.fontWeight = '600';
-    noResultsElement.style.marginTop = '12px';
-    productMain.appendChild(noResultsElement);
-  }
-
-  noResultsElement.style.display = isSearchMode && matchedProductCount === 0 ? 'block' : 'none';
-};
-
-const ensureProductPagesUseMainNavigation = function () {
-  const currentPath = window.location.pathname || '';
-  const isProductPage = currentPath.includes('/products/');
-  const headerElement = document.querySelector('header');
-
-  if (!isProductPage || !headerElement || headerElement.querySelector('.desktop-navigation-menu')) {
-    return;
-  }
-
-  const headerMainContainer = headerElement.querySelector('.header-main .container');
-  if (headerMainContainer && !headerMainContainer.querySelector('.header-search-container')) {
-    const searchContainer = document.createElement('div');
-    searchContainer.className = 'header-search-container';
-    searchContainer.innerHTML = `
-      <input type="search" name="search" class="search-field" placeholder="Enter your product name...">
-      <button class="search-btn"><ion-icon name="search-outline"></ion-icon></button>
-    `;
-    headerMainContainer.appendChild(searchContainer);
-  }
-
-  const desktopNav = document.createElement('nav');
-  desktopNav.className = 'desktop-navigation-menu';
-  desktopNav.innerHTML = `
-    <div class="container">
-      <ul class="desktop-menu-category-list">
-        <li class="menu-category"><a href="#" class="menu-title">Home</a></li>
-        <li class="menu-category"><a href="#" class="menu-title">Categories</a></li>
-        <li class="menu-category"><a href="#" class="menu-title">TV</a></li>
-        <li class="menu-category"><a href="#" class="menu-title">Refrigerators</a></li>
-        <li class="menu-category"><a href="#" class="menu-title">Cooking</a></li>
-        <li class="menu-category"><a href="#" class="menu-title">Laundry</a></li>
-        <li class="menu-category"><a href="#" class="menu-title">Blog</a></li>
-        <li class="menu-category"><a href="#" class="menu-title">Hot Offers</a></li>
-      </ul>
-    </div>
-  `;
-
-  const mobileBottomNav = document.createElement('div');
-  mobileBottomNav.className = 'mobile-bottom-navigation';
-  mobileBottomNav.innerHTML = `
-    <button class="action-btn" data-mobile-menu-open-btn><ion-icon name="menu-outline"></ion-icon></button>
-    <button class="action-btn"><ion-icon name="home-outline"></ion-icon></button>
-    <button class="action-btn"><ion-icon name="bag-handle-outline"></ion-icon></button>
-  `;
-
-  const mobileMenu = document.createElement('nav');
-  mobileMenu.className = 'mobile-navigation-menu has-scrollbar';
-  mobileMenu.setAttribute('data-mobile-menu', '');
-  mobileMenu.innerHTML = `
-    <div class="menu-top">
-      <h2 class="menu-title">Menu</h2>
-      <button class="menu-close-btn" data-mobile-menu-close-btn><ion-icon name="close-outline"></ion-icon></button>
-    </div>
-    <ul class="mobile-menu-category-list">
-      <li class="menu-category"><a href="#" class="menu-title">Home</a></li>
-      <li class="menu-category"><a href="#" class="menu-title">Categories</a></li>
-      <li class="menu-category"><a href="#" class="menu-title">TV</a></li>
-      <li class="menu-category"><a href="#" class="menu-title">Refrigerators</a></li>
-      <li class="menu-category"><a href="#" class="menu-title">Cooking</a></li>
-      <li class="menu-category"><a href="#" class="menu-title">Laundry</a></li>
-      <li class="menu-category"><a href="#" class="menu-title">Blog</a></li>
-      <li class="menu-category"><a href="#" class="menu-title">Hot Offers</a></li>
-    </ul>
-  `;
-
-  headerElement.appendChild(desktopNav);
-  headerElement.insertAdjacentElement('afterend', mobileBottomNav);
-  mobileBottomNav.insertAdjacentElement('afterend', mobileMenu);
-
-  const overlayElement = document.querySelector('[data-overlay]');
-  const productMobileMenu = mobileMenu;
-  const openButton = mobileBottomNav.querySelector('[data-mobile-menu-open-btn]');
-  const closeButton = mobileMenu.querySelector('[data-mobile-menu-close-btn]');
-
-  if (overlayElement && productMobileMenu && openButton && closeButton) {
-    const closeMenu = function () {
-      productMobileMenu.classList.remove('active');
-      overlayElement.classList.remove('active');
-    };
-
-    openButton.addEventListener('click', function () {
-      productMobileMenu.classList.add('active');
-      overlayElement.classList.add('active');
-    });
-    closeButton.addEventListener('click', closeMenu);
-    overlayElement.addEventListener('click', closeMenu);
-  }
 };
 
 const setGlobalNavigationLinks = function () {
@@ -553,13 +141,16 @@ const setGlobalNavigationButtons = function () {
     if (buttonElement.classList.contains('search-btn')) {
       const linkedSearchField = buttonElement.parentElement ? buttonElement.parentElement.querySelector('.search-field') : null;
       if (linkedSearchField) {
+        buttonElement.addEventListener('click', function () {
+          linkedSearchField.focus();
+        });
         return;
       }
       redirectPath = getSiteRelativePath('index.html');
     } else if (iconName.includes('home')) {
       redirectPath = getSiteRelativePath('index.html');
     } else if (iconName.includes('bag')) {
-      redirectPath = getSiteRelativePath('index.html');
+      redirectPath = getSiteRelativePath('checkout.html');
     } else if (iconName.includes('person') || iconName.includes('heart')) {
       redirectPath = getSiteRelativePath('index.html');
     }
@@ -572,43 +163,8 @@ const setGlobalNavigationButtons = function () {
   });
 };
 
-ensureProductPagesUseMainNavigation();
 setGlobalNavigationLinks();
-setGlobalSearch();
 setGlobalNavigationButtons();
-
-const searchQueryFromUrl = new URLSearchParams(window.location.search).get('search') || '';
-if (searchQueryFromUrl) {
-  applyHomepageSearchResultsMode(searchQueryFromUrl);
-}
-
-window.addEventListener('shisham-global-search', function (event) {
-  const query = event && event.detail ? event.detail.query : '';
-  applyHomepageSearchResultsMode(query);
-});
-
-const disableCartUi = function () {
-  const cartCountElements = document.querySelectorAll('[data-cart-count]');
-  cartCountElements.forEach(function (countElement) {
-    countElement.textContent = '';
-  });
-
-  const bagButtons = document.querySelectorAll('button.action-btn ion-icon[name*="bag"]');
-  bagButtons.forEach(function (iconElement) {
-    const actionButton = iconElement.closest('button');
-    if (actionButton) {
-      actionButton.style.display = 'none';
-    }
-  });
-
-  const cartWrappers = document.querySelectorAll('.cart-wrapper, [data-cart-items], [data-cart-empty], [data-cart-checkout-btn]');
-  cartWrappers.forEach(function (element) {
-    const block = element.classList.contains('cart-wrapper') ? element : element.closest('.cart-wrapper') || element;
-    block.style.display = 'none';
-  });
-};
-
-disableCartUi();
 
 // ecommerce helpers
 const CHECKOUT_PRODUCT_KEY = 'shishamHomesDirectCheckoutItem';
@@ -680,31 +236,29 @@ const normalisePrice = function (rawPrice) {
 const createProductFromCard = function (cardElement) {
   const titleElement = cardElement.querySelector('.showcase-title');
   const priceElement = cardElement.querySelector('.price');
-  const defaultImage = cardElement.querySelector('.product-img.default')
-    || cardElement.querySelector('.showcase-img')
-    || cardElement.querySelector('img');
+  const defaultImage = cardElement.querySelector('.product-img.default') || cardElement.querySelector('.showcase-img');
   const hoverImage = cardElement.querySelector('.product-img.hover');
 
-  if (!titleElement || !defaultImage) {
+  if (!titleElement || !priceElement || !defaultImage) {
     return null;
   }
 
-  const productName = titleElement.textContent.trim();
-  const productPrice = priceElement ? normalisePrice(priceElement.textContent) : 'Rs 0';
-  const fallbackImagePath = getSiteRelativePath('assets/images/products/Samsung-CE76JD-B1.jpg');
-
   return {
-    id: `${productName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${productPrice}`,
-    name: productName,
-    price: productPrice,
-    images: Array.from(new Set([defaultImage.getAttribute('src') || fallbackImagePath, hoverImage ? hoverImage.getAttribute('src') : null].filter(Boolean))),
+    id: `${titleElement.textContent.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${normalisePrice(priceElement.textContent)}`,
+    name: titleElement.textContent.trim(),
+    price: normalisePrice(priceElement.textContent),
+    images: Array.from(new Set([defaultImage.getAttribute('src'), hoverImage ? hoverImage.getAttribute('src') : null].filter(Boolean))),
     category: cardElement.querySelector('.showcase-category') ? cardElement.querySelector('.showcase-category').textContent.trim() : 'Home Appliance',
-    description: `Get ${productName} at Shisham Homes with trusted local support and fast checkout.`,
+    description: `Get ${titleElement.textContent.trim()} at Shisham Homes with trusted local support and fast checkout.`,
   };
 };
 
 const updateCartCount = function () {
-  // shopping cart has been removed
+  const cartCountElements = document.querySelectorAll('[data-cart-count]');
+
+  cartCountElements.forEach(function (element) {
+    element.textContent = '0';
+  });
 };
 
 const slugifyProductName = function (name) {
@@ -712,40 +266,7 @@ const slugifyProductName = function (name) {
 };
 
 const getProductPageUrl = function (product) {
-  return getSiteRelativePath(`products/${slugifyProductName(product.name)}.html`);
-};
-
-const PRODUCT_KEYWORD_ROUTES = [
-  { keywords: ['samsung ce76jd', 'curd making'], page: 'samsung-ce76jd-b1-im-21l-convection-microwave-with-curd-making-technology.html' },
-  { keywords: ['panasonic nn-st266byte'], page: 'panasonic-nn-st266byte-solo-microwave.html' },
-  { keywords: ['panasonic nn-ct645byte'], page: 'panasonic-nn-ct645byte-convection-grill-microwave.html' },
-  { keywords: ['panasonic nn-ct36hbyte'], page: 'panasonic-nn-ct36hbyte-convection-grill-microwave.html' },
-  { keywords: ['himstar hk-20d1ici'], page: 'himstar-hk-20d1ici-ye-induction-cooker.html' },
-  { keywords: ['himstar hv-22703wdj'], page: 'himstar-hv-22703wdj-se-vacuum-cleaner.html' },
-  { keywords: ['sansui ss-vc16m37', 'vacuum cleaner'], page: 'sansui-ss-vc16m37-1600w-bag-type-vacuum-cleaner.html' },
-  { keywords: ['electric kettle wb-ek188'], page: 'electric-kettle-wb-ek188-1-8l.html' },
-  { keywords: ['webor electric kettle'], page: 'webor-electric-kettle.html' },
-  { keywords: ['orbit infrared cooker'], page: 'orbit-infrared-cooker-ok-20p46ica-ya.html' },
-  { keywords: ['samsung smart microwave with curd making technology'], page: 'samsung-smart-microwave-with-curd-making-technology.html' },
-  { keywords: ['samsung smart microwave'], page: 'samsung-smart-microwave.html' },
-  { keywords: ['panasonic smart microwave oven'], page: 'panasonic-smart-microwave-oven.html' },
-  { keywords: ['sansui vacuum cleaner'], page: 'sansui-vacuum-cleaner.html' },
-  { keywords: ['home appliance accessory bundle'], page: 'home-appliance-accessory-bundle.html' },
-];
-
-const getProductDetailUrl = function (productName) {
-  const normalisedName = String(productName || '').trim().toLowerCase();
-  const matchedProduct = PRODUCT_KEYWORD_ROUTES.find(function (route) {
-    return route.keywords.every(function (keyword) {
-      return normalisedName.includes(keyword);
-    });
-  });
-
-  if (!matchedProduct) {
-    return getProductPageUrl({ name: productName });
-  }
-
-  return getSiteRelativePath(`products/${matchedProduct.page}`);
+  return `./products/${slugifyProductName(product.name)}.html`;
 };
 
 const openProductPage = function (product) {
@@ -757,7 +278,7 @@ const openProductPage = function (product) {
     overlay.classList.remove('active');
   }
 
-  window.location.href = getProductDetailUrl(product.name);
+  window.location.href = getProductPageUrl(product);
 };
 
 const setProductPageLinks = function () {
@@ -769,7 +290,7 @@ const setProductPageLinks = function () {
       return;
     }
 
-    const productUrl = getProductDetailUrl(product.name);
+    const productUrl = getProductPageUrl(product);
     const linkTargets = cardElement.querySelectorAll('.showcase-img-box, .showcase-content a');
 
     linkTargets.forEach(function (linkElement) {
@@ -881,16 +402,6 @@ allProductCards.forEach(function (cardElement) {
       openProductPage(product);
     });
   });
-
-  const actionButtons = cardElement.querySelectorAll('.btn-action');
-
-  actionButtons.forEach(function (actionButton) {
-    actionButton.addEventListener('click', function (event) {
-      event.preventDefault();
-      event.stopPropagation();
-      openProductPage(product);
-    });
-  });
 });
 
 const productCheckoutButton = document.querySelector('[data-product-page-checkout]');
@@ -914,119 +425,111 @@ if (productCheckoutButton) {
 
 
 // product search
-const allSearchContainers = document.querySelectorAll('.header-search-container');
-const allSearchableCards = Array.from(document.querySelectorAll('.product-grid > .showcase, [data-category-grid] .showcase'));
-const getSearchQueryParam = function () {
-  return new URLSearchParams(window.location.search).get('search') || '';
-};
+const searchField = document.querySelector('.header-search-container .search-field');
+const searchButton = document.querySelector('.header-search-container .search-btn');
+const homeMain = document.querySelector('main');
+const homeProductMain = document.querySelector('.product-main');
 
-const applySearch = function (query) {
-  const cleanQuery = String(query || '').trim().toLowerCase();
-  const searchSummary = document.querySelector('.search-results-status');
-  const summaryElement = searchSummary || document.createElement('div');
-  const productGrid = document.querySelector('.product-grid, [data-category-grid]');
+if (searchField && searchButton && homeMain && homeProductMain) {
+  const productCards = Array.from(homeProductMain.querySelectorAll('.product-grid > .showcase'));
+  const productGrid = homeProductMain.querySelector('.product-grid');
+  const searchSummary = document.createElement('div');
+  searchSummary.className = 'search-results-status';
+  searchSummary.setAttribute('aria-live', 'polite');
+  searchSummary.hidden = true;
 
-  if (!searchSummary && productGrid) {
-    summaryElement.className = 'search-results-status';
-    summaryElement.setAttribute('aria-live', 'polite');
-    productGrid.parentElement.insertBefore(summaryElement, productGrid);
+  if (productGrid) {
+    homeProductMain.insertBefore(searchSummary, productGrid);
   }
 
-  if (!allSearchableCards.length) {
-    return;
-  }
+  const hideSiblingBranches = function (targetElement, stopElement) {
+    let node = targetElement;
 
-  const searchLayoutSections = document.querySelectorAll('.category, .product-minimal, .product-featured, .sidebar, .testimonials-box, .cta-container, .service, .blog');
-  searchLayoutSections.forEach(function (sectionElement) {
-    sectionElement.classList.toggle('search-hidden-section', Boolean(cleanQuery));
-  });
+    while (node && node.parentElement && node !== stopElement) {
+      const parentNode = node.parentElement;
 
-  let matches = 0;
+      Array.from(parentNode.children).forEach(function (siblingNode) {
+        if (siblingNode !== node) {
+          siblingNode.classList.add('search-hidden-section');
+        }
+      });
 
-  allSearchableCards.forEach(function (cardElement) {
-    const cardText = `${cardElement.textContent || ''}`.toLowerCase();
-    const visible = !cleanQuery || cardText.includes(cleanQuery);
-    cardElement.classList.toggle('search-card-hidden', !visible);
-    if (visible) {
-      matches += 1;
+      node = parentNode;
     }
-  });
+  };
 
-  if (!summaryElement) {
-    return;
-  }
+  const resetSearchView = function () {
+    document.body.classList.remove('search-active');
+    document.querySelectorAll('.search-hidden-section').forEach(function (element) {
+      element.classList.remove('search-hidden-section');
+    });
 
-  if (!cleanQuery) {
-    summaryElement.textContent = '';
-    summaryElement.hidden = true;
-    return;
-  }
+    productCards.forEach(function (cardElement) {
+      cardElement.classList.remove('search-card-hidden');
+    });
 
-  summaryElement.hidden = false;
-  summaryElement.textContent = matches
-    ? `Showing ${matches} result${matches === 1 ? '' : 's'} for "${query}".`
-    : `No products found for "${query}".`;
-};
+    searchSummary.hidden = true;
+    searchSummary.textContent = '';
+  };
 
-const submitSearch = function (searchInput) {
-  const query = searchInput.value.trim();
-  const hasProductsOnPage = allSearchableCards.length > 0;
-  const isHomePage = /(^|\/)index\.html$/.test(window.location.pathname) || window.location.pathname === '/';
+  const searchProducts = function () {
+    const query = searchField.value.trim().toLowerCase();
 
-  if (!hasProductsOnPage || !isHomePage) {
-    const targetPath = getSiteRelativePath(`index.html?search=${encodeURIComponent(query)}`);
-    window.location.href = targetPath;
-    return;
-  }
-
-  const url = new URL(window.location.href);
-  if (query) {
-    url.searchParams.set('search', query);
-  } else {
-    url.searchParams.delete('search');
-  }
-  window.history.replaceState({}, '', url.toString());
-  applySearch(query);
-};
-
-allSearchContainers.forEach(function (searchContainer) {
-  const searchField = searchContainer.querySelector('.search-field');
-  const searchButton = searchContainer.querySelector('.search-btn');
-
-  if (!searchField || !searchButton) {
-    return;
-  }
-
-  const presetQuery = getSearchQueryParam();
-  if (presetQuery) {
-    searchField.value = presetQuery;
-  }
-
-  searchField.addEventListener('input', function () {
-    if (!searchField.value.trim()) {
-      applySearch('');
+    if (!query) {
+      resetSearchView();
       return;
     }
 
-    if (allSearchableCards.length > 0) {
-      submitSearch(searchField);
-    }
-  });
+    document.body.classList.add('search-active');
+    hideSiblingBranches(homeProductMain, homeMain);
+
+    let matchedProducts = 0;
+
+    productCards.forEach(function (cardElement) {
+      const title = cardElement.querySelector('.showcase-title') ? cardElement.querySelector('.showcase-title').textContent : '';
+      const category = cardElement.querySelector('.showcase-category') ? cardElement.querySelector('.showcase-category').textContent : '';
+      const price = cardElement.querySelector('.price') ? cardElement.querySelector('.price').textContent : '';
+      const productText = `${title} ${category} ${price}`.toLowerCase();
+      const isMatch = productText.includes(query);
+
+      cardElement.classList.toggle('search-card-hidden', !isMatch);
+
+      if (isMatch) {
+        matchedProducts += 1;
+      }
+    });
+
+    searchSummary.hidden = false;
+    searchSummary.textContent = matchedProducts
+      ? `Showing ${matchedProducts} result${matchedProducts === 1 ? '' : 's'} for "${searchField.value.trim()}".`
+      : `No products found for "${searchField.value.trim()}". Clear search to return to the full homepage.`;
+  };
+
+  searchField.addEventListener('input', searchProducts);
 
   searchField.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') {
+      searchField.value = '';
+      resetSearchView();
+      return;
+    }
+
     if (event.key === 'Enter') {
       event.preventDefault();
-      submitSearch(searchField);
+      searchProducts();
+      homeProductMain.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   });
 
   searchButton.addEventListener('click', function (event) {
     event.preventDefault();
-    submitSearch(searchField);
-  });
-});
+    searchProducts();
 
-applySearch(getSearchQueryParam());
+    if (searchField.value.trim()) {
+      homeProductMain.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+}
 
 // checkout page logic
 const checkoutSummary = document.querySelector('[data-checkout-summary]');
