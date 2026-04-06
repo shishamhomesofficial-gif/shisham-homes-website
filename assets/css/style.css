@@ -844,20 +844,21 @@ body::-webkit-scrollbar-thumb:hover { background: hsl(0, 0%, 70%); }
 }
 
 .sidebar-close-btn ion-icon { --ionicon-stroke-width: 50px; }
-
-.sidebar-accordion-menu {
+.sidebar-accordion-menu a {
+  display: flex !important;
+  align-items: center;
   width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 7px 0;
+  height: 100%;
+  text-decoration: none;
 }
 
-.sidebar .menu-title-flex {
+.menu-title-flex {
   display: flex;
   align-items: center;
-  gap: 10px;
+  width: 100%; /* Critical: This ensures the clickable area extends to the text */
+  gap: 10px;    /* Adds space between image and text */
 }
+
 
 .sidebar .menu-title {
   font-size: var(--fs-5);
