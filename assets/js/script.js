@@ -85,13 +85,16 @@ const resolveNavigationTarget = function (labelText) {
 
   if (normalisedLabel.includes('home')) return getSiteRelativePath('index.html');
   if (normalisedLabel.includes('checkout') || normalisedLabel.includes('cart') || normalisedLabel.includes('bag')) return getSiteRelativePath('checkout.html');
-  if (normalisedLabel.includes('category') || normalisedLabel.includes('shop')) return getSiteRelativePath('index.html');
+  if (normalisedLabel.includes('category') || normalisedLabel.includes('shop') || normalisedLabel.includes('all product')) return getSiteRelativePath('index.html');
   if (normalisedLabel.includes('refrigerator') || normalisedLabel.includes('refrigeration')) return getSiteRelativePath('category-refrigerators.html');
   if (normalisedLabel.includes('tv')) return getSiteRelativePath('category-tv.html');
   if (normalisedLabel.includes('microwave') || normalisedLabel.includes('oven')) return getSiteRelativePath('category-microwaves-ovens.html');
-  if (normalisedLabel.includes('kitchen') || normalisedLabel.includes('cooking') || normalisedLabel.includes('induction')) return getSiteRelativePath('category-smart-kitchen-appliances.html');
+  if (normalisedLabel.includes('kitchen') || normalisedLabel.includes('cooking') || normalisedLabel.includes('induction') || normalisedLabel.includes('kettle')) return getSiteRelativePath('category-smart-kitchen-appliances.html');
   if (normalisedLabel.includes('laundry') || normalisedLabel.includes('washing') || normalisedLabel.includes('household')) return getSiteRelativePath('category-smart-household-appliances.html');
-  if (normalisedLabel.includes('other product') || normalisedLabel.includes('other appliance')) return getSiteRelativePath('category-other-products.html');
+  if (normalisedLabel.includes('other product') || normalisedLabel.includes('other appliance') || normalisedLabel.includes('accessor')) return getSiteRelativePath('category-other-products.html');
+  if (normalisedLabel.includes('vacuum') || normalisedLabel.includes('washer')) return getSiteRelativePath('category-smart-household-appliances.html');
+  if (normalisedLabel.includes('fridge') || normalisedLabel.includes('door refrigerator')) return getSiteRelativePath('category-refrigerators.html');
+  if (normalisedLabel.includes('smart tv') || normalisedLabel.includes('android smart tv') || normalisedLabel.includes('samsung tv') || normalisedLabel.includes('sony tv')) return getSiteRelativePath('category-tv.html');
   if (normalisedLabel.includes('blog') || normalisedLabel.includes('offer')) return getSiteRelativePath('index.html');
 
   return null;
@@ -266,7 +269,40 @@ const slugifyProductName = function (name) {
 };
 
 const getProductPageUrl = function (product) {
-  return `./products/${slugifyProductName(product.name)}.html`;
+  return getSiteRelativePath(`products/${slugifyProductName(product.name)}.html`);
+};
+
+const PRODUCT_KEYWORD_ROUTES = [
+  { keywords: ['samsung ce76jd', 'curd making'], page: 'samsung-ce76jd-b1-im-21l-convection-microwave-with-curd-making-technology.html' },
+  { keywords: ['panasonic nn-st266byte'], page: 'panasonic-nn-st266byte-solo-microwave.html' },
+  { keywords: ['panasonic nn-ct645byte'], page: 'panasonic-nn-ct645byte-convection-grill-microwave.html' },
+  { keywords: ['panasonic nn-ct36hbyte'], page: 'panasonic-nn-ct36hbyte-convection-grill-microwave.html' },
+  { keywords: ['himstar hk-20d1ici'], page: 'himstar-hk-20d1ici-ye-induction-cooker.html' },
+  { keywords: ['himstar hv-22703wdj'], page: 'himstar-hv-22703wdj-se-vacuum-cleaner.html' },
+  { keywords: ['sansui ss-vc16m37', 'vacuum cleaner'], page: 'sansui-ss-vc16m37-1600w-bag-type-vacuum-cleaner.html' },
+  { keywords: ['electric kettle wb-ek188'], page: 'electric-kettle-wb-ek188-1-8l.html' },
+  { keywords: ['webor electric kettle'], page: 'webor-electric-kettle.html' },
+  { keywords: ['orbit infrared cooker'], page: 'orbit-infrared-cooker-ok-20p46ica-ya.html' },
+  { keywords: ['samsung smart microwave with curd making technology'], page: 'samsung-smart-microwave-with-curd-making-technology.html' },
+  { keywords: ['samsung smart microwave'], page: 'samsung-smart-microwave.html' },
+  { keywords: ['panasonic smart microwave oven'], page: 'panasonic-smart-microwave-oven.html' },
+  { keywords: ['sansui vacuum cleaner'], page: 'sansui-vacuum-cleaner.html' },
+  { keywords: ['home appliance accessory bundle'], page: 'home-appliance-accessory-bundle.html' },
+];
+
+const getProductDetailUrl = function (productName) {
+  const normalisedName = String(productName || '').trim().toLowerCase();
+  const matchedProduct = PRODUCT_KEYWORD_ROUTES.find(function (route) {
+    return route.keywords.every(function (keyword) {
+      return normalisedName.includes(keyword);
+    });
+  });
+
+  if (!matchedProduct) {
+    return getProductPageUrl({ name: productName });
+  }
+
+  return getSiteRelativePath(`products/${matchedProduct.page}`);
 };
 
 const openProductPage = function (product) {
@@ -278,7 +314,7 @@ const openProductPage = function (product) {
     overlay.classList.remove('active');
   }
 
-  window.location.href = getProductPageUrl(product);
+  window.location.href = getProductDetailUrl(product.name);
 };
 
 const setProductPageLinks = function () {
@@ -290,7 +326,7 @@ const setProductPageLinks = function () {
       return;
     }
 
-    const productUrl = getProductPageUrl(product);
+    const productUrl = getProductDetailUrl(product.name);
     const linkTargets = cardElement.querySelectorAll('.showcase-img-box, .showcase-content a');
 
     linkTargets.forEach(function (linkElement) {
@@ -402,6 +438,26 @@ allProductCards.forEach(function (cardElement) {
       openProductPage(product);
     });
   });
+
+  const actionButtons = cardElement.querySelectorAll('.btn-action');
+  const viewButton = actionButtons[1];
+  const checkoutButton = actionButtons[3];
+
+  if (viewButton) {
+    viewButton.addEventListener('click', function (event) {
+      event.preventDefault();
+      event.stopPropagation();
+      openProductPage(product);
+    });
+  }
+
+  if (checkoutButton) {
+    checkoutButton.addEventListener('click', function (event) {
+      event.preventDefault();
+      event.stopPropagation();
+      handleProceedToCheckout(product);
+    });
+  }
 });
 
 const productCheckoutButton = document.querySelector('[data-product-page-checkout]');
