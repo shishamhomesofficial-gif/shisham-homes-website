@@ -2405,6 +2405,22 @@ document.addEventListener('DOMContentLoaded', function () {
     openModal(productModal);
   }
 
+  function getProductLinkFromShowcase(showcaseEl) {
+    if (!showcaseEl) return '';
+    const linkedTitle = showcaseEl.querySelector('.showcase-title');
+    if (linkedTitle && linkedTitle.tagName.toLowerCase() === 'a' && linkedTitle.getAttribute('href')) {
+      return linkedTitle.getAttribute('href');
+    }
+
+    const linkedImage = showcaseEl.querySelector('.showcase-img-box[href]');
+    if (linkedImage) {
+      return linkedImage.getAttribute('href');
+    }
+
+    const firstProductAnchor = showcaseEl.querySelector('a[href*="./products/"], a[href*="products/"]');
+    return firstProductAnchor ? firstProductAnchor.getAttribute('href') : '';
+  }
+
   function openCheckoutFromProductData(data) {
     if (coImage) {
       coImage.src = data.image;
@@ -2614,16 +2630,10 @@ document.addEventListener('DOMContentLoaded', function () {
   document.addEventListener('click', function (ev) {
     const showcase = ev.target.closest('.product-grid > .showcase');
     if (!showcase) return;
-
-    if (ev.target.closest('.btn-action')) {
-      return;
-    }
-
-    if (ev.target.closest('a')) {
-      ev.preventDefault();
-    }
-
-    openProductModalForShowcase(showcase);
+    const productLink = getProductLinkFromShowcase(showcase);
+    if (!productLink) return;
+    ev.preventDefault();
+    window.location.href = productLink;
   });
 
   if (productClose) {
@@ -2675,7 +2685,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (addToCartBtn) {
     addToCartBtn.addEventListener('click', function () {
-      alert('Added to cart (placeholder). Hook this into your cart logic if needed.');
+      const selectedProductLink = document.querySelector('.product-grid .showcase .showcase-title[href]');
+      if (selectedProductLink) {
+        window.location.href = selectedProductLink.getAttribute('href');
+      }
     });
   }
 

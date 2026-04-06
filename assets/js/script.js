@@ -84,7 +84,7 @@ const resolveNavigationTarget = function (labelText) {
   }
 
   if (normalisedLabel.includes('home')) return getSiteRelativePath('index.html');
-  if (normalisedLabel.includes('checkout') || normalisedLabel.includes('cart') || normalisedLabel.includes('bag')) return getSiteRelativePath('checkout.html');
+  if (normalisedLabel.includes('checkout')) return getSiteRelativePath('checkout.html');
   if (normalisedLabel.includes('category') || normalisedLabel.includes('shop') || normalisedLabel.includes('all product')) return getSiteRelativePath('index.html');
   if (normalisedLabel.includes('refrigerator') || normalisedLabel.includes('refrigeration')) return getSiteRelativePath('category-refrigerators.html');
   if (normalisedLabel.includes('tv')) return getSiteRelativePath('category-tv.html');
@@ -153,7 +153,7 @@ const setGlobalNavigationButtons = function () {
     } else if (iconName.includes('home')) {
       redirectPath = getSiteRelativePath('index.html');
     } else if (iconName.includes('bag')) {
-      redirectPath = getSiteRelativePath('checkout.html');
+      redirectPath = getSiteRelativePath('index.html');
     } else if (iconName.includes('person') || iconName.includes('heart')) {
       redirectPath = getSiteRelativePath('index.html');
     }
@@ -168,6 +168,29 @@ const setGlobalNavigationButtons = function () {
 
 setGlobalNavigationLinks();
 setGlobalNavigationButtons();
+
+const disableCartUi = function () {
+  const cartCountElements = document.querySelectorAll('[data-cart-count]');
+  cartCountElements.forEach(function (countElement) {
+    countElement.textContent = '';
+  });
+
+  const bagButtons = document.querySelectorAll('button.action-btn ion-icon[name*="bag"]');
+  bagButtons.forEach(function (iconElement) {
+    const actionButton = iconElement.closest('button');
+    if (actionButton) {
+      actionButton.style.display = 'none';
+    }
+  });
+
+  const cartWrappers = document.querySelectorAll('.cart-wrapper, [data-cart-items], [data-cart-empty], [data-cart-checkout-btn]');
+  cartWrappers.forEach(function (element) {
+    const block = element.classList.contains('cart-wrapper') ? element : element.closest('.cart-wrapper') || element;
+    block.style.display = 'none';
+  });
+};
+
+disableCartUi();
 
 // ecommerce helpers
 const CHECKOUT_PRODUCT_KEY = 'shishamHomesDirectCheckoutItem';
@@ -263,11 +286,7 @@ const createProductFromCard = function (cardElement) {
 };
 
 const updateCartCount = function () {
-  const cartCountElements = document.querySelectorAll('[data-cart-count]');
-
-  cartCountElements.forEach(function (element) {
-    element.textContent = '0';
-  });
+  // shopping cart has been removed
 };
 
 const slugifyProductName = function (name) {
@@ -446,24 +465,14 @@ allProductCards.forEach(function (cardElement) {
   });
 
   const actionButtons = cardElement.querySelectorAll('.btn-action');
-  const viewButton = actionButtons[1];
-  const checkoutButton = actionButtons[3];
 
-  if (viewButton) {
-    viewButton.addEventListener('click', function (event) {
+  actionButtons.forEach(function (actionButton) {
+    actionButton.addEventListener('click', function (event) {
       event.preventDefault();
       event.stopPropagation();
       openProductPage(product);
     });
-  }
-
-  if (checkoutButton) {
-    checkoutButton.addEventListener('click', function (event) {
-      event.preventDefault();
-      event.stopPropagation();
-      handleProceedToCheckout(product);
-    });
-  }
+  });
 });
 
 const productCheckoutButton = document.querySelector('[data-product-page-checkout]');
@@ -487,111 +496,109 @@ if (productCheckoutButton) {
 
 
 // product search
-const searchField = document.querySelector('.header-search-container .search-field');
-const searchButton = document.querySelector('.header-search-container .search-btn');
-const homeMain = document.querySelector('main');
-const homeProductMain = document.querySelector('.product-main');
+const allSearchContainers = document.querySelectorAll('.header-search-container');
+const allSearchableCards = Array.from(document.querySelectorAll('.product-grid > .showcase, [data-category-grid] .showcase'));
+const getSearchQueryParam = function () {
+  return new URLSearchParams(window.location.search).get('search') || '';
+};
 
-if (searchField && searchButton && homeMain && homeProductMain) {
-  const productCards = Array.from(homeProductMain.querySelectorAll('.product-grid > .showcase'));
-  const productGrid = homeProductMain.querySelector('.product-grid');
-  const searchSummary = document.createElement('div');
-  searchSummary.className = 'search-results-status';
-  searchSummary.setAttribute('aria-live', 'polite');
-  searchSummary.hidden = true;
+const applySearch = function (query) {
+  const cleanQuery = String(query || '').trim().toLowerCase();
+  const searchSummary = document.querySelector('.search-results-status');
+  const summaryElement = searchSummary || document.createElement('div');
+  const productGrid = document.querySelector('.product-grid, [data-category-grid]');
 
-  if (productGrid) {
-    homeProductMain.insertBefore(searchSummary, productGrid);
+  if (!searchSummary && productGrid) {
+    summaryElement.className = 'search-results-status';
+    summaryElement.setAttribute('aria-live', 'polite');
+    productGrid.parentElement.insertBefore(summaryElement, productGrid);
   }
 
-  const hideSiblingBranches = function (targetElement, stopElement) {
-    let node = targetElement;
+  if (!allSearchableCards.length) {
+    return;
+  }
 
-    while (node && node.parentElement && node !== stopElement) {
-      const parentNode = node.parentElement;
+  let matches = 0;
 
-      Array.from(parentNode.children).forEach(function (siblingNode) {
-        if (siblingNode !== node) {
-          siblingNode.classList.add('search-hidden-section');
-        }
-      });
-
-      node = parentNode;
+  allSearchableCards.forEach(function (cardElement) {
+    const cardText = `${cardElement.textContent || ''}`.toLowerCase();
+    const visible = !cleanQuery || cardText.includes(cleanQuery);
+    cardElement.classList.toggle('search-card-hidden', !visible);
+    if (visible) {
+      matches += 1;
     }
-  };
+  });
 
-  const resetSearchView = function () {
-    document.body.classList.remove('search-active');
-    document.querySelectorAll('.search-hidden-section').forEach(function (element) {
-      element.classList.remove('search-hidden-section');
-    });
+  if (!summaryElement) {
+    return;
+  }
 
-    productCards.forEach(function (cardElement) {
-      cardElement.classList.remove('search-card-hidden');
-    });
+  if (!cleanQuery) {
+    summaryElement.textContent = '';
+    summaryElement.hidden = true;
+    return;
+  }
 
-    searchSummary.hidden = true;
-    searchSummary.textContent = '';
-  };
+  summaryElement.hidden = false;
+  summaryElement.textContent = matches
+    ? `Showing ${matches} result${matches === 1 ? '' : 's'} for "${query}".`
+    : `No products found for "${query}".`;
+};
 
-  const searchProducts = function () {
-    const query = searchField.value.trim().toLowerCase();
+const submitSearch = function (searchInput) {
+  const query = searchInput.value.trim();
+  const hasProductsOnPage = allSearchableCards.length > 0;
+  const isHomePage = /(^|\/)index\.html$/.test(window.location.pathname) || window.location.pathname === '/';
 
-    if (!query) {
-      resetSearchView();
-      return;
+  if (!hasProductsOnPage || !isHomePage) {
+    const targetPath = getSiteRelativePath(`index.html?search=${encodeURIComponent(query)}`);
+    window.location.href = targetPath;
+    return;
+  }
+
+  const url = new URL(window.location.href);
+  if (query) {
+    url.searchParams.set('search', query);
+  } else {
+    url.searchParams.delete('search');
+  }
+  window.history.replaceState({}, '', url.toString());
+  applySearch(query);
+};
+
+allSearchContainers.forEach(function (searchContainer) {
+  const searchField = searchContainer.querySelector('.search-field');
+  const searchButton = searchContainer.querySelector('.search-btn');
+
+  if (!searchField || !searchButton) {
+    return;
+  }
+
+  const presetQuery = getSearchQueryParam();
+  if (presetQuery) {
+    searchField.value = presetQuery;
+  }
+
+  searchField.addEventListener('input', function () {
+    if (!searchField.value.trim()) {
+      applySearch('');
     }
-
-    document.body.classList.add('search-active');
-    hideSiblingBranches(homeProductMain, homeMain);
-
-    let matchedProducts = 0;
-
-    productCards.forEach(function (cardElement) {
-      const title = cardElement.querySelector('.showcase-title') ? cardElement.querySelector('.showcase-title').textContent : '';
-      const category = cardElement.querySelector('.showcase-category') ? cardElement.querySelector('.showcase-category').textContent : '';
-      const price = cardElement.querySelector('.price') ? cardElement.querySelector('.price').textContent : '';
-      const productText = `${title} ${category} ${price}`.toLowerCase();
-      const isMatch = productText.includes(query);
-
-      cardElement.classList.toggle('search-card-hidden', !isMatch);
-
-      if (isMatch) {
-        matchedProducts += 1;
-      }
-    });
-
-    searchSummary.hidden = false;
-    searchSummary.textContent = matchedProducts
-      ? `Showing ${matchedProducts} result${matchedProducts === 1 ? '' : 's'} for "${searchField.value.trim()}".`
-      : `No products found for "${searchField.value.trim()}". Clear search to return to the full homepage.`;
-  };
-
-  searchField.addEventListener('input', searchProducts);
+  });
 
   searchField.addEventListener('keydown', function (event) {
-    if (event.key === 'Escape') {
-      searchField.value = '';
-      resetSearchView();
-      return;
-    }
-
     if (event.key === 'Enter') {
       event.preventDefault();
-      searchProducts();
-      homeProductMain.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      submitSearch(searchField);
     }
   });
 
   searchButton.addEventListener('click', function (event) {
     event.preventDefault();
-    searchProducts();
-
-    if (searchField.value.trim()) {
-      homeProductMain.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+    submitSearch(searchField);
   });
-}
+});
+
+applySearch(getSearchQueryParam());
 
 // checkout page logic
 const checkoutSummary = document.querySelector('[data-checkout-summary]');
