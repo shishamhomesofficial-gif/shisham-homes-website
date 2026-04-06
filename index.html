@@ -2439,11 +2439,54 @@ document.addEventListener('DOMContentLoaded', function () {
   // Only target product cards inside the product grid
   const showcaseCards = Array.from(document.querySelectorAll('.product-grid > .showcase'));
   const productGrid = document.querySelector('.product-grid');
+  const mainElement = document.querySelector('main');
+  const productContainer = document.querySelector('.product-container');
+  const productSidebar = productContainer ? productContainer.querySelector('.sidebar') : null;
+  const productMinimal = productContainer ? productContainer.querySelector('.product-minimal') : null;
+  const productFeatured = productContainer ? productContainer.querySelector('.product-featured') : null;
+  const productMain = productContainer ? productContainer.querySelector('.product-main') : null;
   let noResultsMessage = null;
+  let searchResultsHeading = null;
 
   function normalizeValue(value) {
     return (value || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
   }
+
+  function tokenizeValue(value) {
+    const normalized = normalizeValue(value);
+    return normalized ? normalized.split(' ').filter(Boolean) : [];
+  }
+
+  function getLevenshteinDistance(a, b) {
+    if (a === b) return 0;
+    if (!a.length) return b.length;
+    if (!b.length) return a.length;
+
+    const matrix = Array.from({ length: b.length + 1 }, function (_, rowIndex) {
+      return Array.from({ length: a.length + 1 }, function (_, columnIndex) {
+        if (rowIndex === 0) return columnIndex;
+        if (columnIndex === 0) return rowIndex;
+        return 0;
+      });
+    });
+
+    for (let row = 1; row <= b.length; row++) {
+      for (let column = 1; column <= a.length; column++) {
+        const substitutionCost = b[row - 1] === a[column - 1] ? 0 : 1;
+        matrix[row][column] = Math.min(
+          matrix[row - 1][column] + 1,
+          matrix[row][column - 1] + 1,
+          matrix[row - 1][column - 1] + substitutionCost
+        );
+      }
+    }
+
+    return matrix[b.length][a.length];
+  }
+
+  let activeCategoryKey = 'all';
+  let activeSearchQuery = '';
+  let activeSearchLabel = '';
 
   function inferProductTags(product) {
     const searchText = normalizeValue(`${product.title} ${product.category}`);
@@ -2530,21 +2573,135 @@ document.addEventListener('DOMContentLoaded', function () {
     noResultsMessage.style.display = visible ? 'block' : 'none';
   }
 
-  function filterProductsByCategory(categoryKey) {
+  function calculateSearchScore(searchText, queryText) {
+    if (!queryText) return 1;
+
+    const normalizedSearch = normalizeValue(searchText);
+    const normalizedQuery = normalizeValue(queryText);
+
+    if (!normalizedQuery) return 1;
+    if (!normalizedSearch) return 0;
+
+    if (normalizedSearch === normalizedQuery) return 100;
+    if (normalizedSearch.includes(normalizedQuery)) return 90;
+
+    const searchTokens = tokenizeValue(normalizedSearch);
+    const queryTokens = tokenizeValue(normalizedQuery);
+
+    if (!queryTokens.length) return 1;
+
+    let tokenScore = 0;
+
+    queryTokens.forEach(function (queryToken) {
+      if (normalizedSearch.includes(queryToken)) {
+        tokenScore += 12;
+        return;
+      }
+
+      const fuzzyTokenMatch = searchTokens.some(function (searchToken) {
+        if (searchToken.length <= 2 || queryToken.length <= 2) return false;
+        return getLevenshteinDistance(searchToken, queryToken) <= 1;
+      });
+
+      if (fuzzyTokenMatch) {
+        tokenScore += 6;
+      }
+    });
+
+    return tokenScore;
+  }
+
+  function getSearchTextFromCard(cardElement) {
+    const cachedSearchText = cardElement.dataset.searchText;
+    if (cachedSearchText) {
+      return cachedSearchText;
+    }
+
+    const title = cardElement.querySelector('.showcase-title') ? cardElement.querySelector('.showcase-title').textContent : '';
+    const category = cardElement.querySelector('.showcase-category') ? cardElement.querySelector('.showcase-category').textContent : '';
+    const description = cardElement.querySelector('.showcase-desc') ? cardElement.querySelector('.showcase-desc').textContent : '';
+
+    const combined = `${title} ${category} ${description}`;
+    const normalizedCombined = normalizeValue(combined);
+    cardElement.dataset.searchText = normalizedCombined;
+    return normalizedCombined;
+  }
+
+  function ensureSearchResultsHeading() {
+    if (!productMain) return null;
+    if (!searchResultsHeading) {
+      searchResultsHeading = document.createElement('h2');
+      searchResultsHeading.className = 'title';
+      searchResultsHeading.style.display = 'none';
+      searchResultsHeading.style.marginBottom = '16px';
+      productMain.insertAdjacentElement('afterbegin', searchResultsHeading);
+    }
+
+    return searchResultsHeading;
+  }
+
+  function toggleSearchModeUi(isSearchModeEnabled, queryText) {
+    if (!mainElement || !productContainer) return;
+
+    Array.from(mainElement.children).forEach(function (mainChild) {
+      if (mainChild === productContainer) {
+        mainChild.style.display = '';
+        return;
+      }
+
+      mainChild.style.display = isSearchModeEnabled ? 'none' : '';
+    });
+
+    if (productSidebar) {
+      productSidebar.style.display = isSearchModeEnabled ? 'none' : '';
+    }
+
+    if (productMinimal) {
+      productMinimal.style.display = isSearchModeEnabled ? 'none' : '';
+    }
+
+    if (productFeatured) {
+      productFeatured.style.display = isSearchModeEnabled ? 'none' : '';
+    }
+
+    const headingElement = ensureSearchResultsHeading();
+    if (!headingElement) return;
+
+    if (isSearchModeEnabled) {
+      headingElement.textContent = `Search results for "${activeSearchLabel || queryText}"`;
+      headingElement.style.display = 'block';
+    } else {
+      headingElement.style.display = 'none';
+      headingElement.textContent = '';
+    }
+  }
+
+  function applyFilters() {
     let visibleCount = 0;
+    const isSearchModeEnabled = Boolean(activeSearchQuery);
+
+    toggleSearchModeUi(isSearchModeEnabled, activeSearchQuery);
 
     showcaseCards.forEach(function (card) {
       const tags = (card.dataset.filterTags || '').split(',').map(function (entry) {
         return normalizeValue(entry);
       });
-      const show = matchesCategory(tags, categoryKey);
+
+      const matchesCategoryFilter = matchesCategory(tags, activeCategoryKey);
+      const searchText = getSearchTextFromCard(card);
+      const searchScore = calculateSearchScore(searchText, activeSearchQuery);
+      const matchesSearchFilter = !activeSearchQuery || searchScore > 0;
+
+      const show = matchesCategoryFilter && matchesSearchFilter;
       card.style.display = show ? '' : 'none';
-      if (show) visibleCount += 1;
+
+      if (show) {
+        visibleCount += 1;
+      }
     });
 
     toggleNoResultsMessage(visibleCount === 0);
   }
-
   showcaseCards.forEach(function (showcaseEl, index) {
     const product = productCatalog[index];
     if (!product) return;
@@ -2588,6 +2745,7 @@ document.addEventListener('DOMContentLoaded', function () {
     showcaseEl.setAttribute('data-sku', product.sku);
     showcaseEl.setAttribute('data-product-id', product.sku.toLowerCase());
     showcaseEl.dataset.filterTags = inferProductTags(product).join(',');
+    showcaseEl.dataset.searchText = normalizeValue(`${product.title} ${product.category} ${product.description}`);
   });
 
   function findCategoryText(triggerEl) {
@@ -2620,11 +2778,38 @@ document.addEventListener('DOMContentLoaded', function () {
         event.preventDefault();
       }
 
-      filterProductsByCategory(categoryKey);
+      activeCategoryKey = categoryKey;
+      applyFilters();
     });
   });
 
-  filterProductsByCategory('all');
+  const searchField = document.querySelector('.header-search-container .search-field');
+
+  window.addEventListener('shisham-global-search', function (event) {
+    const query = event && event.detail ? event.detail.query : '';
+    activeSearchLabel = String(query || '').trim();
+    activeSearchQuery = normalizeValue(query);
+
+    if (searchField && query) {
+      searchField.value = query;
+    }
+
+    activeCategoryKey = 'all';
+    applyFilters();
+  });
+
+  const searchParams = new URLSearchParams(window.location.search);
+  const initialSearch = searchParams.get('search') || '';
+
+  if (initialSearch) {
+    activeSearchLabel = String(initialSearch || '').trim();
+    activeSearchQuery = normalizeValue(initialSearch);
+    if (searchField) {
+      searchField.value = initialSearch;
+    }
+  }
+
+  applyFilters();
 
   // Click handling
   document.addEventListener('click', function (ev) {
