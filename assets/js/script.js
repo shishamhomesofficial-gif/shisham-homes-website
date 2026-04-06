@@ -76,6 +76,12 @@ const getSiteRelativePath = function (targetPath) {
   return `${isProductDetailPage ? '../' : './'}${targetPath}`;
 };
 
+const getProductDetailPath = function (productFileName) {
+  const currentPath = window.location.pathname || '';
+  const isProductDetailPage = currentPath.includes('/products/');
+  return `${isProductDetailPage ? './' : './products/'}${productFileName}`;
+};
+
 const resolveNavigationTarget = function (labelText) {
   const normalisedLabel = String(labelText || '').trim().toLowerCase();
 
@@ -98,6 +104,131 @@ const resolveNavigationTarget = function (labelText) {
   if (normalisedLabel.includes('blog') || normalisedLabel.includes('offer')) return getSiteRelativePath('index.html');
 
   return null;
+};
+
+const productSearchIndex = [
+  {
+    keywords: ['samsung ce76jd', 'ce76jd', 'curd making microwave', 'samsung convection microwave'],
+    path: getProductDetailPath('samsung-ce76jd-b1-im-21l-convection-microwave-with-curd-making-technology.html'),
+  },
+  {
+    keywords: ['panasonic nn-st266byte', 'nn-st266byte', 'solo microwave'],
+    path: getProductDetailPath('panasonic-nn-st266byte-solo-microwave.html'),
+  },
+  {
+    keywords: ['sansui ss-vc16m37', 'ss-vc16m37', 'sansui vacuum cleaner'],
+    path: getProductDetailPath('sansui-ss-vc16m37-1600w-bag-type-vacuum-cleaner.html'),
+  },
+  {
+    keywords: ['electric kettle wb-ek188', 'wb-ek188', 'webor kettle'],
+    path: getProductDetailPath('electric-kettle-wb-ek188-1-8l.html'),
+  },
+  {
+    keywords: ['orbit infrared cooker', 'ok-20p46ica', 'orbit cooker'],
+    path: getProductDetailPath('orbit-infrared-cooker-ok-20p46ica-ya.html'),
+  },
+  {
+    keywords: ['panasonic nn-ct645byte', 'nn-ct645byte', 'panasonic convection grill microwave'],
+    path: getProductDetailPath('panasonic-nn-ct645byte-convection-grill-microwave.html'),
+  },
+  {
+    keywords: ['himstar hk-20d1ici', 'hk-20d1ici', 'himstar induction cooker'],
+    path: getProductDetailPath('himstar-hk-20d1ici-ye-induction-cooker.html'),
+  },
+  {
+    keywords: ['himstar hv-22703wdj', 'hv-22703wdj', 'himstar vacuum cleaner'],
+    path: getProductDetailPath('himstar-hv-22703wdj-se-vacuum-cleaner.html'),
+  },
+  {
+    keywords: ['panasonic nn-ct36hbyte', 'nn-ct36hbyte', 'panasonic grill microwave'],
+    path: getProductDetailPath('panasonic-nn-ct36hbyte-convection-grill-microwave.html'),
+  },
+  {
+    keywords: ['samsung smart microwave'],
+    path: getProductDetailPath('samsung-smart-microwave.html'),
+  },
+  {
+    keywords: ['samsung smart microwave with curd making technology'],
+    path: getProductDetailPath('samsung-smart-microwave-with-curd-making-technology.html'),
+  },
+  {
+    keywords: ['panasonic smart microwave oven', 'panasonic smart microwave'],
+    path: getProductDetailPath('panasonic-smart-microwave-oven.html'),
+  },
+  {
+    keywords: ['panasonic nn-ct645byte convection grill microwave'],
+    path: getProductDetailPath('panasonic-nn-ct645byte-convection-grill-microwave.html'),
+  },
+  {
+    keywords: ['home appliance accessory bundle', 'appliance accessory bundle'],
+    path: getProductDetailPath('home-appliance-accessory-bundle.html'),
+  },
+  {
+    keywords: ['webor electric kettle'],
+    path: getProductDetailPath('webor-electric-kettle.html'),
+  },
+  {
+    keywords: ['sansui vacuum cleaner'],
+    path: getProductDetailPath('sansui-vacuum-cleaner.html'),
+  },
+];
+
+const resolveSearchTarget = function (query) {
+  const normalisedQuery = String(query || '').trim().toLowerCase();
+
+  if (!normalisedQuery) {
+    return null;
+  }
+
+  const navigationTarget = resolveNavigationTarget(normalisedQuery);
+  if (navigationTarget) {
+    return navigationTarget;
+  }
+
+  const matchingProduct = productSearchIndex.find(function (productEntry) {
+    return productEntry.keywords.some(function (keyword) {
+      return keyword.includes(normalisedQuery) || normalisedQuery.includes(keyword);
+    });
+  });
+
+  if (matchingProduct) {
+    return matchingProduct.path;
+  }
+
+  return null;
+};
+
+const setGlobalSearch = function () {
+  const searchContainers = document.querySelectorAll('.header-search-container');
+
+  searchContainers.forEach(function (searchContainer) {
+    const searchInput = searchContainer.querySelector('.search-field');
+    const searchButton = searchContainer.querySelector('.search-btn');
+
+    if (!searchInput || !searchButton) {
+      return;
+    }
+
+    const runSearch = function () {
+      const targetPath = resolveSearchTarget(searchInput.value);
+
+      if (!targetPath) {
+        window.alert('No matching product or category found. Please try a different search term.');
+        searchInput.focus();
+        return;
+      }
+
+      window.location.href = targetPath;
+    };
+
+    searchButton.addEventListener('click', runSearch);
+    searchInput.addEventListener('keydown', function (event) {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        runSearch();
+      }
+    });
+  });
 };
 
 const ensureProductPagesUseMainNavigation = function () {
@@ -233,9 +364,6 @@ const setGlobalNavigationButtons = function () {
     if (buttonElement.classList.contains('search-btn')) {
       const linkedSearchField = buttonElement.parentElement ? buttonElement.parentElement.querySelector('.search-field') : null;
       if (linkedSearchField) {
-        buttonElement.addEventListener('click', function () {
-          linkedSearchField.focus();
-        });
         return;
       }
       redirectPath = getSiteRelativePath('index.html');
@@ -257,6 +385,7 @@ const setGlobalNavigationButtons = function () {
 
 ensureProductPagesUseMainNavigation();
 setGlobalNavigationLinks();
+setGlobalSearch();
 setGlobalNavigationButtons();
 
 const disableCartUi = function () {
