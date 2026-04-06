@@ -84,11 +84,15 @@ if (categoryPage) {
   });
 
   if (!grid || !emptyState) {
-    console.warn('Category page grid or empty state is missing.');
-  } else if (!filtered.length) {
+    return;
+  }
+
+  if (!filtered.length) {
     emptyState.hidden = false;
-  } else {
-    const cards = filtered
+    return;
+  }
+
+  const cards = filtered
     .map(function (product) {
       return `
         <div class="showcase">
@@ -109,5 +113,4 @@ if (categoryPage) {
     .join('');
 
   grid.innerHTML = cards;
-  }
 }
