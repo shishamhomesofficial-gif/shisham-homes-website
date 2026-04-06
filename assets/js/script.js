@@ -100,6 +100,95 @@ const resolveNavigationTarget = function (labelText) {
   return null;
 };
 
+const ensureProductPagesUseMainNavigation = function () {
+  const currentPath = window.location.pathname || '';
+  const isProductPage = currentPath.includes('/products/');
+  const headerElement = document.querySelector('header');
+
+  if (!isProductPage || !headerElement || headerElement.querySelector('.desktop-navigation-menu')) {
+    return;
+  }
+
+  const headerMainContainer = headerElement.querySelector('.header-main .container');
+  if (headerMainContainer && !headerMainContainer.querySelector('.header-search-container')) {
+    const searchContainer = document.createElement('div');
+    searchContainer.className = 'header-search-container';
+    searchContainer.innerHTML = `
+      <input type="search" name="search" class="search-field" placeholder="Enter your product name...">
+      <button class="search-btn"><ion-icon name="search-outline"></ion-icon></button>
+    `;
+    headerMainContainer.appendChild(searchContainer);
+  }
+
+  const desktopNav = document.createElement('nav');
+  desktopNav.className = 'desktop-navigation-menu';
+  desktopNav.innerHTML = `
+    <div class="container">
+      <ul class="desktop-menu-category-list">
+        <li class="menu-category"><a href="#" class="menu-title">Home</a></li>
+        <li class="menu-category"><a href="#" class="menu-title">Categories</a></li>
+        <li class="menu-category"><a href="#" class="menu-title">TV</a></li>
+        <li class="menu-category"><a href="#" class="menu-title">Refrigerators</a></li>
+        <li class="menu-category"><a href="#" class="menu-title">Cooking</a></li>
+        <li class="menu-category"><a href="#" class="menu-title">Laundry</a></li>
+        <li class="menu-category"><a href="#" class="menu-title">Blog</a></li>
+        <li class="menu-category"><a href="#" class="menu-title">Hot Offers</a></li>
+      </ul>
+    </div>
+  `;
+
+  const mobileBottomNav = document.createElement('div');
+  mobileBottomNav.className = 'mobile-bottom-navigation';
+  mobileBottomNav.innerHTML = `
+    <button class="action-btn" data-mobile-menu-open-btn><ion-icon name="menu-outline"></ion-icon></button>
+    <button class="action-btn"><ion-icon name="home-outline"></ion-icon></button>
+    <button class="action-btn"><ion-icon name="bag-handle-outline"></ion-icon></button>
+  `;
+
+  const mobileMenu = document.createElement('nav');
+  mobileMenu.className = 'mobile-navigation-menu has-scrollbar';
+  mobileMenu.setAttribute('data-mobile-menu', '');
+  mobileMenu.innerHTML = `
+    <div class="menu-top">
+      <h2 class="menu-title">Menu</h2>
+      <button class="menu-close-btn" data-mobile-menu-close-btn><ion-icon name="close-outline"></ion-icon></button>
+    </div>
+    <ul class="mobile-menu-category-list">
+      <li class="menu-category"><a href="#" class="menu-title">Home</a></li>
+      <li class="menu-category"><a href="#" class="menu-title">Categories</a></li>
+      <li class="menu-category"><a href="#" class="menu-title">TV</a></li>
+      <li class="menu-category"><a href="#" class="menu-title">Refrigerators</a></li>
+      <li class="menu-category"><a href="#" class="menu-title">Cooking</a></li>
+      <li class="menu-category"><a href="#" class="menu-title">Laundry</a></li>
+      <li class="menu-category"><a href="#" class="menu-title">Blog</a></li>
+      <li class="menu-category"><a href="#" class="menu-title">Hot Offers</a></li>
+    </ul>
+  `;
+
+  headerElement.appendChild(desktopNav);
+  headerElement.insertAdjacentElement('afterend', mobileBottomNav);
+  mobileBottomNav.insertAdjacentElement('afterend', mobileMenu);
+
+  const overlayElement = document.querySelector('[data-overlay]');
+  const productMobileMenu = mobileMenu;
+  const openButton = mobileBottomNav.querySelector('[data-mobile-menu-open-btn]');
+  const closeButton = mobileMenu.querySelector('[data-mobile-menu-close-btn]');
+
+  if (overlayElement && productMobileMenu && openButton && closeButton) {
+    const closeMenu = function () {
+      productMobileMenu.classList.remove('active');
+      overlayElement.classList.remove('active');
+    };
+
+    openButton.addEventListener('click', function () {
+      productMobileMenu.classList.add('active');
+      overlayElement.classList.add('active');
+    });
+    closeButton.addEventListener('click', closeMenu);
+    overlayElement.addEventListener('click', closeMenu);
+  }
+};
+
 const setGlobalNavigationLinks = function () {
   const placeholderLinks = document.querySelectorAll('a[href="#"], a[href=""], a[href="javascript:void(0)"]');
 
@@ -166,6 +255,7 @@ const setGlobalNavigationButtons = function () {
   });
 };
 
+ensureProductPagesUseMainNavigation();
 setGlobalNavigationLinks();
 setGlobalNavigationButtons();
 
@@ -518,6 +608,11 @@ const applySearch = function (query) {
     return;
   }
 
+  const searchLayoutSections = document.querySelectorAll('.category, .product-minimal, .product-featured, .sidebar, .testimonials-box, .cta-container, .service, .blog');
+  searchLayoutSections.forEach(function (sectionElement) {
+    sectionElement.classList.toggle('search-hidden-section', Boolean(cleanQuery));
+  });
+
   let matches = 0;
 
   allSearchableCards.forEach(function (cardElement) {
@@ -582,6 +677,11 @@ allSearchContainers.forEach(function (searchContainer) {
   searchField.addEventListener('input', function () {
     if (!searchField.value.trim()) {
       applySearch('');
+      return;
+    }
+
+    if (allSearchableCards.length > 0) {
+      submitSearch(searchField);
     }
   });
 
