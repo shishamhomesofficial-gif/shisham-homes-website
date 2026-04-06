@@ -13,7 +13,6 @@
 </head>
 <body>
   <div class="overlay" data-overlay></div>
-
   <header>
     <div class="header-top">
       <div class="container">
@@ -29,12 +28,16 @@
           <img src="../assets/images/logo/logo.svg" alt="Shisham Homes logo" width="120" height="36">
         </a>
   
-        <div class="header-search-container">
-          <input type="search" name="search" class="search-field" placeholder="Enter your product name...">
-          <button class="search-btn" type="button">
+        <a
+          href="https://shisham-homes-website.vercel.app/"
+          class="header-search-container search-redirect"
+          aria-label="Go to Shisham Homes homepage"
+        >
+          <div class="search-field" role="presentation">Enter your product name...</div>
+          <div class="search-btn" aria-hidden="true">
             <ion-icon name="search-outline"></ion-icon>
-          </button>
-        </div>
+          </div>
+        </a>
       </div>
     </div>
   
