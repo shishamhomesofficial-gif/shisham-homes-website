@@ -185,17 +185,46 @@ const resolveSearchTarget = function (query) {
     return navigationTarget;
   }
 
-  const matchingProduct = productSearchIndex.find(function (productEntry) {
-    return productEntry.keywords.some(function (keyword) {
+  const queryTokens = normalisedQuery.split(/[^a-z0-9]+/).filter(Boolean);
+  let bestMatch = null;
+
+  productSearchIndex.forEach(function (productEntry) {
+    const joinedKeywords = productEntry.keywords.join(' ');
+
+    const directMatch = productEntry.keywords.some(function (keyword) {
       return keyword.includes(normalisedQuery) || normalisedQuery.includes(keyword);
     });
+
+    const tokenHits = queryTokens.reduce(function (count, token) {
+      return count + (joinedKeywords.includes(token) ? 1 : 0);
+    }, 0);
+
+    const score = directMatch ? 100 : tokenHits;
+
+    if (!bestMatch || score > bestMatch.score) {
+      bestMatch = {
+        score,
+        path: productEntry.path,
+      };
+    }
   });
 
-  if (matchingProduct) {
-    return matchingProduct.path;
+  if (bestMatch && bestMatch.score > 0) {
+    return bestMatch.path;
   }
 
   return null;
+};
+
+const getSearchResultsPagePath = function (query) {
+  const trimmedQuery = String(query || '').trim();
+  const baseIndexPath = getSiteRelativePath('index.html');
+
+  if (!trimmedQuery) {
+    return baseIndexPath;
+  }
+
+  return `${baseIndexPath}?search=${encodeURIComponent(trimmedQuery)}`;
 };
 
 const setGlobalSearch = function () {
@@ -210,15 +239,32 @@ const setGlobalSearch = function () {
     }
 
     const runSearch = function () {
-      const targetPath = resolveSearchTarget(searchInput.value);
+      const rawQuery = String(searchInput.value || '').trim();
 
-      if (!targetPath) {
-        window.alert('No matching product or category found. Please try a different search term.');
+      if (!rawQuery) {
+        window.alert('Please enter a product or category to search.');
         searchInput.focus();
         return;
       }
 
-      window.location.href = targetPath;
+      const currentPath = window.location.pathname || '';
+      const isHomePage = /(^|\/)index\.html$/.test(currentPath) || currentPath === '/' || currentPath === '';
+
+      if (isHomePage) {
+        window.dispatchEvent(new CustomEvent('shisham-global-search', {
+          detail: {
+            query: rawQuery,
+            directTarget: resolveSearchTarget(rawQuery),
+          },
+        }));
+
+        const nextUrl = new URL(window.location.href);
+        nextUrl.searchParams.set('search', rawQuery);
+        window.history.replaceState({}, '', nextUrl.toString());
+        return;
+      }
+
+      window.location.href = getSearchResultsPagePath(rawQuery);
     };
 
     searchButton.addEventListener('click', runSearch);
