@@ -239,20 +239,26 @@ const normalisePrice = function (rawPrice) {
 const createProductFromCard = function (cardElement) {
   const titleElement = cardElement.querySelector('.showcase-title');
   const priceElement = cardElement.querySelector('.price');
-  const defaultImage = cardElement.querySelector('.product-img.default') || cardElement.querySelector('.showcase-img');
+  const defaultImage = cardElement.querySelector('.product-img.default')
+    || cardElement.querySelector('.showcase-img')
+    || cardElement.querySelector('img');
   const hoverImage = cardElement.querySelector('.product-img.hover');
 
-  if (!titleElement || !priceElement || !defaultImage) {
+  if (!titleElement || !defaultImage) {
     return null;
   }
 
+  const productName = titleElement.textContent.trim();
+  const productPrice = priceElement ? normalisePrice(priceElement.textContent) : 'Rs 0';
+  const fallbackImagePath = getSiteRelativePath('assets/images/products/Samsung-CE76JD-B1.jpg');
+
   return {
-    id: `${titleElement.textContent.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${normalisePrice(priceElement.textContent)}`,
-    name: titleElement.textContent.trim(),
-    price: normalisePrice(priceElement.textContent),
-    images: Array.from(new Set([defaultImage.getAttribute('src'), hoverImage ? hoverImage.getAttribute('src') : null].filter(Boolean))),
+    id: `${productName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${productPrice}`,
+    name: productName,
+    price: productPrice,
+    images: Array.from(new Set([defaultImage.getAttribute('src') || fallbackImagePath, hoverImage ? hoverImage.getAttribute('src') : null].filter(Boolean))),
     category: cardElement.querySelector('.showcase-category') ? cardElement.querySelector('.showcase-category').textContent.trim() : 'Home Appliance',
-    description: `Get ${titleElement.textContent.trim()} at Shisham Homes with trusted local support and fast checkout.`,
+    description: `Get ${productName} at Shisham Homes with trusted local support and fast checkout.`,
   };
 };
 
