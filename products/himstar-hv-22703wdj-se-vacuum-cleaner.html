@@ -10,6 +10,101 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    .product-page-extra {
+      margin-top: 24px;
+      display: grid;
+      gap: 20px;
+    }
+
+    .product-page-extra h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: #111;
+    }
+
+    .product-page-extra p {
+      line-height: 1.7;
+      color: #444;
+      margin-bottom: 10px;
+    }
+
+    .product-page-specs {
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      padding: 18px;
+    }
+
+    .product-page-specs-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px 18px;
+    }
+
+    .product-spec-item {
+      padding: 12px 14px;
+      background: #f9f9f9;
+      border-radius: 10px;
+      border: 1px solid #ededed;
+    }
+
+    .product-spec-label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #666;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+    }
+
+    .product-spec-value {
+      display: block;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #111;
+    }
+
+    .product-page-description-block {
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      padding: 18px;
+    }
+
+    .product-page-description-block ul {
+      padding-left: 18px;
+      line-height: 1.7;
+      color: #444;
+    }
+
+    .product-page-description-block li {
+      margin-bottom: 6px;
+    }
+
+    @media (max-width: 768px) {
+      .product-page-specs-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .product-page-actions {
+        display: grid;
+        gap: 12px;
+      }
+
+      .product-page-actions .add-cart-btn,
+      .product-page-actions a.add-cart-btn {
+        width: 100%;
+        text-align: center;
+      }
+
+      .detail-images img {
+        width: 100%;
+        height: auto;
+      }
+    }
+  </style>
 </head>
 <body>
   <div class="overlay" data-overlay></div>
@@ -183,6 +278,72 @@
             <button class="add-cart-btn primary-action-btn" type="button" onclick="window.location.href='https://wa.link/k0qabi'">Contact us on WhatsApp</button>
             <a class="add-cart-btn primary-action-btn" href="../index.html">Back to Products</a>
           </div>
+
+          <div class="product-page-extra">
+            <div class="product-page-description-block">
+              <h2>Product Description</h2>
+              <p>
+                The Himstar HV-22703WDJ/SE Vacuum Cleaner delivers powerful suction for efficient cleaning of dust, dirt, and debris across your home.
+                It is ideal for maintaining clean floors, carpets, and furniture with ease.
+              </p>
+              <ul>
+                <li>Strong suction for deep cleaning</li>
+                <li>Suitable for floors, carpets, and furniture</li>
+                <li>Reliable performance for daily home use</li>
+              </ul>
+            </div>
+
+            <div class="product-page-specs">
+              <h2>Specifications</h2>
+              <div class="product-page-specs-grid">
+                <div class="product-spec-item">
+                  <span class="product-spec-label">Product Name</span>
+                  <span class="product-spec-value">Himstar HV-22703WDJ/SE Vacuum Cleaner</span>
+                </div>
+
+                <div class="product-spec-item">
+                  <span class="product-spec-label">Category</span>
+                  <span class="product-spec-value">Vacuum Cleaners</span>
+                </div>
+
+                <div class="product-spec-item">
+                  <span class="product-spec-label">Product Type</span>
+                  <span class="product-spec-value">Electric vacuum cleaner</span>
+                </div>
+
+                <div class="product-spec-item">
+                  <span class="product-spec-label">Best For</span>
+                  <span class="product-spec-value">Home cleaning, dust and debris removal</span>
+                </div>
+
+                <div class="product-spec-item">
+                  <span class="product-spec-label">SKU</span>
+                  <span class="product-spec-value">HS-HV22703</span>
+                </div>
+
+                <div class="product-spec-item">
+                  <span class="product-spec-label">Warranty</span>
+                  <span class="product-spec-value">1 year motor warranty</span>
+                </div>
+
+                <div class="product-spec-item">
+                  <span class="product-spec-label">Delivery</span>
+                  <span class="product-spec-value">2-4 business days</span>
+                </div>
+
+                <div class="product-spec-item">
+                  <span class="product-spec-label">Price</span>
+                  <span class="product-spec-value">Rs 12,450</span>
+                </div>
+
+                <div class="product-spec-item">
+                  <span class="product-spec-label">Key Benefit</span>
+                  <span class="product-spec-value">Powerful suction with reliable performance</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
