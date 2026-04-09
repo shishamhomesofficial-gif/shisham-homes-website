@@ -10,6 +10,101 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    .product-page-extra {
+      margin-top: 24px;
+      display: grid;
+      gap: 20px;
+    }
+
+    .product-page-extra h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: #111;
+    }
+
+    .product-page-extra p {
+      line-height: 1.7;
+      color: #444;
+      margin-bottom: 10px;
+    }
+
+    .product-page-specs {
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      padding: 18px;
+    }
+
+    .product-page-specs-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px 18px;
+    }
+
+    .product-spec-item {
+      padding: 12px 14px;
+      background: #f9f9f9;
+      border-radius: 10px;
+      border: 1px solid #ededed;
+    }
+
+    .product-spec-label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #666;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+    }
+
+    .product-spec-value {
+      display: block;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #111;
+    }
+
+    .product-page-description-block {
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      padding: 18px;
+    }
+
+    .product-page-description-block ul {
+      padding-left: 18px;
+      line-height: 1.7;
+      color: #444;
+    }
+
+    .product-page-description-block li {
+      margin-bottom: 6px;
+    }
+
+    @media (max-width: 768px) {
+      .product-page-specs-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .product-page-actions {
+        display: grid;
+        gap: 12px;
+      }
+
+      .product-page-actions .add-cart-btn,
+      .product-page-actions a.add-cart-btn {
+        width: 100%;
+        text-align: center;
+      }
+
+      .detail-images img {
+        width: 100%;
+        height: auto;
+      }
+    }
+  </style>
 </head>
 <body>
   <div class="overlay" data-overlay></div>
@@ -182,6 +277,72 @@
             <button class="add-cart-btn primary-action-btn" type="button" onclick="window.location.href='https://wa.link/yircf9'">Contact us on WhatsApp</button>
             <a class="add-cart-btn primary-action-btn" href="../index.html">Back to Products</a>
           </div>
+
+          <div class="product-page-extra">
+            <div class="product-page-description-block">
+              <h2>Product Description</h2>
+              <p>
+                The Panasonic NN-CT36HBYTE Convection/Grill Microwave offers versatile cooking with baking, grilling, and reheating in one appliance.
+                It is perfect for modern kitchens that need fast and precise cooking results.
+              </p>
+              <ul>
+                <li>Convection baking and grilling functions</li>
+                <li>Even heating for better cooking results</li>
+                <li>Ideal for daily cooking and reheating</li>
+              </ul>
+            </div>
+
+            <div class="product-page-specs">
+              <h2>Specifications</h2>
+              <div class="product-page-specs-grid">
+                <div class="product-spec-item">
+                  <span class="product-spec-label">Product Name</span>
+                  <span class="product-spec-value">Panasonic NN-CT36HBYTE Convection/Grill Microwave</span>
+                </div>
+
+                <div class="product-spec-item">
+                  <span class="product-spec-label">Category</span>
+                  <span class="product-spec-value">Convection Microwaves</span>
+                </div>
+
+                <div class="product-spec-item">
+                  <span class="product-spec-label">Product Type</span>
+                  <span class="product-spec-value">Convection and grill microwave oven</span>
+                </div>
+
+                <div class="product-spec-item">
+                  <span class="product-spec-label">Best For</span>
+                  <span class="product-spec-value">Baking, grilling, reheating, and cooking</span>
+                </div>
+
+                <div class="product-spec-item">
+                  <span class="product-spec-label">SKU</span>
+                  <span class="product-spec-value">PN-CT36H</span>
+                </div>
+
+                <div class="product-spec-item">
+                  <span class="product-spec-label">Warranty</span>
+                  <span class="product-spec-value">2 years service warranty</span>
+                </div>
+
+                <div class="product-spec-item">
+                  <span class="product-spec-label">Delivery</span>
+                  <span class="product-spec-value">2-4 business days</span>
+                </div>
+
+                <div class="product-spec-item">
+                  <span class="product-spec-label">Price</span>
+                  <span class="product-spec-value">Rs 24,600</span>
+                </div>
+
+                <div class="product-spec-item">
+                  <span class="product-spec-label">Key Benefit</span>
+                  <span class="product-spec-value">All-in-one cooking with convection and grill</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
