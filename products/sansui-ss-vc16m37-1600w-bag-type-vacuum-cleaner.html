@@ -9,7 +9,103 @@
   <link rel="stylesheet" href="../assets/css/style-prefix.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppinas:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    .product-page-extra {
+      margin-top: 24px;
+      display: grid;
+      gap: 20px;
+    }
+
+    .product-page-extra h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: #111;
+    }
+
+    .product-page-extra p {
+      line-height: 1.7;
+      color: #444;
+      margin-bottom: 10px;
+    }
+
+    .product-page-specs {
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      padding: 18px;
+    }
+
+    .product-page-specs-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px 18px;
+    }
+
+    .product-spec-item {
+      padding: 12px 14px;
+      background: #f9f9f9;
+      border-radius: 10px;
+      border: 1px solid #ededed;
+    }
+
+    .product-spec-label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #666;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+    }
+
+    .product-spec-value {
+      display: block;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #111;
+    }
+
+    .product-page-description-block {
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      padding: 18px;
+    }
+
+    .product-page-description-block ul {
+      padding-left: 18px;
+      line-height: 1.7;
+      color: #444;
+    }
+
+    .product-page-description-block li {
+      margin-bottom: 6px;
+    }
+
+    @media (max-width: 768px) {
+      .product-page-specs-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .product-page-actions {
+        display: grid;
+        gap: 12px;
+      }
+
+      .product-page-actions .add-cart-btn,
+      .product-page-actions a.add-cart-btn {
+        width: 100%;
+        text-align: center;
+      }
+
+      .detail-images img {
+        width: 100%;
+        height: auto;
+      }
+    }
+  </style>
 </head>
 <body>
   <div class="overlay" data-overlay></div>
@@ -158,17 +254,21 @@
       </div>
     </nav>
   </header>
+
   <main>
     <section class="ecommerce-section">
       <div class="container product-page-layout" data-product-page>
+
         <div class="detail-images" data-product-page-images>
           <img src="../assets/images/products/Sansui-SS-VC16M37.jpg" alt="Sansui SS-VC16M37 1600W Bag Type Vacuum Cleaner" class="detail-image" width="260" height="260">
         </div>
+
         <div class="detail-info">
           <p class="showcase-category" data-product-page-category>Vacuum Cleaners</p>
           <h1 data-product-page-name>Sansui SS-VC16M37 1600W Bag Type Vacuum Cleaner</h1>
           <p class="detail-price" data-product-page-price>Rs 7,500</p>
           <p class="product-page-description" data-product-page-description>Powerful 1600W vacuum cleaner with bag type dust collection for deep cleaning across floors and corners.</p>
+
           <div class="product-page-actions">
             <button class="add-cart-btn primary-action-btn" type="button" data-product-page-checkout
               data-product-id="sansui-ss-vc16m37-1600w-bag-type-vacuum-cleaner"
@@ -180,13 +280,91 @@
               data-product-warranty="1 year motor warranty"
               data-product-delivery="2-4 business days"
               data-product-image="../assets/images/products/Sansui-SS-VC16M37.jpg">Continue to Checkout</button>
+
             <button class="add-cart-btn primary-action-btn" type="button" onclick="window.location.href='https://wa.link/0ki2mi'">Contact us on WhatsApp</button>
             <a class="add-cart-btn primary-action-btn" href="../index.html">Back to Products</a>
           </div>
+
+          <div class="product-page-extra">
+
+            <div class="product-page-description-block">
+              <h2>Product Description</h2>
+              <p>
+                The Sansui SS-VC16M37 1600W Vacuum Cleaner is designed for powerful and efficient cleaning across your home.
+                Its strong suction power helps remove dust, dirt, and debris from floors, carpets, and corners with ease.
+              </p>
+              <ul>
+                <li>1600W high suction power for deep cleaning</li>
+                <li>Bag type dust collection for easy disposal</li>
+                <li>Suitable for floors, carpets, and furniture</li>
+                <li>Compact design for convenient storage</li>
+              </ul>
+            </div>
+
+            <div class="product-page-specs">
+              <h2>Specifications</h2>
+              <div class="product-page-specs-grid">
+
+                <div class="product-spec-item">
+                  <span class="product-spec-label">Product Name</span>
+                  <span class="product-spec-value">Sansui SS-VC16M37</span>
+                </div>
+
+                <div class="product-spec-item">
+                  <span class="product-spec-label">Category</span>
+                  <span class="product-spec-value">Vacuum Cleaners</span>
+                </div>
+
+                <div class="product-spec-item">
+                  <span class="product-spec-label">Power</span>
+                  <span class="product-spec-value">1600W</span>
+                </div>
+
+                <div class="product-spec-item">
+                  <span class="product-spec-label">Type</span>
+                  <span class="product-spec-value">Bag type vacuum cleaner</span>
+                </div>
+
+                <div class="product-spec-item">
+                  <span class="product-spec-label">Best For</span>
+                  <span class="product-spec-value">Deep cleaning, dust removal</span>
+                </div>
+
+                <div class="product-spec-item">
+                  <span class="product-spec-label">SKU</span>
+                  <span class="product-spec-value">SN-VC16M37</span>
+                </div>
+
+                <div class="product-spec-item">
+                  <span class="product-spec-label">Warranty</span>
+                  <span class="product-spec-value">1 year motor warranty</span>
+                </div>
+
+                <div class="product-spec-item">
+                  <span class="product-spec-label">Delivery</span>
+                  <span class="product-spec-value">2-4 business days</span>
+                </div>
+
+                <div class="product-spec-item">
+                  <span class="product-spec-label">Price</span>
+                  <span class="product-spec-value">Rs 7,500</span>
+                </div>
+
+                <div class="product-spec-item">
+                  <span class="product-spec-label">Key Benefit</span>
+                  <span class="product-spec-value">Strong suction with easy dust handling</span>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
         </div>
       </div>
     </section>
   </main>
+
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
   <script src="../assets/js/script.js"></script>
