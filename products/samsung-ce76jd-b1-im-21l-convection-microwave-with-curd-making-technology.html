@@ -10,6 +10,113 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    .product-page-extra {
+      margin-top: 24px;
+      display: grid;
+      gap: 20px;
+    }
+
+    .product-page-extra h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: #111;
+    }
+
+    .product-page-extra p {
+      line-height: 1.7;
+      color: #444;
+      margin-bottom: 10px;
+    }
+
+    .product-page-specs {
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      padding: 18px;
+    }
+
+    .product-page-specs-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px 18px;
+    }
+
+    .product-spec-item {
+      padding: 12px 14px;
+      background: #f9f9f9;
+      border-radius: 10px;
+      border: 1px solid #ededed;
+    }
+
+    .product-spec-label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #666;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .product-spec-value {
+      display: block;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #111;
+      line-height: 1.5;
+    }
+
+    .product-page-description-block {
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      padding: 18px;
+    }
+
+    .product-page-description-block ul {
+      margin: 0;
+      padding-left: 18px;
+      color: #444;
+      line-height: 1.7;
+    }
+
+    .product-page-description-block li {
+      margin-bottom: 8px;
+    }
+
+    @media (max-width: 768px) {
+      .product-page-extra {
+        gap: 16px;
+      }
+
+      .product-page-specs-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .product-page-specs,
+      .product-page-description-block {
+        padding: 16px;
+      }
+
+      .product-page-actions {
+        display: grid;
+        gap: 12px;
+      }
+
+      .product-page-actions .add-cart-btn,
+      .product-page-actions a.add-cart-btn {
+        width: 100%;
+        text-align: center;
+      }
+
+      .detail-images img {
+        width: 100%;
+        height: auto;
+      }
+    }
+  </style>
 </head>
 <body>
   <div class="overlay" data-overlay></div>
@@ -182,6 +289,93 @@
             <button class="add-cart-btn primary-action-btn" type="button" onclick="window.location.href='https://wa.link/rxqbpg'">Contact us on WhatsApp</button>
             <a class="add-cart-btn primary-action-btn" href="../index.html">Back to Products</a>
           </div>
+
+          <div class="product-page-extra">
+            <div class="product-page-description-block">
+              <h2>Product Description</h2>
+              <p>
+                The Samsung CE76JD-B1/IM 21L Convection Microwave is a versatile kitchen appliance built for convenient everyday cooking.
+                With convection, grill, and microwave functions in one unit, it supports baking, grilling, reheating, and simple meal preparation with consistent results.
+              </p>
+              <p>
+                Samsung’s Curd Making Technology makes it easy to prepare fresh homemade curd at the right temperature, adding extra value for daily family use.
+                Its 21L capacity is well suited for small to medium households and gives you reliable performance in a compact design.
+              </p>
+              <ul>
+                <li>Convection, grill, and microwave cooking modes</li>
+                <li>Curd Making Technology for homemade curd</li>
+                <li>21L capacity suitable for small to medium families</li>
+                <li>Easy to use for baking, reheating, and grilling</li>
+                <li>Reliable performance for everyday kitchen tasks</li>
+              </ul>
+            </div>
+
+            <div class="product-page-specs">
+              <h2>Specifications</h2>
+              <div class="product-page-specs-grid">
+                <div class="product-spec-item">
+                  <span class="product-spec-label">Product Name</span>
+                  <span class="product-spec-value">Samsung CE76JD-B1/IM 21L Convection Microwave with Curd Making Technology</span>
+                </div>
+
+                <div class="product-spec-item">
+                  <span class="product-spec-label">Category</span>
+                  <span class="product-spec-value">Smart Microwaves</span>
+                </div>
+
+                <div class="product-spec-item">
+                  <span class="product-spec-label">Product Type</span>
+                  <span class="product-spec-value">Convection microwave oven</span>
+                </div>
+
+                <div class="product-spec-item">
+                  <span class="product-spec-label">Capacity</span>
+                  <span class="product-spec-value">21L</span>
+                </div>
+
+                <div class="product-spec-item">
+                  <span class="product-spec-label">Best For</span>
+                  <span class="product-spec-value">Baking, grilling, reheating, and daily cooking</span>
+                </div>
+
+                <div class="product-spec-item">
+                  <span class="product-spec-label">Special Feature</span>
+                  <span class="product-spec-value">Curd Making Technology</span>
+                </div>
+
+                <div class="product-spec-item">
+                  <span class="product-spec-label">SKU</span>
+                  <span class="product-spec-value">SM-CE76JD-B1</span>
+                </div>
+
+                <div class="product-spec-item">
+                  <span class="product-spec-label">Warranty</span>
+                  <span class="product-spec-value">2 years service warranty</span>
+                </div>
+
+                <div class="product-spec-item">
+                  <span class="product-spec-label">Delivery</span>
+                  <span class="product-spec-value">2-3 business days</span>
+                </div>
+
+                <div class="product-spec-item">
+                  <span class="product-spec-label">Price</span>
+                  <span class="product-spec-value">Rs 24,450</span>
+                </div>
+
+                <div class="product-spec-item">
+                  <span class="product-spec-label">Key Benefit</span>
+                  <span class="product-spec-value">All-in-one cooking with home curd making support</span>
+                </div>
+
+                <div class="product-spec-item">
+                  <span class="product-spec-label">Usage</span>
+                  <span class="product-spec-value">Suitable for everyday home kitchen use</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
