@@ -1142,6 +1142,27 @@
 
             <h2 class="title">Our Products</h2>
 
+            <div class="product-filter-panel" data-product-filter-panel>
+              <div class="filter-field">
+                <label for="product-category-filter">Category</label>
+                <select id="product-category-filter" data-filter-category></select>
+              </div>
+              <div class="filter-field">
+                <label for="product-sort-filter">Sort by</label>
+                <select id="product-sort-filter" data-filter-sort>
+                  <option value="relevance">Relevance</option>
+                  <option value="price-low-high">Price: Low to High</option>
+                  <option value="price-high-low">Price: High to Low</option>
+                </select>
+              </div>
+              <div class="filter-field filter-price-field">
+                <label for="product-price-filter">Max price <span data-filter-max-price-value></span></label>
+                <input type="range" id="product-price-filter" data-filter-max-price>
+              </div>
+              <button class="filter-clear-btn" type="button" data-filter-clear>Clear filters</button>
+            </div>
+            <p class="filter-results-status" data-filter-results-status aria-live="polite"></p>
+
             <div class="product-grid">
 
               <div class="showcase">
@@ -2367,9 +2388,34 @@ document.addEventListener('DOMContentLoaded', function () {
     showcaseCards = Array.from(document.querySelectorAll('.product-grid > .showcase'));
   }
   let noResultsMessage = null;
+  const searchField = document.querySelector('.header-search-container .search-field');
+  const searchButton = document.querySelector('.header-search-container .search-btn');
+  const filterPanel = document.querySelector('[data-product-filter-panel]');
+  const categoryFilterSelect = document.querySelector('[data-filter-category]');
+  const sortFilterSelect = document.querySelector('[data-filter-sort]');
+  const priceFilterRange = document.querySelector('[data-filter-max-price]');
+  const priceFilterValue = document.querySelector('[data-filter-max-price-value]');
+  const clearFiltersButton = document.querySelector('[data-filter-clear]');
+  const productResultsStatus = document.querySelector('[data-filter-results-status]');
+  const homeMain = document.querySelector('main');
+  const activeFilters = {
+    query: '',
+    category: 'all',
+    sortBy: 'relevance',
+    maxPrice: Number.POSITIVE_INFINITY
+  };
 
   function normalizeValue(value) {
     return (value || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+  }
+
+  function slugifyValue(value) {
+    return normalizeValue(value).replace(/\s+/g, '-');
+  }
+
+  function parsePriceValue(priceText) {
+    const numericValue = Number(String(priceText || '').replace(/[^0-9.]/g, ''));
+    return Number.isNaN(numericValue) ? 0 : numericValue;
   }
 
   function inferProductTags(product) {
@@ -2429,18 +2475,13 @@ document.addEventListener('DOMContentLoaded', function () {
     return 'all';
   }
 
-  function matchesCategory(productTags, categoryKey) {
-    if (categoryKey === 'all') return true;
-    if (categoryKey === 'refrigerators') return productTags.includes('refrigerator');
-    if (categoryKey === 'tv') return productTags.includes('tv');
-    if (categoryKey === 'laundry') return productTags.includes('washing');
-    if (categoryKey === 'microwaves') return productTags.includes('microwaves');
-    if (categoryKey === 'induction') return productTags.includes('induction');
-    if (categoryKey === 'infrared') return productTags.includes('infrared');
-    if (categoryKey === 'kettle') return productTags.includes('kettle');
-    if (categoryKey === 'household') return productTags.includes('household') || productTags.includes('vacuum');
-    if (categoryKey === 'cooking') return productTags.includes('cooking') || productTags.includes('kitchen');
-    return true;
+  function mapCategoryLabelToFilterValue(categoryLabel) {
+    const categoryKey = getCategoryKey(categoryLabel);
+    if (categoryKey === 'all') return 'all';
+    if (['refrigerators', 'tv', 'laundry', 'microwaves', 'induction', 'infrared', 'kettle', 'household', 'cooking'].includes(categoryKey)) {
+      return categoryKey;
+    }
+    return slugifyValue(categoryLabel);
   }
 
   function toggleNoResultsMessage(visible) {
@@ -2457,19 +2498,139 @@ document.addEventListener('DOMContentLoaded', function () {
     noResultsMessage.style.display = visible ? 'block' : 'none';
   }
 
-  function filterProductsByCategory(categoryKey) {
+  function hideSiblingBranches(targetElement, stopElement) {
+    let node = targetElement;
+
+    while (node && node.parentElement && node !== stopElement) {
+      const parentNode = node.parentElement;
+
+      Array.from(parentNode.children).forEach(function (siblingNode) {
+        if (siblingNode !== node) {
+          siblingNode.classList.add('search-hidden-section');
+        }
+      });
+
+      node = parentNode;
+    }
+  }
+
+  function updateSearchVisibility(hasQuery) {
+    if (!homeMain || !filterPanel) return;
+
+    if (hasQuery) {
+      document.body.classList.add('search-active');
+      hideSiblingBranches(filterPanel, homeMain);
+      return;
+    }
+
+    document.body.classList.remove('search-active');
+    document.querySelectorAll('.search-hidden-section').forEach(function (element) {
+      element.classList.remove('search-hidden-section');
+    });
+  }
+
+  function updateStatusMessage(visibleCount) {
+    if (!productResultsStatus) return;
+
+    const queryLabel = activeFilters.query ? ` for "${activeFilters.query}"` : '';
+    productResultsStatus.hidden = false;
+    productResultsStatus.textContent = `${visibleCount} product${visibleCount === 1 ? '' : 's'} found${queryLabel}.`;
+  }
+
+  function applyFilters() {
     let visibleCount = 0;
+    const filteredCards = [];
 
     showcaseCards.forEach(function (card) {
-      const tags = (card.dataset.filterTags || '').split(',').map(function (entry) {
-        return normalizeValue(entry);
-      });
-      const show = matchesCategory(tags, categoryKey);
+      const cardSearchText = card.dataset.searchText || '';
+      const cardCategoryKey = card.dataset.categoryKey || 'all';
+      const cardPrice = Number(card.dataset.priceValue || '0');
+      const matchesQuery = !activeFilters.query || cardSearchText.includes(activeFilters.query);
+      const matchesCategory = activeFilters.category === 'all' || cardCategoryKey === activeFilters.category;
+      const matchesPrice = cardPrice <= activeFilters.maxPrice;
+      const show = matchesQuery && matchesCategory && matchesPrice;
+
       card.style.display = show ? '' : 'none';
-      if (show) visibleCount += 1;
+
+      if (show) {
+        visibleCount += 1;
+        filteredCards.push(card);
+      }
     });
 
+    if (activeFilters.sortBy === 'price-low-high' || activeFilters.sortBy === 'price-high-low') {
+      const multiplier = activeFilters.sortBy === 'price-low-high' ? 1 : -1;
+      filteredCards
+        .sort(function (a, b) {
+          return (Number(a.dataset.priceValue || '0') - Number(b.dataset.priceValue || '0')) * multiplier;
+        })
+        .forEach(function (card) {
+          productGrid.appendChild(card);
+        });
+    }
+
     toggleNoResultsMessage(visibleCount === 0);
+    updateStatusMessage(visibleCount);
+    updateSearchVisibility(Boolean(activeFilters.query));
+  }
+
+  function configureFilterPanel(products) {
+    if (!filterPanel || !categoryFilterSelect || !sortFilterSelect || !priceFilterRange || !priceFilterValue) {
+      return;
+    }
+
+    const categories = Array.from(new Set(products.map(function (product) {
+      return product.category;
+    }))).sort();
+
+    categoryFilterSelect.innerHTML = '<option value="all">All Categories</option>' + categories.map(function (category) {
+      return `<option value="${mapCategoryLabelToFilterValue(category)}">${category}</option>`;
+    }).join('');
+
+    const maxProductPrice = products.reduce(function (max, product) {
+      return Math.max(max, parsePriceValue(product.price));
+    }, 0);
+
+    priceFilterRange.min = '0';
+    priceFilterRange.max = String(maxProductPrice);
+    priceFilterRange.step = '10';
+    priceFilterRange.value = String(maxProductPrice);
+    priceFilterValue.textContent = `Rs ${maxProductPrice.toLocaleString()}`;
+    activeFilters.maxPrice = maxProductPrice;
+
+    priceFilterRange.addEventListener('input', function () {
+      const selectedPrice = Number(priceFilterRange.value || '0');
+      activeFilters.maxPrice = selectedPrice;
+      priceFilterValue.textContent = `Rs ${selectedPrice.toLocaleString()}`;
+      applyFilters();
+    });
+
+    categoryFilterSelect.addEventListener('change', function () {
+      activeFilters.category = categoryFilterSelect.value;
+      applyFilters();
+    });
+
+    sortFilterSelect.addEventListener('change', function () {
+      activeFilters.sortBy = sortFilterSelect.value;
+      applyFilters();
+    });
+
+    if (clearFiltersButton) {
+      clearFiltersButton.addEventListener('click', function () {
+        activeFilters.query = '';
+        activeFilters.category = 'all';
+        activeFilters.sortBy = 'relevance';
+        activeFilters.maxPrice = maxProductPrice;
+
+        if (searchField) searchField.value = '';
+        categoryFilterSelect.value = 'all';
+        sortFilterSelect.value = 'relevance';
+        priceFilterRange.value = String(maxProductPrice);
+        priceFilterValue.textContent = `Rs ${maxProductPrice.toLocaleString()}`;
+
+        applyFilters();
+      });
+    }
   }
 
   showcaseCards.forEach(function (showcaseEl, index) {
@@ -2515,7 +2676,43 @@ document.addEventListener('DOMContentLoaded', function () {
     showcaseEl.setAttribute('data-sku', product.sku);
     showcaseEl.setAttribute('data-product-id', product.sku.toLowerCase());
     showcaseEl.dataset.filterTags = inferProductTags(product).join(',');
+    showcaseEl.dataset.searchText = normalizeValue(`${product.title} ${product.category} ${product.description} ${product.sku}`);
+    showcaseEl.dataset.categoryKey = mapCategoryLabelToFilterValue(product.category);
+    showcaseEl.dataset.priceValue = String(parsePriceValue(product.price));
   });
+
+  configureFilterPanel(productCatalog);
+
+  function runSearchFilters() {
+    activeFilters.query = normalizeValue(searchField ? searchField.value : '');
+    applyFilters();
+  }
+
+  if (searchField) {
+    searchField.addEventListener('input', runSearchFilters);
+    searchField.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') {
+        searchField.value = '';
+        activeFilters.query = '';
+        applyFilters();
+        return;
+      }
+
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        runSearchFilters();
+        filterPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  }
+
+  if (searchButton) {
+    searchButton.addEventListener('click', function (event) {
+      event.preventDefault();
+      runSearchFilters();
+      filterPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
 
   function findCategoryText(triggerEl) {
     if (!triggerEl) return '';
@@ -2538,6 +2735,7 @@ document.addEventListener('DOMContentLoaded', function () {
       if (trigger.classList.contains('category-btn') && trigger.getAttribute('href') && trigger.getAttribute('href') !== '#') {
         return;
       }
+
       const categoryText = findCategoryText(trigger);
       const categoryKey = getCategoryKey(categoryText);
 
@@ -2547,11 +2745,16 @@ document.addEventListener('DOMContentLoaded', function () {
         event.preventDefault();
       }
 
-      filterProductsByCategory(categoryKey);
+      if (categoryFilterSelect) {
+        categoryFilterSelect.value = categoryKey;
+      }
+      activeFilters.category = categoryKey;
+      applyFilters();
+      filterPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   });
 
-  filterProductsByCategory('all');
+  applyFilters();
 
   // Click handling
   document.addEventListener('click', function (ev) {
