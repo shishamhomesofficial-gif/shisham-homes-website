@@ -1519,6 +1519,96 @@ body::-webkit-scrollbar-thumb:hover { background: hsl(0, 0%, 70%); }
 
 .product-main { margin-bottom: 30px; }
 
+.product-filter-panel {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+  gap: 12px;
+  margin: 0 0 12px;
+  padding: 14px;
+  border: 1px solid var(--cultured);
+  -webkit-border-radius: var(--border-radius-md);
+          border-radius: var(--border-radius-md);
+  background: #fafafa;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: end;
+  -webkit-align-items: flex-end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+}
+
+.product-filter-panel .filter-field {
+  min-width: 200px;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1 1 220px;
+      -ms-flex: 1 1 220px;
+          flex: 1 1 220px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 6px;
+}
+
+.product-filter-panel .filter-price-field {
+  -webkit-box-flex: 2;
+  -webkit-flex: 2 1 320px;
+      -ms-flex: 2 1 320px;
+          flex: 2 1 320px;
+}
+
+.product-filter-panel label {
+  font-size: var(--fs-7);
+  color: var(--sonic-silver);
+  font-weight: var(--weight-500);
+}
+
+.product-filter-panel select,
+.product-filter-panel input[type="range"] {
+  width: 100%;
+}
+
+.filter-clear-btn {
+  border: 1px solid var(--cultured);
+  background: var(--white);
+  color: var(--eerie-black);
+  -webkit-border-radius: var(--border-radius-md);
+          border-radius: var(--border-radius-md);
+  font-size: var(--fs-7);
+  font-weight: var(--weight-500);
+  padding: 10px 14px;
+  width: auto;
+  white-space: nowrap;
+}
+
+.filter-clear-btn[disabled] {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.filter-results-status {
+  color: var(--sonic-silver);
+  font-size: var(--fs-7);
+  margin-bottom: 18px;
+}
+
+body.search-active .product-filter-panel .filter-field-category,
+body.search-active .product-filter-panel .filter-clear-btn {
+  display: none;
+}
+
 
 .search-results-status {
   margin: 0 0 20px;

@@ -1143,16 +1143,16 @@
             <h2 class="title">Our Products</h2>
 
             <div class="product-filter-panel" data-product-filter-panel>
-              <div class="filter-field">
+              <div class="filter-field filter-field-category">
                 <label for="product-category-filter">Category</label>
                 <select id="product-category-filter" data-filter-category></select>
               </div>
-              <div class="filter-field">
+              <div class="filter-field filter-field-sort">
                 <label for="product-sort-filter">Sort by</label>
                 <select id="product-sort-filter" data-filter-sort>
                   <option value="relevance">Relevance</option>
-                  <option value="price-low-high">Price: Low to High</option>
                   <option value="price-high-low">Price: High to Low</option>
+                  <option value="price-low-high">Price: Low to High</option>
                 </select>
               </div>
               <div class="filter-field filter-price-field">
@@ -2053,12 +2053,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
   const productCatalog = [
     {
-      title: 'Samsung CE76JD-B1/IM 21L Convection Microwave with Curd Making Technology',
+      title: 'Samsung 21L Convection Microwave CE76JD-B1/IM',
       category: 'Microwave Oven',
       price: 'Rs 24,450',
       description: 'Buy Samsung CE76JD-B1/IM 21L Convection Microwave with Curd Making Technology at Shisham Homes Kathmandu with reliable delivery, genuine appliances, and dependable after-sales support for daily home performance.',
       sku: 'SAM-CE76JD-B1-IM',
-      image: './assets/images/products/Samsung-CE76JD-B1.jpg'
+      image: './assets/images/products/Samsung-CE76JD-B1.jpg',
+      slug: 'samsung-ce76jd-b1-im-21l-convection-microwave-with-curd-making-technology.html'
     },
     {
       title: 'Panasonic NN-ST266BYTE Solo Microwave',
@@ -2066,7 +2067,8 @@ document.addEventListener('DOMContentLoaded', function () {
       price: 'Rs 13,250',
       description: 'Buy Panasonic NN-ST266BYTE Solo Microwave at Shisham Homes Kathmandu with reliable delivery, genuine appliances, and dependable after-sales support for daily home performance.',
       sku: 'PAN-NN-ST266BYTE',
-      image: './assets/images/products/Panasonic-NN-ST266BYTE.webp'
+      image: './assets/images/products/Panasonic-NN-ST266BYTE.webp',
+      slug: 'panasonic-nn-st266byte-solo-microwave.html'
     },
     {
       title: 'Sansui SS-VC16M37 1600W Bag Type Vacuum Cleaner',
@@ -2074,7 +2076,8 @@ document.addEventListener('DOMContentLoaded', function () {
       price: 'Rs 7,500',
       description: 'Buy Sansui SS-VC16M37 1600W Bag Type Vacuum Cleaner at Shisham Homes Kathmandu with reliable delivery, genuine appliances, and dependable after-sales support for daily home performance.',
       sku: 'SAN-SS-VC16M37',
-      image: './assets/images/products/Sansui-SS-VC16M37.jpg'
+      image: './assets/images/products/Sansui-SS-VC16M37.jpg',
+      slug: 'sansui-ss-vc16m37-1600w-bag-type-vacuum-cleaner.html'
     },
     {
       title: 'Electric Kettle WB-EK188 (1.8L)',
@@ -2082,7 +2085,8 @@ document.addEventListener('DOMContentLoaded', function () {
       price: 'Rs 1,200',
       description: 'Buy Electric Kettle WB-EK188 (1.8L) at Shisham Homes Kathmandu with reliable delivery, genuine appliances, and dependable after-sales support for daily home performance.',
       sku: 'WB-EK188-18L',
-      image: './assets/images/products/Webor-WB-EK188.jpg'
+      image: './assets/images/products/Webor-WB-EK188.jpg',
+      slug: 'electric-kettle-wb-ek188-1-8l.html'
     },
     {
       title: 'Orbit Infrared Cooker OK-20P46ICA/YA',
@@ -2090,7 +2094,8 @@ document.addEventListener('DOMContentLoaded', function () {
       price: 'Rs 4,880',
       description: 'Buy Orbit Infrared Cooker OK-20P46ICA/YA at Shisham Homes Kathmandu with reliable delivery, genuine appliances, and dependable after-sales support for daily home performance.',
       sku: 'ORB-OK-20P46ICA-YA',
-      image: './assets/images/products/orbit-OK-20P46ICA.png'
+      image: './assets/images/products/orbit-OK-20P46ICA.png',
+      slug: 'orbit-infrared-cooker-ok-20p46ica-ya.html'
     },
     {
       title: 'Panasonic NN-CT645BYTE Convection/Grill Microwave',
@@ -2098,7 +2103,8 @@ document.addEventListener('DOMContentLoaded', function () {
       price: 'Rs 23,500',
       description: 'Buy Panasonic NN-CT645BYTE Convection/Grill Microwave at Shisham Homes Kathmandu with reliable delivery, genuine appliances, and dependable after-sales support for daily home performance.',
       sku: 'PAN-NN-CT645BYTE',
-      image: './assets/images/products/Panasonic-NN-CT645BYTE.jpg'
+      image: './assets/images/products/Panasonic-NN-CT645BYTE.jpg',
+      slug: 'panasonic-nn-ct645byte-convection-grill-microwave.html'
     },
     {
       title: 'Himstar HK-20D1ICI/YE Induction Cooker',
@@ -2106,7 +2112,8 @@ document.addEventListener('DOMContentLoaded', function () {
       price: 'Rs 4,400',
       description: 'Buy Himstar HK-20D1ICI/YE Induction Cooker at Shisham Homes Kathmandu with reliable delivery, genuine appliances, and dependable after-sales support for daily home performance.',
       sku: 'HIM-HK-20D1ICI-YE',
-      image: './assets/images/products/Himstar-HK-20D1ICI.jpeg'
+      image: './assets/images/products/Himstar-HK-20D1ICI.jpeg',
+      slug: 'himstar-hk-20d1ici-ye-induction-cooker.html'
     },
     {
       title: 'Himstar HV-22703WDJ/SE Vacuum Cleaner',
@@ -2114,7 +2121,8 @@ document.addEventListener('DOMContentLoaded', function () {
       price: 'Rs 12,450',
       description: 'Buy Himstar HV-22703WDJ/SE Vacuum Cleaner at Shisham Homes Kathmandu with reliable delivery, genuine appliances, and dependable after-sales support for daily home performance.',
       sku: 'HIM-HV-22703WDJ-SE',
-      image: './assets/images/products/Himstar-HV-22703WDJ.png'
+      image: './assets/images/products/Himstar-HV-22703WDJ.png',
+      slug: 'himstar-hv-22703wdj-se-vacuum-cleaner.html'
     },
     {
       title: 'Panasonic NN-CT36HBYTE Convection/Grill Microwave',
@@ -2122,71 +2130,80 @@ document.addEventListener('DOMContentLoaded', function () {
       price: 'Rs 24,600',
       description: 'Buy Panasonic NN-CT36HBYTE Convection/Grill Microwave at Shisham Homes Kathmandu with reliable delivery, genuine appliances, and dependable after-sales support for daily home performance.',
       sku: 'PAN-NN-CT36HBYTE',
-      image: './assets/images/products/Panasonic-NN-CT36HBYTE.png'
+      image: './assets/images/products/Panasonic-NN-CT36HBYTE.png',
+      slug: 'panasonic-nn-ct36hbyte-convection-grill-microwave.html'
     },
     {
-      title: 'Samsung Refrigerator RR20M282ZS8',
+      title: 'Samsung RR20M282ZS8 Single Door Refrigerator',
       category: 'Refrigerators',
       price: 'Rs 33,500',
       description: 'Buy Samsung Refrigerator RR20M282ZS8 at Shisham Homes Kathmandu with reliable delivery, genuine appliances, and dependable after-sales support for daily home performance.',
       sku: 'SAM-RR20M282ZS8',
-      image: './assets/images/products/RR20M282ZS8.jpg'
+      image: './assets/images/products/RR20M282ZS8.jpg',
+      slug: 'samsung-refrigerator-rr20m282zs8.html'
     },
     {
-      title: 'Samsung Refrigerator RR20C20C2RH',
+      title: 'Samsung RR20C20C2RH Direct Cool Refrigerator',
       category: 'Refrigerators',
       price: 'Rs 28,990',
       description: 'Buy Samsung Refrigerator RR20C20C2RH at Shisham Homes Kathmandu with reliable delivery, genuine appliances, and dependable after-sales support for daily home performance.',
       sku: 'SAM-RR20C20C2RH',
-      image: './assets/images/products/RT20C20C2RH.jpg'
+      image: './assets/images/products/RT20C20C2RH.jpg',
+      slug: 'samsung-refrigerator-rr20c20c2rh.html'
     },
     {
-      title: 'Panasonic Refrigerator NR-A192MFMNP',
+      title: 'Panasonic NR-A192MFMNP Single Door Refrigerator',
       category: 'Refrigerators',
       price: 'Rs 29,298',
       description: 'Buy Panasonic Refrigerator NR-A192MFMNP at Shisham Homes Kathmandu with reliable delivery, genuine appliances, and dependable after-sales support for daily home performance.',
       sku: 'PAN-NRA192MFMNP',
-      image: './assets/images/products/NR-A192MFMNP.jpg'
+      image: './assets/images/products/NR-A192MFMNP.jpg',
+      slug: 'panasonic-refrigerator-nr-a192mfmnp.html'
     },
     {
-      title: 'Panasonic Refrigerator NR-A201BEAN',
+      title: 'Panasonic NR-A201BEAN Direct Cool Refrigerator',
       category: 'Refrigerators',
       price: 'Rs 29,295',
       description: 'Buy Panasonic Refrigerator NR-A201BEAN at Shisham Homes Kathmandu with reliable delivery, genuine appliances, and dependable after-sales support for daily home performance.',
       sku: 'PAN-NRA201BEAN',
-      image: './assets/images/products/NR-A201BEAN.jpg'
+      image: './assets/images/products/NR-A201BEAN.jpg',
+      slug: 'panasonic-refrigerator-nr-a201bean.html'
     },
     {
-      title: 'Samsung Refrigerator RR20C20C2GS',
+      title: 'Samsung RR20C20C2GS Direct Cool Refrigerator',
       category: 'Refrigerators',
       price: 'Rs 28,500',
       description: 'Buy Samsung Refrigerator RR20C20C2GS at Shisham Homes Kathmandu with reliable delivery, genuine appliances, and dependable after-sales support for daily home performance.',
       sku: 'SAM-RR20C20C2GS',
-      image: './assets/images/products/RR20C20C2GS.png'
+      image: './assets/images/products/RR20C20C2GS.png',
+      slug: 'samsung-refrigerator-rr20c20c2gs.html'
     },
     {
-      title: 'Panasonic Refrigerator NR-A192MFANP',
+      title: 'Panasonic NR-A192MFANP Single Door Refrigerator',
       category: 'Refrigerators',
       price: 'Rs 30,300',
       description: 'Buy Panasonic Refrigerator NR-A192MFANP at Shisham Homes Kathmandu with reliable delivery, genuine appliances, and dependable after-sales support for daily home performance.',
       sku: 'PAN-NRA192MFANP',
-      image: './assets/images/products/NR-A192MFANP.png'
+      image: './assets/images/products/NR-A192MFANP.png',
+      slug: 'panasonic-refrigerator-nr-a192mfanp.html'
     },
     {
-      title: 'Panasonic Refrigerator NR-A201BTAN',
+      title: 'Panasonic NR-A201BTAN Direct Cool Refrigerator',
       category: 'Refrigerators',
       price: 'Rs 31,195',
       description: 'Buy Panasonic Refrigerator NR-A201BTAN at Shisham Homes Kathmandu with reliable delivery, genuine appliances, and dependable after-sales support for daily home performance.',
       sku: 'PAN-NRA201BTAN',
-      image: './assets/images/products/NR-A201BTAN.jpg'
+      image: './assets/images/products/NR-A201BTAN.jpg',
+      slug: 'panasonic-refrigerator-nr-a201btan.html'
     },
     {
-      title: 'Samsung Refrigerator RR20C2722CR',
+      title: 'Samsung RR20C2722CR Single Door Refrigerator',
       category: 'Refrigerators',
       price: 'Rs 33,798',
       description: 'Buy Samsung Refrigerator RR20C2722CR at Shisham Homes Kathmandu with reliable delivery, genuine appliances, and dependable after-sales support for daily home performance.',
       sku: 'SAM-RR20C2722CR',
-      image: './assets/images/products/RR20C2722CR.jpg'
+      image: './assets/images/products/RR20C2722CR.jpg',
+      slug: 'samsung-refrigerator-rr20c2722cr.html'
     },
     {
       title: 'Kent Sapphire Water Purifier (Black)',
@@ -2194,7 +2211,8 @@ document.addEventListener('DOMContentLoaded', function () {
       price: 'Rs 36,390',
       description: 'Buy Kent Sapphire Water Purifier (Black) at Shisham Homes Kathmandu with reliable delivery, genuine appliances, and dependable after-sales support for daily home performance.',
       sku: 'KENT-SAPPHIRE-BLK',
-      image: './assets/images/products/Kent-Sapphire-B.jpg'
+      image: './assets/images/products/Kent-Sapphire-B.jpg',
+      slug: 'kent-sapphire-water-purifier-black.html'
     },
     {
       title: 'Kent Sapphire Water Purifier (White)',
@@ -2202,7 +2220,8 @@ document.addEventListener('DOMContentLoaded', function () {
       price: 'Rs 36,390',
       description: 'Buy Kent Sapphire Water Purifier (White) at Shisham Homes Kathmandu with reliable delivery, genuine appliances, and dependable after-sales support for daily home performance.',
       sku: 'KENT-SAPPHIRE-WHT',
-      image: './assets/images/products/Kent-Sapphire-W.png'
+      image: './assets/images/products/Kent-Sapphire-W.png',
+      slug: 'kent-sapphire-water-purifier-white.html'
     },
     {
       title: 'Kent Grand Plus Water Purifier',
@@ -2210,7 +2229,8 @@ document.addEventListener('DOMContentLoaded', function () {
       price: 'Rs 34,450',
       description: 'Buy Kent Grand Plus Water Purifier at Shisham Homes Kathmandu with reliable delivery, genuine appliances, and dependable after-sales support for daily home performance.',
       sku: 'KENT-GRAND-PLUS',
-      image: './assets/images/products/kent-grand-plus.jpg'
+      image: './assets/images/products/kent-grand-plus.jpg',
+      slug: 'kent-grand-plus-water-purifier.html'
     },
     {
       title: 'Kent Pearl ZWW Water Purifier',
@@ -2218,7 +2238,8 @@ document.addEventListener('DOMContentLoaded', function () {
       price: 'Rs 34,990',
       description: 'Buy Kent Pearl ZWW Water Purifier at Shisham Homes Kathmandu with reliable delivery, genuine appliances, and dependable after-sales support for daily home performance.',
       sku: 'KENT-PEARL-ZWW',
-      image: './assets/images/products/kent-pearl-zww.jpg'
+      image: './assets/images/products/kent-pearl-zww.jpg',
+      slug: 'kent-pearl-zww-water-purifier.html'
     },
     {
       title: 'Kent Ace Water Purifier',
@@ -2226,7 +2247,8 @@ document.addEventListener('DOMContentLoaded', function () {
       price: 'Rs 29,960',
       description: 'Buy Kent Ace Water Purifier at Shisham Homes Kathmandu with reliable delivery, genuine appliances, and dependable after-sales support for daily home performance.',
       sku: 'KENT-ACE',
-      image: './assets/images/products/kent-ace.jpg'
+      image: './assets/images/products/kent-ace.jpg',
+      slug: 'kent-ace-water-purifier.html'
     },
     {
       title: 'Kent Marvel Water Purifier',
@@ -2234,7 +2256,8 @@ document.addEventListener('DOMContentLoaded', function () {
       price: 'Rs 24,985',
       description: 'Buy Kent Marvel Water Purifier at Shisham Homes Kathmandu with reliable delivery, genuine appliances, and dependable after-sales support for daily home performance.',
       sku: 'KENT-MARVEL',
-      image: './assets/images/products/kent-marvel.webp'
+      image: './assets/images/products/kent-marvel.webp',
+      slug: 'kent-marvel-water-purifier.html'
     },
     {
       title: 'Kent Ultra Storage Water Purifier',
@@ -2242,7 +2265,8 @@ document.addEventListener('DOMContentLoaded', function () {
       price: 'Rs 17,400',
       description: 'Buy Kent Ultra Storage Water Purifier at Shisham Homes Kathmandu with reliable delivery, genuine appliances, and dependable after-sales support for daily home performance.',
       sku: 'KENT-ULTRA-STORAGE',
-      image: './assets/images/products/kent-ultra-storage.png'
+      image: './assets/images/products/kent-ultra-storage.png',
+      slug: 'kent-ultra-storage-water-purifier.html'
     },
     {
       title: 'Kent Maxx Water Purifier',
@@ -2250,7 +2274,8 @@ document.addEventListener('DOMContentLoaded', function () {
       price: 'Rs 15,835',
       description: 'Buy Kent Maxx Water Purifier at Shisham Homes Kathmandu with reliable delivery, genuine appliances, and dependable after-sales support for daily home performance.',
       sku: 'KENT-MAXX',
-      image: './assets/images/products/kent-maxx.jpg'
+      image: './assets/images/products/kent-maxx.jpg',
+      slug: 'kent-maxx-water-purifier.html'
     },
     {
       title: 'Webor WBGS2050B Steel Gas Cooktop Burner',
@@ -2258,7 +2283,8 @@ document.addEventListener('DOMContentLoaded', function () {
       price: 'Rs 3,900',
       description: 'Buy Webor WBGS2050B Steel Gas Cooktop Burner at Shisham Homes Kathmandu with reliable delivery, genuine appliances, and dependable after-sales support for daily home performance.',
       sku: 'WEB-WBGS2050B',
-      image: './assets/images/products/1.jpg'
+      image: './assets/images/products/1.jpg',
+      slug: 'webor-wbgs2050b-steel-gas-cooktop-burner.html'
     },
     {
       title: 'Faber FMG Candy 1000 3J+1PC Plum Mixer Grinder',
@@ -2266,23 +2292,26 @@ document.addEventListener('DOMContentLoaded', function () {
       price: 'Rs 15,050',
       description: 'Buy Faber FMG Candy 1000 3J+1PC Plum Mixer Grinder at Shisham Homes Kathmandu with reliable delivery, genuine appliances, and dependable after-sales support for daily home performance.',
       sku: 'FAB-FMGCANDY1000',
-      image: './assets/images/products/2.jpg'
+      image: './assets/images/products/2.jpg',
+      slug: 'faber-fmg-candy-1000-3j-1pc-plum-mixer-grinder.html'
     },
     {
-      title: 'Samsung Washing Machine WW90DG5U24AX',
+      title: 'Samsung WW90DG5U24AX Front Load Washing Machine',
       category: 'Washing Machines',
       price: 'Rs 81,910',
       description: 'Buy Samsung Washing Machine WW90DG5U24AX at Shisham Homes Kathmandu with reliable delivery, genuine appliances, and dependable after-sales support for daily home performance.',
       sku: 'SAM-WW90DG5U24AX',
-      image: './assets/images/products/WW90DG5U24AX.jpg'
+      image: './assets/images/products/WW90DG5U24AX.jpg',
+      slug: 'samsung-washing-machine-ww90dg5u24ax.html'
     },
     {
-      title: 'Panasonic Washing Machine NA-148MG4LN1',
+      title: 'Panasonic NA-148MG4LN1 Front Load Washing Machine',
       category: 'Washing Machines',
       price: 'Rs 72,940',
       description: 'Buy Panasonic Washing Machine NA-148MG4LN1 at Shisham Homes Kathmandu with reliable delivery, genuine appliances, and dependable after-sales support for daily home performance.',
       sku: 'PAN-NA148MG4LN1',
-      image: './assets/images/products/NA-148MG4LN1.jpg'
+      image: './assets/images/products/NA-148MG4LN1.jpg',
+      slug: 'panasonic-washing-machine-na-148mg4ln1.html'
     }
   ];
 
@@ -2498,35 +2527,21 @@ document.addEventListener('DOMContentLoaded', function () {
     noResultsMessage.style.display = visible ? 'block' : 'none';
   }
 
-  function hideSiblingBranches(targetElement, stopElement) {
-    let node = targetElement;
-
-    while (node && node.parentElement && node !== stopElement) {
-      const parentNode = node.parentElement;
-
-      Array.from(parentNode.children).forEach(function (siblingNode) {
-        if (siblingNode !== node) {
-          siblingNode.classList.add('search-hidden-section');
-        }
-      });
-
-      node = parentNode;
-    }
-  }
-
   function updateSearchVisibility(hasQuery) {
-    if (!homeMain || !filterPanel) return;
+    if (!homeMain || !filterPanel || !categoryFilterSelect || !clearFiltersButton) return;
 
     if (hasQuery) {
       document.body.classList.add('search-active');
-      hideSiblingBranches(filterPanel, homeMain);
+      categoryFilterSelect.value = 'all';
+      activeFilters.category = 'all';
+      categoryFilterSelect.setAttribute('disabled', 'disabled');
+      clearFiltersButton.setAttribute('disabled', 'disabled');
       return;
     }
 
     document.body.classList.remove('search-active');
-    document.querySelectorAll('.search-hidden-section').forEach(function (element) {
-      element.classList.remove('search-hidden-section');
-    });
+    categoryFilterSelect.removeAttribute('disabled');
+    clearFiltersButton.removeAttribute('disabled');
   }
 
   function updateStatusMessage(visibleCount) {
@@ -2673,18 +2688,30 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     }
 
+    const productUrl = `https://www.shishamhomes.com.np/products/${product.slug}`;
+
     showcaseEl.setAttribute('data-sku', product.sku);
     showcaseEl.setAttribute('data-product-id', product.sku.toLowerCase());
+    showcaseEl.dataset.productUrl = productUrl;
     showcaseEl.dataset.filterTags = inferProductTags(product).join(',');
     showcaseEl.dataset.searchText = normalizeValue(`${product.title} ${product.category} ${product.description} ${product.sku}`);
     showcaseEl.dataset.categoryKey = mapCategoryLabelToFilterValue(product.category);
     showcaseEl.dataset.priceValue = String(parsePriceValue(product.price));
+
+    showcaseEl.querySelectorAll('a').forEach(function (linkElement) {
+      if (linkElement.closest('.btn-action')) return;
+      linkElement.href = productUrl;
+    });
   });
 
   configureFilterPanel(productCatalog);
 
   function runSearchFilters() {
     activeFilters.query = normalizeValue(searchField ? searchField.value : '');
+    if (activeFilters.query && categoryFilterSelect) {
+      activeFilters.category = 'all';
+      categoryFilterSelect.value = 'all';
+    }
     applyFilters();
   }
 
@@ -2765,11 +2792,14 @@ document.addEventListener('DOMContentLoaded', function () {
       return;
     }
 
-    if (ev.target.closest('a')) {
-      ev.preventDefault();
+    if (ev.target.closest('a[href]')) {
+      return;
     }
 
-    openProductModalForShowcase(showcase);
+    const productUrl = showcase.dataset.productUrl;
+    if (productUrl) {
+      window.location.href = productUrl;
+    }
   });
 
   if (productClose) {

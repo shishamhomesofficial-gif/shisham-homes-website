@@ -1,97 +1,203 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset
-      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
-
-
-<url>
-  <loc>https://www.shishamhomes.com.np/</loc>
-  <lastmod>2026-04-09T06:42:27+00:00</lastmod>
-  <priority>1.00</priority>
-</url>
-<url>
-  <loc>https://www.shishamhomes.com.np/category-refrigerators.html</loc>
-  <lastmod>2026-04-09T06:42:28+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://www.shishamhomes.com.np/category-smart-kitchen-appliances.html</loc>
-  <lastmod>2026-04-09T06:42:28+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://www.shishamhomes.com.np/category-microwaves-ovens.html</loc>
-  <lastmod>2026-04-09T06:42:29+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://www.shishamhomes.com.np/category-tv.html</loc>
-  <lastmod>2026-04-09T06:42:29+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://www.shishamhomes.com.np/category-smart-household-appliances.html</loc>
-  <lastmod>2026-04-09T06:42:29+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://www.shishamhomes.com.np/category-other-products.html</loc>
-  <lastmod>2026-04-09T06:42:29+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://www.shishamhomes.com.np/products/samsung-ce76jd-b1-im-21l-convection-microwave-with-curd-making-technology.html</loc>
-  <lastmod>2026-04-09T06:42:29+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://www.shishamhomes.com.np/products/panasonic-nn-st266byte-solo-microwave.html</loc>
-  <lastmod>2026-04-09T06:42:29+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://www.shishamhomes.com.np/products/sansui-ss-vc16m37-1600w-bag-type-vacuum-cleaner.html</loc>
-  <lastmod>2026-04-09T06:42:29+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://www.shishamhomes.com.np/products/electric-kettle-wb-ek188-1-8l.html</loc>
-  <lastmod>2026-04-09T06:42:30+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://www.shishamhomes.com.np/products/panasonic-nn-ct645byte-convection-grill-microwave.html</loc>
-  <lastmod>2026-04-09T06:42:30+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://www.shishamhomes.com.np/products/panasonic-nn-ct36hbyte-convection-grill-microwave.html</loc>
-  <lastmod>2026-04-09T06:42:30+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://www.shishamhomes.com.np/products/himstar-hk-20d1ici-ye-induction-cooker.html</loc>
-  <lastmod>2026-04-09T06:42:30+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://www.shishamhomes.com.np/products/orbit-infrared-cooker-ok-20p46ica-ya.html</loc>
-  <lastmod>2026-04-09T06:42:30+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://www.shishamhomes.com.np/products/himstar-hv-22703wdj-se-vacuum-cleaner.html</loc>
-  <lastmod>2026-04-09T06:42:31+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://www.shishamhomes.com.np/index.html</loc>
-  <lastmod>2026-04-09T06:42:31+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-
-
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+  <url>
+    <loc>https://www.shishamhomes.com.np/</loc>
+    <lastmod>2026-04-12T00:00:00+00:00</lastmod>
+    <priority>1.00</priority>
+  </url>
+  <url>
+    <loc>https://www.shishamhomes.com.np/category-microwaves-ovens.html</loc>
+    <lastmod>2026-04-12T00:00:00+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.shishamhomes.com.np/category-other-products.html</loc>
+    <lastmod>2026-04-12T00:00:00+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.shishamhomes.com.np/category-refrigerators.html</loc>
+    <lastmod>2026-04-12T00:00:00+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.shishamhomes.com.np/category-smart-household-appliances.html</loc>
+    <lastmod>2026-04-12T00:00:00+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.shishamhomes.com.np/category-smart-kitchen-appliances.html</loc>
+    <lastmod>2026-04-12T00:00:00+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.shishamhomes.com.np/category-tv.html</loc>
+    <lastmod>2026-04-12T00:00:00+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.shishamhomes.com.np/checkout.html</loc>
+    <lastmod>2026-04-12T00:00:00+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://www.shishamhomes.com.np/index.html</loc>
+    <lastmod>2026-04-12T00:00:00+00:00</lastmod>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.shishamhomes.com.np/product.html</loc>
+    <lastmod>2026-04-12T00:00:00+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://www.shishamhomes.com.np/products/electric-kettle-wb-ek188-1-8l.html</loc>
+    <lastmod>2026-04-12T00:00:00+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.shishamhomes.com.np/products/faber-fmg-candy-1000-3j-1pc-plum-mixer-grinder.html</loc>
+    <lastmod>2026-04-12T00:00:00+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.shishamhomes.com.np/products/himstar-hk-20d1ici-ye-induction-cooker.html</loc>
+    <lastmod>2026-04-12T00:00:00+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.shishamhomes.com.np/products/himstar-hv-22703wdj-se-vacuum-cleaner.html</loc>
+    <lastmod>2026-04-12T00:00:00+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.shishamhomes.com.np/products/kent-ace-water-purifier.html</loc>
+    <lastmod>2026-04-12T00:00:00+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.shishamhomes.com.np/products/kent-grand-plus-water-purifier.html</loc>
+    <lastmod>2026-04-12T00:00:00+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.shishamhomes.com.np/products/kent-marvel-water-purifier.html</loc>
+    <lastmod>2026-04-12T00:00:00+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.shishamhomes.com.np/products/kent-maxx-water-purifier.html</loc>
+    <lastmod>2026-04-12T00:00:00+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.shishamhomes.com.np/products/kent-pearl-zww-water-purifier.html</loc>
+    <lastmod>2026-04-12T00:00:00+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.shishamhomes.com.np/products/kent-sapphire-water-purifier-black.html</loc>
+    <lastmod>2026-04-12T00:00:00+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.shishamhomes.com.np/products/kent-sapphire-water-purifier-white.html</loc>
+    <lastmod>2026-04-12T00:00:00+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.shishamhomes.com.np/products/kent-ultra-storage-water-purifier.html</loc>
+    <lastmod>2026-04-12T00:00:00+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.shishamhomes.com.np/products/orbit-infrared-cooker-ok-20p46ica-ya.html</loc>
+    <lastmod>2026-04-12T00:00:00+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.shishamhomes.com.np/products/panasonic-nn-ct36hbyte-convection-grill-microwave.html</loc>
+    <lastmod>2026-04-12T00:00:00+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.shishamhomes.com.np/products/panasonic-nn-ct645byte-convection-grill-microwave.html</loc>
+    <lastmod>2026-04-12T00:00:00+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.shishamhomes.com.np/products/panasonic-nn-st266byte-solo-microwave.html</loc>
+    <lastmod>2026-04-12T00:00:00+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.shishamhomes.com.np/products/panasonic-refrigerator-nr-a192mfanp.html</loc>
+    <lastmod>2026-04-12T00:00:00+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.shishamhomes.com.np/products/panasonic-refrigerator-nr-a192mfmnp.html</loc>
+    <lastmod>2026-04-12T00:00:00+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.shishamhomes.com.np/products/panasonic-refrigerator-nr-a201bean.html</loc>
+    <lastmod>2026-04-12T00:00:00+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.shishamhomes.com.np/products/panasonic-refrigerator-nr-a201btan.html</loc>
+    <lastmod>2026-04-12T00:00:00+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.shishamhomes.com.np/products/panasonic-washing-machine-na-148mg4ln1.html</loc>
+    <lastmod>2026-04-12T00:00:00+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.shishamhomes.com.np/products/samsung-WW90DG5U24AX-washing-machine.html</loc>
+    <lastmod>2026-04-12T00:00:00+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.shishamhomes.com.np/products/samsung-ce76jd-b1-im-21l-convection-microwave-with-curd-making-technology.html</loc>
+    <lastmod>2026-04-12T00:00:00+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.shishamhomes.com.np/products/samsung-refrigerator-rr20c20c2gs.html</loc>
+    <lastmod>2026-04-12T00:00:00+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.shishamhomes.com.np/products/samsung-refrigerator-rr20c20c2rh.html</loc>
+    <lastmod>2026-04-12T00:00:00+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.shishamhomes.com.np/products/samsung-refrigerator-rr20c2722cr.html</loc>
+    <lastmod>2026-04-12T00:00:00+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.shishamhomes.com.np/products/samsung-refrigerator-rr20m282zs8.html</loc>
+    <lastmod>2026-04-12T00:00:00+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.shishamhomes.com.np/products/samsung-washing-machine-ww90dg5u24ax.html</loc>
+    <lastmod>2026-04-12T00:00:00+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.shishamhomes.com.np/products/sansui-ss-vc16m37-1600w-bag-type-vacuum-cleaner.html</loc>
+    <lastmod>2026-04-12T00:00:00+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.shishamhomes.com.np/products/webor-wbgs2050b-steel-gas-cooktop-burner.html</loc>
+    <lastmod>2026-04-12T00:00:00+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
 </urlset>
