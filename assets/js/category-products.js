@@ -29,7 +29,17 @@ const categoryCatalog = [
   { name: 'Webor WBGS2050B Steel Gas Cooktop Burner', price: 'Rs 3,900', image: './assets/images/products/1.jpg', link: './products/webor-wbgs2050b-steel-gas-cooktop-burner.html', tags: ['smart-kitchen-appliances'] },
   { name: 'Faber FMG Candy 1000 3J+1PC Plum Mixer Grinder', price: 'Rs 15,050', image: './assets/images/products/2.jpg', link: './products/faber-fmg-candy-1000-3j-1pc-plum-mixer-grinder.html', tags: ['smart-kitchen-appliances'] },
   { name: 'Samsung Washing Machine WW90DG5U24AX', price: 'Rs 81,910', image: './assets/images/products/WW90DG5U24AX.jpg', link: './products/samsung-washing-machine-ww90dg5u24ax.html', tags: ['smart-household-appliances'] },
-  { name: 'Panasonic Washing Machine NA-148MG4LN1', price: 'Rs 72,940', image: './assets/images/products/NA-148MG4LN1.jpg', link: './products/panasonic-washing-machine-na-148mg4ln1.html', tags: ['smart-household-appliances'] }
+  { name: 'Panasonic Washing Machine NA-148MG4LN1', price: 'Rs 72,940', image: './assets/images/products/NA-148MG4LN1.jpg', link: './products/panasonic-washing-machine-na-148mg4ln1.html', tags: ['smart-household-appliances'] },
+
+  { name: 'Webor WBRC22DRM Electric Rice Cooker', price: 'Rs 3,250', image: './assets/images/products/WBRC22DRM.png', link: './products/webor-wbrc22drm-electric-rice-cooker.html', tags: ['smart-kitchen-appliances'] },
+  { name: 'Webor WBGS2050A Glass Gas Cook Top', price: 'Rs 3,950', image: './assets/images/products/WBGS2050A.webp', link: './products/webor-wbgs2050a-glass-gas-cook-top.html', tags: ['smart-kitchen-appliances'] },
+  { name: 'Signoracare Electric Air Fryer 8.5L', price: 'Rs 8,950', image: './assets/images/products/signoracare-air-fryer.jpg', link: './products/signoracare-electric-air-fryer-8-5l.html', tags: ['smart-kitchen-appliances'] },
+  { name: 'Kenstar Electric Juicer', price: 'Rs 4,040', image: './assets/images/products/kenstar-nutriv-juiser.jpg', link: './products/kenstar-electric-juicer.html', tags: ['smart-kitchen-appliances'] },
+  { name: 'Webor Electric Kettle WB-KE18E', price: 'Rs 1,660', image: './assets/images/products/WB-KE18E.jpg', link: './products/webor-electric-kettle-wb-ke18e.html', tags: ['smart-kitchen-appliances'] },
+  { name: 'Signora Electric Kettle 1.8L', price: 'Rs 880', image: './assets/images/products/signora-kettle.jpg', link: './products/signora-electric-kettle-1-8l.html', tags: ['smart-kitchen-appliances'] },
+  { name: 'Himstar Electric Kettle HK-18JSFI/GY', price: 'Rs 955', image: './assets/images/products/HK-18JSFI.png', link: './products/himstar-electric-kettle-hk-18jsfi-gy.html', tags: ['smart-kitchen-appliances'] },
+  { name: 'Himstar Electric Kettle KG-18RMFI/GY', price: 'Rs 995', image: './assets/images/products/KG-18RMFI.jpg', link: './products/himstar-electric-kettle-kg-18rmfi-gy.html', tags: ['smart-kitchen-appliances'] },
+  { name: 'Himstar HK-20D19ICI Induction Cooker', price: 'Rs 5,200', image: './assets/images/products/HK-20D19ICI.jpeg', link: './products/himstar-hk-20d19ici-induction-cooker.html', tags: ['smart-kitchen-appliances'] },
 ];
 
 const categoryPage = document.querySelector('[data-category-page]');
