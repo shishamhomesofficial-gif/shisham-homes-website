@@ -92,7 +92,8 @@ const resolveNavigationTarget = function (labelText) {
   if (normalisedLabel.includes('kitchen') || normalisedLabel.includes('cooking') || normalisedLabel.includes('induction')) return getSiteRelativePath('category-smart-kitchen-appliances.html');
   if (normalisedLabel.includes('laundry') || normalisedLabel.includes('washing') || normalisedLabel.includes('household')) return getSiteRelativePath('category-smart-household-appliances.html');
   if (normalisedLabel.includes('other product') || normalisedLabel.includes('other appliance')) return getSiteRelativePath('category-other-products.html');
-  if (normalisedLabel.includes('blog') || normalisedLabel.includes('offer')) return getSiteRelativePath('index.html');
+  if (normalisedLabel.includes('blog')) return getSiteRelativePath('blog-energy-efficient-home-appliances-nepal.html');
+  if (normalisedLabel.includes('offer')) return getSiteRelativePath('index.html');
 
   return null;
 };
@@ -168,8 +169,23 @@ const setGlobalNavigationButtons = function () {
   });
 };
 
+const optimiseImageLoading = function () {
+  const allImages = document.querySelectorAll('img');
+
+  allImages.forEach(function (imageElement, imageIndex) {
+    if (!imageElement.getAttribute('loading')) {
+      imageElement.setAttribute('loading', imageIndex === 0 ? 'eager' : 'lazy');
+    }
+
+    if (!imageElement.getAttribute('decoding')) {
+      imageElement.setAttribute('decoding', 'async');
+    }
+  });
+};
+
 setGlobalNavigationLinks();
 setGlobalNavigationButtons();
+optimiseImageLoading();
 
 
 // ecommerce helpers
@@ -574,4 +590,3 @@ document.querySelectorAll('.desktop-navigation-menu a').forEach(link => {
     e.stopPropagation(); // prevent JS interference
   });
 });
-
