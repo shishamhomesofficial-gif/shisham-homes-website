@@ -2,6 +2,16 @@
 <html lang="en">
 
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B23JDXE688"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-B23JDXE688');
+</script>
+
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,6 +26,11 @@
   <meta property="og:url" content="https://www.shishamhomes.com.np/">
   <meta property="og:image" content="https://www.shishamhomes.com.np/assets/images/banner-1.jpg">
   <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+  <link rel="dns-prefetch" href="//www.googletagmanager.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+  <link rel="preload" as="image" href="./assets/images/banner-1.jpg" fetchpriority="high">
 
   <!--
     - favicon
@@ -382,7 +397,7 @@
 
           <div class="slider-item">
 
-            <img loading="lazy"  src="./assets/images/banner-1.jpg" alt="Essential home appliances sale banner at Shisham Homes Kathmandu" class="banner-img">
+            <img loading="eager" fetchpriority="high" decoding="async" src="./assets/images/banner-1.jpg" alt="Essential home appliances sale banner at Shisham Homes Kathmandu" class="banner-img">
 
             <div class="banner-content">
 
@@ -1791,18 +1806,46 @@
 
     <section class="seo-internal-links" aria-labelledby="internal-links-seo">
       <div class="container">
-        <h2 class="title" id="internal-links-seo">Explore Shisham Homes Categories</h2>
-        <p>Find top home appliances faster using our key category and buying guide links.</p>
-        <ul>
-          <li><a href="./category-refrigerators.html">Refrigerators in Kathmandu</a></li>
-          <li><a href="./category-tv.html">Smart TVs and Entertainment</a></li>
-          <li><a href="./category-microwaves-ovens.html">Microwave Ovens and Induction Cookers</a></li>
-          <li><a href="./category-smart-kitchen-appliances.html">Smart Kitchen Appliances</a></li>
-          <li><a href="./category-smart-household-appliances.html">Smart Household Appliances</a></li>
-          <li><a href="./category-other-products.html">Other Home Appliance Products</a></li>
-          <li><a href="./blog-refrigerator-buying-guide-kathmandu.html">Refrigerator Buying Guide</a></li>
-          <li><a href="./blog-smart-kitchen-appliances-for-modern-homes.html">Smart Kitchen Buying Tips</a></li>
-        </ul>
+        <div class="seo-heading-wrap">
+          <p class="seo-eyebrow">Curated quick links</p>
+          <h2 class="title" id="internal-links-seo">Explore Shisham Homes Categories</h2>
+          <p class="seo-intro">Find top home appliances faster using category pages, buying guides, and direct product links that help customers and search engines discover our latest catalog.</p>
+        </div>
+
+        <div class="seo-link-grid" role="list">
+          <article class="seo-link-card" role="listitem">
+            <h3>Shop by Category</h3>
+            <ul>
+              <li><a href="./category-refrigerators.html">Refrigerators in Kathmandu</a></li>
+              <li><a href="./category-tv.html">Smart TVs and Entertainment</a></li>
+              <li><a href="./category-microwaves-ovens.html">Microwave Ovens and Induction Cookers</a></li>
+              <li><a href="./category-smart-kitchen-appliances.html">Smart Kitchen Appliances</a></li>
+              <li><a href="./category-smart-household-appliances.html">Smart Household Appliances</a></li>
+              <li><a href="./category-other-products.html">Other Home Appliance Products</a></li>
+            </ul>
+          </article>
+
+          <article class="seo-link-card" role="listitem">
+            <h3>Buying Guides</h3>
+            <ul>
+              <li><a href="./blog-refrigerator-buying-guide-kathmandu.html">Refrigerator Buying Guide</a></li>
+              <li><a href="./blog-smart-kitchen-appliances-for-modern-homes.html">Smart Kitchen Buying Tips</a></li>
+              <li><a href="./blog-energy-efficient-home-appliances-nepal.html">Energy Efficient Appliance Guide</a></li>
+            </ul>
+          </article>
+
+          <article class="seo-link-card" role="listitem">
+            <h3>Featured Product Redirect Links</h3>
+            <ul class="product-redirect-links">
+              <li><a href="https://www.shishamhomes.com.np/products/samsung-ce76jd-b1-im-21l-convection-microwave-with-curd-making-technology.html">https://www.shishamhomes.com.np/products/samsung-ce76jd-b1-im-21l-convection-microwave-with-curd-making-technology.html</a></li>
+              <li><a href="https://www.shishamhomes.com.np/products/panasonic-nn-st266byte-solo-microwave.html">https://www.shishamhomes.com.np/products/panasonic-nn-st266byte-solo-microwave.html</a></li>
+              <li><a href="https://www.shishamhomes.com.np/products/sansui-ss-vc16m37-1600w-bag-type-vacuum-cleaner.html">https://www.shishamhomes.com.np/products/sansui-ss-vc16m37-1600w-bag-type-vacuum-cleaner.html</a></li>
+              <li><a href="https://www.shishamhomes.com.np/products/electric-kettle-wb-ek188-1-8l.html">https://www.shishamhomes.com.np/products/electric-kettle-wb-ek188-1-8l.html</a></li>
+              <li><a href="https://www.shishamhomes.com.np/products/panasonic-air-conditioner-cs-cu-kz12yky-8.html">https://www.shishamhomes.com.np/products/panasonic-air-conditioner-cs-cu-kz12yky-8.html</a></li>
+              <li><a href="https://www.shishamhomes.com.np/products/samsung-ua55u8500frshe-55-inch-uhd-smart-tv.html">https://www.shishamhomes.com.np/products/samsung-ua55u8500frshe-55-inch-uhd-smart-tv.html</a></li>
+            </ul>
+          </article>
+        </div>
       </div>
     </section>
 
