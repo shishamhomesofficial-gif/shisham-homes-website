@@ -3321,6 +3321,108 @@ footer {
 
 }
 /*-----------------------------------*\
+  #SEO INTERNAL LINKS
+\*-----------------------------------*/
+
+.seo-internal-links {
+  margin-bottom: 50px;
+}
+
+.seo-internal-links .container {
+  background: linear-gradient(135deg, hsl(0, 0%, 100%) 0%, hsl(0, 0%, 98%) 100%);
+  border: 1px solid hsl(0, 0%, 91%);
+  border-radius: 14px;
+  box-shadow: 0 12px 28px hsla(0, 0%, 0%, 0.05);
+  padding: 24px;
+}
+
+.seo-heading-wrap {
+  margin-bottom: 20px;
+}
+
+.seo-eyebrow {
+  color: hsl(353, 100%, 78%);
+  font-size: var(--fs-7);
+  font-weight: var(--weight-700);
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.seo-intro {
+  color: hsl(0, 0%, 42%);
+  font-size: var(--fs-6);
+  line-height: 1.7;
+  max-width: 70ch;
+}
+
+.seo-link-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.seo-link-card {
+  background: hsl(0, 0%, 100%);
+  border: 1px solid hsl(0, 0%, 90%);
+  border-radius: 12px;
+  padding: 18px;
+}
+
+.seo-link-card h3 {
+  color: hsl(0, 0%, 13%);
+  font-size: var(--fs-5);
+  margin-bottom: 12px;
+}
+
+.seo-link-card ul {
+  display: grid;
+  gap: 10px;
+}
+
+.seo-link-card a {
+  color: hsl(0, 0%, 28%);
+  font-size: var(--fs-6);
+  line-height: 1.5;
+  text-decoration: none;
+  word-break: break-word;
+}
+
+.seo-link-card a:hover {
+  color: hsl(353, 100%, 78%);
+  text-decoration: underline;
+}
+
+.product-redirect-links {
+  max-height: 220px;
+  overflow: auto;
+  padding-right: 8px;
+}
+
+@media (min-width: 768px) {
+  .seo-internal-links .container {
+    padding: 30px;
+  }
+
+  .seo-link-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .seo-link-card:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 1200px) {
+  .seo-link-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .seo-link-card:last-child {
+    grid-column: auto;
+  }
+}
+
+/*-----------------------------------*\
   #STORE LOCATION
 \*-----------------------------------*/
 
