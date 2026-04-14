@@ -128,11 +128,13 @@
 </head>
 <body>
  <div id="navbar"></div>
-  <script>
+ <script>
   fetch('/components/navbar.html')
     .then(res => res.text())
     .then(data => {
-      document.getElementById('navbar').innerHTML = data;
+      const host = document.getElementById('navbar');
+      host.innerHTML = data;
+      initNavbar(host);
     });
   </script>
   <main>
