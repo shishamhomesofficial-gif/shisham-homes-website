@@ -22,6 +22,82 @@ if (notificationToast && toastCloseBtn) {
   });
 }
 
+function initNavbar(root = document) {
+  const mobileMenu = root.querySelector('[data-mobile-menu]');
+  const overlay = root.querySelector('[data-overlay]');
+  const openBtns = root.querySelectorAll('[data-mobile-menu-open-btn]');
+  const closeBtn = root.querySelector('[data-mobile-menu-close-btn]');
+  const accordionBtn = root.querySelectorAll('[data-accordion-btn]');
+  const accordion = root.querySelectorAll('[data-accordion]');
+
+  if (mobileMenu && overlay) {
+    const openMenu = function () {
+      mobileMenu.classList.add('active');
+      overlay.classList.add('active');
+      document.body.classList.add('no-scroll');
+    };
+
+    const closeMenu = function () {
+      mobileMenu.classList.remove('active');
+      overlay.classList.remove('active');
+      document.body.classList.remove('no-scroll');
+    };
+
+    openBtns.forEach(function (btn) {
+      btn.addEventListener('click', function (event) {
+        event.preventDefault();
+        openMenu();
+      });
+    });
+
+    if (closeBtn) {
+      closeBtn.addEventListener('click', closeMenu);
+    }
+
+    overlay.addEventListener('click', closeMenu);
+
+    mobileMenu.addEventListener('click', function (event) {
+      if (event.target.closest('a')) {
+        closeMenu();
+      }
+    });
+
+    window.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') {
+        closeMenu();
+      }
+    });
+
+    window.addEventListener('resize', function () {
+      if (window.innerWidth > 768) {
+        closeMenu();
+      }
+    });
+  }
+
+  if (accordionBtn.length && accordion.length) {
+    for (let i = 0; i < accordionBtn.length; i++) {
+      accordionBtn[i].addEventListener('click', function () {
+        const clickedBtn = this.nextElementSibling.classList.contains('active');
+
+        for (let j = 0; j < accordion.length; j++) {
+          if (clickedBtn) break;
+
+          if (accordion[j].classList.contains('active')) {
+            accordion[j].classList.remove('active');
+            accordionBtn[j].classList.remove('active');
+          }
+        }
+
+        this.nextElementSibling.classList.toggle('active');
+        this.classList.toggle('active');
+      });
+    }
+  }
+}
+
+initNavbar(document);
+
 // mobile menu variables
 const mobileMenuOpenBtn = document.querySelectorAll('[data-mobile-menu-open-btn]');
 const mobileMenu = document.querySelectorAll('[data-mobile-menu]');
