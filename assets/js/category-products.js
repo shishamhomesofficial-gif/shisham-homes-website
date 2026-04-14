@@ -1,7 +1,7 @@
 'use strict';
 
 const categoryCatalog = [
-  { name: 'Samsung CE76JD-B1/IM 21L Convection Microwave with Curd Making Technology', price: 'Rs 24,450', image: './assets/images/products/Samsung-CE76JD-B1.jpg', link: './products/samsung-ce76jd-b1-im-21l-convection-microwave-with-curd-making-technology.html', tags: ['microwaves-ovens', 'smart-kitchen-appliances'] },
+  { name: 'Samsung CE76JD-B1/IM 21L Convection Microwave with Curd Making Technology', price: 'Rs 24,450', image: './assets/images/products/Samsung-CE76JD-B1.jpg', link: './products/samsung-ce76jd-b1-im-21l-convection-microwave-with-curd-making-technology.html', tags: ['microwaves-ovens', 'smart-kitchen-appliances', 'popular-products'] },
   { name: 'Panasonic NN-ST266BYTE Solo Microwave', price: 'Rs 13,250', image: './assets/images/products/Panasonic-NN-ST266BYTE.webp', link: './products/panasonic-nn-st266byte-solo-microwave.html', tags: ['microwaves-ovens', 'smart-kitchen-appliances'] },
   { name: 'Sansui SS-VC16M37 1600W Bag Type Vacuum Cleaner', price: 'Rs 7,500', image: './assets/images/products/Sansui-SS-VC16M37.jpg', link: './products/sansui-ss-vc16m37-1600w-bag-type-vacuum-cleaner.html', tags: ['smart-household-appliances'] },
   { name: 'Electric Kettle WB-EK188 (1.8L)', price: 'Rs 1,200', image: './assets/images/products/Webor-WB-EK188.jpg', link: './products/electric-kettle-wb-ek188-1-8l.html', tags: ['smart-kitchen-appliances'] },
@@ -10,7 +10,7 @@ const categoryCatalog = [
   { name: 'Himstar HK-20D1ICI/YE Induction Cooker', price: 'Rs 4,400', image: './assets/images/products/Himstar-HK-20D1ICI.jpeg', link: './products/himstar-hk-20d1ici-ye-induction-cooker.html', tags: ['smart-kitchen-appliances'] },
   { name: 'Himstar HV-22703WDJ/SE Vacuum Cleaner', price: 'Rs 12,450', image: './assets/images/products/Himstar-HV-22703WDJ.png', link: './products/himstar-hv-22703wdj-se-vacuum-cleaner.html', tags: ['smart-household-appliances'] },
   { name: 'Panasonic NN-CT36HBYTE Convection/Grill Microwave', price: 'Rs 24,600', image: './assets/images/products/Panasonic-NN-CT36HBYTE.png', link: './products/panasonic-nn-ct36hbyte-convection-grill-microwave.html', tags: ['microwaves-ovens', 'smart-kitchen-appliances'] },
-  { name: 'Samsung Refrigerator RR20M282ZS8', price: 'Rs 33,500', image: './assets/images/products/RR20M282ZS8.jpg', link: './products/samsung-refrigerator-rr20m282zs8.html', tags: ['refrigerators'] },
+  { name: 'Samsung Refrigerator RR20M282ZS8', price: 'Rs 33,500', image: './assets/images/products/RR20M282ZS8.jpg', link: './products/samsung-refrigerator-rr20m282zs8.html', tags: ['refrigerators', 'popular-products'] },
   { name: 'Samsung Refrigerator RR20C20C2RH', price: 'Rs 28,990', image: './assets/images/products/RT20C20C2RH.jpg', link: './products/samsung-refrigerator-rr20c20c2rh.html', tags: ['refrigerators'] },
   { name: 'Panasonic Refrigerator NR-A192MFMNP', price: 'Rs 29,298', image: './assets/images/products/NR-A192MFMNP.jpg', link: './products/panasonic-refrigerator-nr-a192mfmnp.html', tags: ['refrigerators'] },
   { name: 'Panasonic Refrigerator NR-A201BEAN', price: 'Rs 29,295', image: './assets/images/products/NR-A201BEAN.jpg', link: './products/panasonic-refrigerator-nr-a201bean.html', tags: ['refrigerators'] },
@@ -20,7 +20,7 @@ const categoryCatalog = [
   { name: 'Samsung Refrigerator RR20C2722CR', price: 'Rs 33,798', image: './assets/images/products/RR20C2722CR.jpg', link: './products/samsung-refrigerator-rr20c2722cr.html', tags: ['refrigerators'] },
   { name: 'Kent Sapphire Water Purifier (Black)', price: 'Rs 36,390', image: './assets/images/products/Kent-Sapphire-B.jpg', link: './products/kent-sapphire-water-purifier-black.html', tags: ['other-products', 'smart-household-appliances'] },
   { name: 'Kent Sapphire Water Purifier (White)', price: 'Rs 36,390', image: './assets/images/products/Kent-Sapphire-W.png', link: './products/kent-sapphire-water-purifier-white.html', tags: ['other-products', 'smart-household-appliances'] },
-  { name: 'Kent Grand Plus Water Purifier', price: 'Rs 34,450', image: './assets/images/products/kent-grand-plus.jpg', link: './products/kent-grand-plus-water-purifier.html', tags: ['other-products', 'smart-household-appliances'] },
+  { name: 'Kent Grand Plus Water Purifier', price: 'Rs 34,450', image: './assets/images/products/kent-grand-plus.jpg', link: './products/kent-grand-plus-water-purifier.html', tags: ['other-products', 'smart-household-appliances', 'popular-products'] },
   { name: 'Kent Pearl ZWW Water Purifier', price: 'Rs 34,990', image: './assets/images/products/kent-pearl-zww.jpg', link: './products/kent-pearl-zww-water-purifier.html', tags: ['other-products', 'smart-household-appliances'] },
   { name: 'Kent Ace Water Purifier', price: 'Rs 29,960', image: './assets/images/products/kent-ace.jpg', link: './products/kent-ace-water-purifier.html', tags: ['other-products', 'smart-household-appliances'] },
   { name: 'Kent Marvel Water Purifier', price: 'Rs 24,985', image: './assets/images/products/kent-marvel.webp', link: './products/kent-marvel-water-purifier.html', tags: ['other-products', 'smart-household-appliances'] },
@@ -29,7 +29,7 @@ const categoryCatalog = [
   { name: 'Webor WBGS2050B Steel Gas Cooktop Burner', price: 'Rs 3,900', image: './assets/images/products/1.jpg', link: './products/webor-wbgs2050b-steel-gas-cooktop-burner.html', tags: ['smart-kitchen-appliances'] },
   { name: 'Faber FMG Candy 1000 3J+1PC Plum Mixer Grinder', price: 'Rs 15,050', image: './assets/images/products/2.jpg', link: './products/faber-fmg-candy-1000-3j-1pc-plum-mixer-grinder.html', tags: ['smart-kitchen-appliances'] },
   { name: 'Samsung Washing Machine WW90DG5U24AX', price: 'Rs 81,910', image: './assets/images/products/WW90DG5U24AX.jpg', link: './products/samsung-washing-machine-ww90dg5u24ax.html', tags: ['smart-household-appliances'] },
-  { name: 'Panasonic Washing Machine NA-148MG4LN1', price: 'Rs 72,940', image: './assets/images/products/NA-148MG4LN1.jpg', link: './products/panasonic-washing-machine-na-148mg4ln1.html', tags: ['smart-household-appliances'] },
+  { name: 'Panasonic Washing Machine NA-148MG4LN1', price: 'Rs 72,940', image: './assets/images/products/NA-148MG4LN1.jpg', link: './products/panasonic-washing-machine-na-148mg4ln1.html', tags: ['smart-household-appliances', 'popular-products'] },
 
   { name: 'Webor WBRC22DRM Electric Rice Cooker', price: 'Rs 3,250', image: './assets/images/products/WBRC22DRM.png', link: './products/webor-wbrc22drm-electric-rice-cooker.html', tags: ['smart-kitchen-appliances'] },
   { name: 'Webor WBGS2050A Glass Gas Cook Top', price: 'Rs 3,950', image: './assets/images/products/WBGS2050A.webp', link: './products/webor-wbgs2050a-glass-gas-cook-top.html', tags: ['smart-kitchen-appliances'] },
@@ -38,7 +38,7 @@ const categoryCatalog = [
   { name: 'Webor Electric Kettle WB-KE18E', price: 'Rs 1,660', image: './assets/images/products/WB-KE18E.jpg', link: './products/webor-electric-kettle-wb-ke18e.html', tags: ['smart-kitchen-appliances'] },
   { name: 'Signora Electric Kettle 1.8L', price: 'Rs 880', image: './assets/images/products/signora-kettle.jpg', link: './products/signora-electric-kettle-1-8l.html', tags: ['smart-kitchen-appliances'] },
   { name: 'Himstar Electric Kettle HK-18JSFI/GY', price: 'Rs 955', image: './assets/images/products/HK-18JSFI.png', link: './products/himstar-electric-kettle-hk-18jsfi-gy.html', tags: ['smart-kitchen-appliances'] },
-  { name: 'Himstar Electric Kettle KG-18RMFI/GY', price: 'Rs 995', image: './assets/images/products/KG-18RMFI.jpg', link: './products/himstar-electric-kettle-kg-18rmfi-gy.html', tags: ['smart-kitchen-appliances'] },
+  { name: 'Himstar Electric Kettle KG-18RMFI/GY', price: 'Rs 995', image: './assets/images/products/KG-18RMFI.jpg', link: './products/himstar-electric-kettle-kg-18rmfi-gy.html', tags: ['smart-kitchen-appliances', 'popular-products'] },
   { name: 'Himstar HK-20D19ICI Induction Cooker', price: 'Rs 5,200', image: './assets/images/products/HK-20D19ICI.jpeg', link: './products/himstar-hk-20d19ici-induction-cooker.html', tags: ['smart-kitchen-appliances'] },
   { name: 'CG Chimney CGCT90YF Kitchen Hood', price: 'Rs 25,325', image: './assets/images/products/CGCT90YF.png', link: './products/cg-chimney-cgct90yf-kitchen-hood.html', tags: ['smart-kitchen-appliances'] },
   { name: 'CG Chimney CGCT60YF Kitchen Hood', price: 'Rs 24,500', image: './assets/images/products/CGCT60YF.jpg', link: './products/cg-chimney-cgct60yf-kitchen-hood.html', tags: ['smart-kitchen-appliances'] },
@@ -58,8 +58,8 @@ const categoryCatalog = [
   { name: 'KENT Austral Prime 30L Water Heater Geyser', price: 'Rs 20,800', image: './assets/images/products/kent-austral-prime.webp', link: './products/kent-austral-prime-30l-water-heater-geyser.html', tags: ['other-products', 'smart-household-appliances'] },
   { name: 'Signoracare Small Hot and Cold Water Dispenser', price: 'Rs 2,399', image: './assets/images/products/signoracare-water-dispenser-small.webp', link: './products/signoracare-small-hot-and-cold-water-dispenser.html', tags: ['other-products', 'smart-household-appliances'] },
   { name: 'Kenstar Tatvam Pro Mixer Grinder', price: 'Rs 7,120', image: './assets/images/products/tatvam-pro.webp', link: './products/kenstar-tatvam-pro-mixer-grinder.html', tags: ['smart-kitchen-appliances'] },
-  { name: 'Bosch TrueMixx Bold Mixer Grinder', price: 'Rs 15,390', image: './assets/images/products/bosh-truemixx.webp', link: './products/bosch-truemixx-bold-mixer-grinder.html', tags: ['smart-kitchen-appliances'] },
-  { name: 'WEBOR TV 39FHDK5S Full HD Smart TV', price: 'Rs 41,000', image: './assets/images/products/39FHDK5S.jpg', link: './products/webor-tv-39fhdk5s-full-hd-smart-tv.html', tags: ['tv'] },
+  { name: 'Bosch TrueMixx Bold Mixer Grinder', price: 'Rs 15,390', image: './assets/images/products/bosh-truemixx.webp', link: './products/bosch-truemixx-bold-mixer-grinder.html', tags: ['smart-kitchen-appliances', 'popular-products'] },
+  { name: 'WEBOR TV 39FHDK5S Full HD Smart TV', price: 'Rs 41,000', image: './assets/images/products/39FHDK5S.jpg', link: './products/webor-tv-39fhdk5s-full-hd-smart-tv.html', tags: ['tv', 'popular-products'] },
   { name: 'Samsung UA55U8500FRSHE 55 Inch UHD Smart TV', price: 'Rs 89,980', image: './assets/images/products/UA55U8500FRSHE.jpg', link: './products/samsung-ua55u8500frshe-55-inch-uhd-smart-tv.html', tags: ['tv'] },
   { name: 'Sansui Deep Freezer SS-CFC110T', price: 'Rs 27,400', image: './assets/images/products/SS-CFC110T.webp', link: './products/sansui-deep-freezer-ss-cfc110t.html', tags: ['other-products', 'smart-household-appliances'] },
   { name: 'Sansui Deep Freezer SS-CFX160HT', price: 'Rs 31,240', image: './assets/images/products/SS-CFX160HT.jpg', link: './products/sansui-deep-freezer-ss-cfx160ht.html', tags: ['other-products', 'smart-household-appliances'] },
@@ -71,7 +71,7 @@ const categoryCatalog = [
   { name: 'Kenstar Iron 1000W', price: 'Rs 1,600', image: './assets/images/products/kenstar-iron.jpg', link: './products/kenstar-iron-1000w.html', tags: ['other-products', 'smart-household-appliances'] },
   { name: 'AMEET Heavy Weight Iron Plancha', price: 'Rs 3,545', image: './assets/images/products/amee-iron-planch.webp', link: './products/ameet-heavy-weight-iron-plancha.html', tags: ['other-products', 'smart-household-appliances'] },
   { name: 'KENSTAR Kettle Estella Optima 1.8L', price: 'Rs 1,800', image: './assets/images/products/kenstar-estella.webp', link: './products/kenstar-kettle-estella-optima-1-8l.html', tags: ['smart-kitchen-appliances'] },
-  { name: 'Signoracare Air Fryer 6L', price: 'Rs 5,998', image: './assets/images/products/signoracare-air-fryer-6L.png', link: './products/signoracare-air-fryer-6l.html', tags: ['smart-kitchen-appliances'] },
+  { name: 'Signoracare Air Fryer 6L', price: 'Rs 5,998', image: './assets/images/products/signoracare-air-fryer-6L.png', link: './products/signoracare-air-fryer-6l.html', tags: ['smart-kitchen-appliances', 'popular-products'] },
   { name: 'Panasonic Air Conditioner CS/CU-KZ12YKY-8', price: 'Rs 93,595', image: './assets/images/products/cu-kz12yky-8.jpg', link: './products/panasonic-air-conditioner-cs-cu-kz12yky-8.html', tags: ['other-products', 'smart-household-appliances'] },
 ];
 
