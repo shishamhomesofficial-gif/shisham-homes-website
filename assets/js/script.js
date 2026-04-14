@@ -23,50 +23,55 @@ if (notificationToast && toastCloseBtn) {
 }
 
 // mobile menu variables
-const mobileMenuOpenBtn = document.querySelectorAll('[data-mobile-menu-open-btn]');
-const mobileMenu = document.querySelectorAll('[data-mobile-menu]');
-const mobileMenuCloseBtn = document.querySelectorAll('[data-mobile-menu-close-btn]');
+const mobileMenuOpenBtns = document.querySelectorAll('[data-mobile-menu-open-btn]');
+const mobileMenu = document.querySelector('[data-mobile-menu]');
+const mobileMenuCloseBtn = document.querySelector('[data-mobile-menu-close-btn]');
 const overlay = document.querySelector('[data-overlay]');
 
-if (mobileMenuOpenBtn.length && mobileMenu.length && mobileMenuCloseBtn.length && overlay) {
-  for (let i = 0; i < mobileMenuOpenBtn.length; i++) {
-    const mobileMenuCloseFunc = function () {
-      mobileMenu[i].classList.remove('active');
-      overlay.classList.remove('active');
-    };
+if (mobileMenu && overlay) {
+  const openMenu = function () {
+    mobileMenu.classList.add('active');
+    overlay.classList.add('active');
+    document.body.classList.add('no-scroll');
+  };
 
-    mobileMenuOpenBtn[i].addEventListener('click', function () {
-      mobileMenu[i].classList.add('active');
-      overlay.classList.add('active');
+  const closeMenu = function () {
+    mobileMenu.classList.remove('active');
+    overlay.classList.remove('active');
+    document.body.classList.remove('no-scroll');
+  };
+
+  mobileMenuOpenBtns.forEach(function (button) {
+    button.addEventListener('click', function (event) {
+      event.preventDefault();
+      openMenu();
     });
+  });
 
-    mobileMenuCloseBtn[i].addEventListener('click', mobileMenuCloseFunc);
-    overlay.addEventListener('click', mobileMenuCloseFunc);
+  if (mobileMenuCloseBtn) {
+    mobileMenuCloseBtn.addEventListener('click', closeMenu);
   }
-}
 
-// accordion variables
-const accordionBtn = document.querySelectorAll('[data-accordion-btn]');
-const accordion = document.querySelectorAll('[data-accordion]');
+  overlay.addEventListener('click', closeMenu);
 
-if (accordionBtn.length && accordion.length) {
-  for (let i = 0; i < accordionBtn.length; i++) {
-    accordionBtn[i].addEventListener('click', function () {
-      const clickedBtn = this.nextElementSibling.classList.contains('active');
+  mobileMenu.addEventListener('click', function (event) {
+    const link = event.target.closest('a');
+    if (link) {
+      closeMenu();
+    }
+  });
 
-      for (let j = 0; j < accordion.length; j++) {
-        if (clickedBtn) break;
+  window.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') {
+      closeMenu();
+    }
+  });
 
-        if (accordion[j].classList.contains('active')) {
-          accordion[j].classList.remove('active');
-          accordionBtn[j].classList.remove('active');
-        }
-      }
-
-      this.nextElementSibling.classList.toggle('active');
-      this.classList.toggle('active');
-    });
-  }
+  window.addEventListener('resize', function () {
+    if (window.innerWidth > 768) {
+      closeMenu();
+    }
+  });
 }
 
 // navigation link helpers
