@@ -167,12 +167,11 @@
   <!--
     - HEADER
   -->
-
   <div class="overlay" data-overlay></div>
   
   <header class="site-header">
     <div class="header-top">
-      <div class="container header-top-inner">
+      <div class="container">
         <ul class="header-social-container">
           <li><a href="#" class="social-link" aria-label="Facebook"><ion-icon name="logo-facebook"></ion-icon></a></li>
           <li><a href="#" class="social-link" aria-label="Twitter"><ion-icon name="logo-twitter"></ion-icon></a></li>
@@ -197,7 +196,7 @@
     </div>
   
     <div class="header-main">
-      <div class="container header-main-inner">
+      <div class="container">
         <a href="https://www.shishamhomes.com.np/" class="header-logo">
           <img loading="lazy" src="./assets/images/logo/logo.svg" alt="Shisham Homes logo" width="120" height="36">
         </a>
@@ -207,7 +206,7 @@
             type="search"
             name="q"
             class="search-field"
-            placeholder="Enter your product name..."
+            placeholder="Search products..."
             autocomplete="off"
             aria-label="Search products"
           >
@@ -221,27 +220,13 @@
     <nav class="desktop-navigation-menu">
       <div class="container">
         <ul class="desktop-menu-category-list">
-          <li class="menu-category">
-            <a href="https://www.shishamhomes.com.np/" class="menu-title">Home</a>
-          </li>
-          <li class="menu-category">
-            <a href="https://www.shishamhomes.com.np/category-refrigerators.html" class="menu-title">Refrigerators</a>
-          </li>
-          <li class="menu-category">
-            <a href="https://www.shishamhomes.com.np/category-smart-kitchen-appliances.html" class="menu-title">Cooking</a>
-          </li>
-          <li class="menu-category">
-            <a href="https://www.shishamhomes.com.np/category-microwaves-ovens.html" class="menu-title">Microwaves &amp; Ovens</a>
-          </li>
-          <li class="menu-category">
-            <a href="https://www.shishamhomes.com.np/category-tv.html" class="menu-title">TVs</a>
-          </li>
-          <li class="menu-category">
-            <a href="https://www.shishamhomes.com.np/category-smart-household-appliances.html" class="menu-title">Household Appliances</a>
-          </li>
-          <li class="menu-category">
-            <a href="https://www.shishamhomes.com.np/category-other-products.html" class="menu-title">Other Products</a>
-          </li>
+          <li class="menu-category"><a href="https://www.shishamhomes.com.np/" class="menu-title">Home</a></li>
+          <li class="menu-category"><a href="https://www.shishamhomes.com.np/category-refrigerators.html" class="menu-title">Refrigerators</a></li>
+          <li class="menu-category"><a href="https://www.shishamhomes.com.np/category-smart-kitchen-appliances.html" class="menu-title">Cooking</a></li>
+          <li class="menu-category"><a href="https://www.shishamhomes.com.np/category-microwaves-ovens.html" class="menu-title">Microwaves &amp; Ovens</a></li>
+          <li class="menu-category"><a href="https://www.shishamhomes.com.np/category-tv.html" class="menu-title">TVs</a></li>
+          <li class="menu-category"><a href="https://www.shishamhomes.com.np/category-smart-household-appliances.html" class="menu-title">Household Appliances</a></li>
+          <li class="menu-category"><a href="https://www.shishamhomes.com.np/category-other-products.html" class="menu-title">Other Products</a></li>
           <li class="menu-category">
             <a
               href="https://www.google.com/maps/dir/?api=1&destination=27.721556,85.377722"
@@ -269,15 +254,18 @@
   
       <button class="action-btn" type="button" data-mobile-menu-open-btn aria-label="Open categories">
         <ion-icon name="grid-outline"></ion-icon>
-        <span>Categories</span>
+        <span>Browse</span>
       </button>
     </div>
   
     <nav class="mobile-navigation-menu has-scrollbar" data-mobile-menu>
-      <div class="mobile-menu-top">
+      <div class="menu-top">
         <div class="mobile-menu-brand">
-          <img src="./assets/images/logo/logo.svg" alt="Shisham Homes" width="110" height="33">
-          <p>Shisham Homes</p>
+          <img src="./assets/images/logo/logo.svg" alt="Shisham Homes logo" width="110" height="33">
+          <div class="mobile-menu-brand-text">
+            <h2 class="menu-title">Shisham Homes</h2>
+            <p>Your trusted home appliances store</p>
+          </div>
         </div>
   
         <button class="menu-close-btn" data-mobile-menu-close-btn type="button" aria-label="Close menu">
@@ -301,60 +289,71 @@
         </form>
       </div>
   
-      <ul class="mobile-menu-category-list">
-        <li class="menu-category"><a href="https://www.shishamhomes.com.np/" class="menu-title">Home</a></li>
-        <li class="menu-category"><a href="https://www.shishamhomes.com.np/category-refrigerators.html" class="menu-title">Refrigerators</a></li>
-        <li class="menu-category"><a href="https://www.shishamhomes.com.np/category-smart-kitchen-appliances.html" class="menu-title">Cooking</a></li>
-        <li class="menu-category"><a href="https://www.shishamhomes.com.np/category-microwaves-ovens.html" class="menu-title">Microwaves &amp; Ovens</a></li>
-        <li class="menu-category"><a href="https://www.shishamhomes.com.np/category-tv.html" class="menu-title">TVs</a></li>
-        <li class="menu-category"><a href="https://www.shishamhomes.com.np/category-smart-household-appliances.html" class="menu-title">Household Appliances</a></li>
-        <li class="menu-category"><a href="https://www.shishamhomes.com.np/category-other-products.html" class="menu-title">Other Products</a></li>
-        <li class="menu-category">
-          <a
-            href="https://www.google.com/maps/dir/?api=1&destination=27.721556,85.377722"
-            class="menu-title"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Location
-          </a>
-        </li>
-      </ul>
+      <div class="mobile-menu-section">
+        <p class="mobile-menu-section-title">Browse</p>
   
-      <div class="menu-bottom">
-        <ul class="menu-category-list">
+        <ul class="mobile-menu-category-list">
+          <li class="menu-category"><a href="https://www.shishamhomes.com.np/" class="menu-title">Home</a></li>
+          <li class="menu-category"><a href="https://www.shishamhomes.com.np/category-refrigerators.html" class="menu-title">Refrigerators</a></li>
+          <li class="menu-category"><a href="https://www.shishamhomes.com.np/category-smart-kitchen-appliances.html" class="menu-title">Cooking</a></li>
+          <li class="menu-category"><a href="https://www.shishamhomes.com.np/category-microwaves-ovens.html" class="menu-title">Microwaves &amp; Ovens</a></li>
+          <li class="menu-category"><a href="https://www.shishamhomes.com.np/category-tv.html" class="menu-title">TVs</a></li>
+          <li class="menu-category"><a href="https://www.shishamhomes.com.np/category-smart-household-appliances.html" class="menu-title">Household Appliances</a></li>
+          <li class="menu-category"><a href="https://www.shishamhomes.com.np/category-other-products.html" class="menu-title">Other Products</a></li>
           <li class="menu-category">
-            <button class="accordion-menu" data-accordion-btn type="button">
-              <p class="menu-title">Language</p>
-              <ion-icon name="caret-back-outline" class="caret-back"></ion-icon>
-            </button>
-  
-            <ul class="submenu-category-list" data-accordion>
-              <li class="submenu-category"><a href="#" class="submenu-title">English</a></li>
-            </ul>
-          </li>
-  
-          <li class="menu-category">
-            <button class="accordion-menu" data-accordion-btn type="button">
-              <p class="menu-title">Currency</p>
-              <ion-icon name="caret-back-outline" class="caret-back"></ion-icon>
-            </button>
-  
-            <ul class="submenu-category-list" data-accordion>
-              <li class="submenu-category"><a href="#" class="submenu-title">NPR</a></li>
-            </ul>
+            <a
+              href="https://www.google.com/maps/dir/?api=1&destination=27.721556,85.377722"
+              class="menu-title"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Location
+            </a>
           </li>
         </ul>
+      </div>
   
-        <div class="mobile-menu-socials">
-          <a href="#" class="social-link" aria-label="Facebook"><ion-icon name="logo-facebook"></ion-icon></a>
-          <a href="#" class="social-link" aria-label="Instagram"><ion-icon name="logo-instagram"></ion-icon></a>
-          <a href="#" class="social-link" aria-label="Twitter"><ion-icon name="logo-twitter"></ion-icon></a>
+      <div class="menu-bottom">
+        <div class="mobile-menu-section">
+          <p class="mobile-menu-section-title">Settings</p>
+  
+          <ul class="menu-category-list">
+            <li class="menu-category">
+              <button class="accordion-menu" data-accordion-btn type="button">
+                <p class="menu-title">Language</p>
+                <ion-icon name="caret-back-outline" class="caret-back"></ion-icon>
+              </button>
+  
+              <ul class="submenu-category-list" data-accordion>
+                <li class="submenu-category"><a href="#" class="submenu-title">English</a></li>
+              </ul>
+            </li>
+  
+            <li class="menu-category">
+              <button class="accordion-menu" data-accordion-btn type="button">
+                <p class="menu-title">Currency</p>
+                <ion-icon name="caret-back-outline" class="caret-back"></ion-icon>
+              </button>
+  
+              <ul class="submenu-category-list" data-accordion>
+                <li class="submenu-category"><a href="#" class="submenu-title">NPR</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+  
+        <div class="mobile-menu-section">
+          <p class="mobile-menu-section-title">Connect</p>
+  
+          <div class="mobile-menu-socials">
+            <a href="#" class="social-link" aria-label="Facebook"><ion-icon name="logo-facebook"></ion-icon></a>
+            <a href="#" class="social-link" aria-label="Instagram"><ion-icon name="logo-instagram"></ion-icon></a>
+            <a href="#" class="social-link" aria-label="Twitter"><ion-icon name="logo-twitter"></ion-icon></a>
+          </div>
         </div>
       </div>
     </nav>
   </header>
-
 
   <!--
     - MAIN
