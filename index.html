@@ -2925,6 +2925,9 @@ document.addEventListener('DOMContentLoaded', function () {
     sortBy: 'relevance',
     maxPrice: Number.POSITIVE_INFINITY
   };
+
+  
+  let shouldScrollToSearchResults = false;
   
   function syncSearchFromUrl() {
     const params = new URLSearchParams(window.location.search);
@@ -2935,6 +2938,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   
     activeFilters.query = normalizeValue(rawQuery);
+    shouldScrollToSearchResults = Boolean(activeFilters.query);
   }
   
   function updateSearchUrl(rawQuery) {
@@ -2960,6 +2964,20 @@ document.addEventListener('DOMContentLoaded', function () {
   
     updateSearchUrl(rawQuery);
     applyFilters();
+    scrollToSearchResults();
+  }
+
+  function scrollToSearchResults() {
+    if (!shouldScrollToSearchResults) return;
+  
+    shouldScrollToSearchResults = false;
+  
+    const target = productResultsStatus || filterPanel || productGrid;
+    if (!target) return;
+  
+    window.requestAnimationFrame(function () {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
   }
 
   syncSearchFromUrl();
