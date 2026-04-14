@@ -15,16 +15,19 @@
         <img loading="lazy"  src="/assets/images/logo/logo.svg" alt="Shisham Homes logo" width="120" height="36">
       </a>
 
-      <a
-        href="https://shishamhomes.com.np/"
-        class="header-search-container search-redirect"
-        aria-label="Go to Shisham Homes homepage"
-      >
-        <div class="search-field">Enter your product name...</div>
-        <div class="search-btn">
+      <form class="header-search-container search-form" action="/index.html" method="GET" role="search">
+        <input
+          type="search"
+          name="q"
+          class="search-field"
+          placeholder="Enter your product name..."
+          aria-label="Search products"
+          autocomplete="off"
+        >
+        <button class="search-btn" type="submit" aria-label="Search">
           <ion-icon name="search-outline"></ion-icon>
-        </div>
-      </a>
+        </button>
+      </form>
     </div>
   </div>
 
