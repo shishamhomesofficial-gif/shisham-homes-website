@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B23JDXE688"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-B23JDXE688');
+</script>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Popular Products | Shisham Homes</title>
+  <meta name="description" content="Explore Popular Products | Shisham Homes at Shisham Homes Kathmandu for genuine home appliances, trusted support, and fast delivery in Nepal.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.shishamhomes.com.np/category-other-products.html">
+  <link rel="shortcut icon" href="./assets/images/logo/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="./assets/css/style-prefix.css">
+  <style>
+    .category-page-wrapper { padding: 40px 0; }
+    .category-page-subtitle { margin-bottom: 18px; color: hsl(0, 0%, 47%); }
+    .category-empty-state { margin-top: 20px; font-size: 24px; font-weight: 600; color: hsl(0, 0%, 27%); }
+  </style>
+</head>
+<body>
+  <div class="overlay" data-overlay></div>
+
+  <div id="navbar"></div>
+  <script>
+  fetch('/components/navbar.html')
+    .then(res => res.text())
+    .then(data => {
+      document.getElementById('navbar').innerHTML = data;
+    });
+  </script>
+
+  <main data-category-page data-category-key="popular-products" data-category-name="Popular Products">
+    <section class="category-page-wrapper">
+      <div class="container">
+        <div class="product-main">
+          <h1 class="title" data-category-heading>Popular Products</h1>
+          <p class="category-page-subtitle">Browse products filtered by Popular Products.</p>
+          <div class="product-grid" data-category-grid></div>
+          <p class="category-empty-state" data-empty-state hidden>No results found</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="./assets/js/script.js"></script>
+  <script src="./assets/js/category-products.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>
