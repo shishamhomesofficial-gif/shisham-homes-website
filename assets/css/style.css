@@ -3079,3 +3079,15 @@ footer {
     font-size: 10px;
   }
 }
+
+
+.detail-info .showcase-category,
+.detail-info h1 {
+  color: #000;
+}
+
+.related-products-section .showcase-category,
+.related-products-section .showcase-title,
+.related-products-section .price {
+  color: #000;
+}
