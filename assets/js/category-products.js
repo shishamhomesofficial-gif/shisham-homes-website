@@ -1,4 +1,3 @@
-window.productCatalog = productCatalog;
 'use strict';
 
 const categoryCatalog = [
@@ -119,3 +118,6 @@ if (categoryPage) {
     grid.innerHTML = cards;
   }
 }
+
+window.categoryCatalog = categoryCatalog;
+window.productCatalog = categoryCatalog;
