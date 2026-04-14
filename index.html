@@ -2864,9 +2864,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     return Array.from(tags);
   }
-
   function getCategoryKey(label) {
     const text = normalizeValue(label);
+  
     if (!text || text === 'categories' || text === 'home') return 'all';
     if (text.includes('refrigerator')) return 'refrigerators';
     if (text.includes('tv')) return 'tv';
@@ -2877,7 +2877,9 @@ document.addEventListener('DOMContentLoaded', function () {
     if (text.includes('kettle')) return 'kettle';
     if (text.includes('vacuum') || text.includes('household')) return 'household';
     if (text.includes('kitchen') || text.includes('cooking') || text.includes('cooker') || text.includes('appliance')) return 'cooking';
-    return 'all';
+  
+    // Important: do NOT fall back to "all"
+    return slugifyValue(label);
   }
 
   function mapCategoryLabelToFilterValue(categoryLabel) {
@@ -2891,18 +2893,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function toggleNoResultsMessage(visible) {
     if (!productGrid) return;
+  
     if (!noResultsMessage) {
       noResultsMessage = document.createElement('p');
-      noResultsMessage.textContent = 'No results found';
       noResultsMessage.style.display = 'none';
       noResultsMessage.style.margin = '16px 0';
       noResultsMessage.style.fontWeight = '600';
       noResultsMessage.style.color = 'var(--eerie-black)';
       productGrid.insertAdjacentElement('afterend', noResultsMessage);
     }
+  
+    noResultsMessage.textContent = activeFilters.query
+      ? 'No products found for your search.'
+      : 'No products found in this category.';
+  
     noResultsMessage.style.display = visible ? 'block' : 'none';
   }
-
   function updateSearchVisibility(hasQuery) {
     if (!homeMain || !filterPanel || !categoryFilterSelect || !clearFiltersButton) return;
 
@@ -3097,29 +3103,32 @@ document.addEventListener('DOMContentLoaded', function () {
   const categoryTriggers = document.querySelectorAll(
     '.menu-title, .dropdown-item a, .panel-list-item a, .submenu-title, .category-btn'
   );
-
   categoryTriggers.forEach(function (trigger) {
     trigger.addEventListener('click', function (event) {
       if (trigger.closest('.product-grid > .showcase')) return;
       if (trigger.classList.contains('category-btn') && trigger.getAttribute('href') && trigger.getAttribute('href') !== '#') {
         return;
       }
-
+  
       const categoryText = findCategoryText(trigger);
       const categoryKey = getCategoryKey(categoryText);
-
+  
       if (categoryKey !== 'all') {
         event.preventDefault();
       } else if (trigger.getAttribute('href') === '#') {
         event.preventDefault();
       }
-
+  
       if (categoryFilterSelect) {
         categoryFilterSelect.value = categoryKey;
       }
+  
       activeFilters.category = categoryKey;
       applyFilters();
-      filterPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  
+      if (filterPanel) {
+        filterPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     });
   });
 
