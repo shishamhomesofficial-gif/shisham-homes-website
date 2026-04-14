@@ -3283,72 +3283,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   configureFilterPanel(productCatalog);
-  function syncSearchFromUrl() {
-    const params = new URLSearchParams(window.location.search);
-    const rawQuery = params.get('q') || '';
   
-    if (searchField) {
-      searchField.value = rawQuery;
-    }
-  
-    activeFilters.query = normalizeValue(rawQuery);
-  }
-  
-  function updateSearchUrl(rawQuery) {
-    const url = new URL(window.location.href);
-  
-    if (rawQuery && rawQuery.trim()) {
-      url.searchParams.set('q', rawQuery.trim());
-    } else {
-      url.searchParams.delete('q');
-    }
-  
-    history.pushState({}, '', url);
-  }
-  
-  function runSearchFilters() {
-    const rawQuery = searchField ? searchField.value : '';
-    activeFilters.query = normalizeValue(rawQuery);
-  
-    if (activeFilters.query && categoryFilterSelect) {
-      activeFilters.category = 'all';
-      categoryFilterSelect.value = 'all';
-    }
-  
-    updateSearchUrl(rawQuery);
-    applyFilters();
-  }
-  
-  syncSearchFromUrl();
-  
-  if (searchField) {
-    searchField.addEventListener('input', runSearchFilters);
-    searchField.addEventListener('keydown', function (event) {
-      if (event.key === 'Escape') {
-        searchField.value = '';
-        activeFilters.query = '';
-        updateSearchUrl('');
-        applyFilters();
-        return;
-      }
-    });
-  }
-  
-  if (searchForm) {
-    searchForm.addEventListener('submit', function (event) {
-      event.preventDefault();
-      runSearchFilters();
-      if (filterPanel) {
-        filterPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    });
-  }
-  
-  window.addEventListener('popstate', function () {
-    syncSearchFromUrl();
-    applyFilters();
-  });
-
   function findCategoryText(triggerEl) {
     if (!triggerEl) return '';
     if (triggerEl.classList.contains('category-btn')) {
