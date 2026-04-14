@@ -200,12 +200,12 @@
           <img loading="lazy"  src="./assets/images/logo/logo.svg" alt="Shisham Homes logo" width="120" height="36">
         </a>
   
-        <div class="header-search-container">
-          <input type="search" name="search" class="search-field" placeholder="Enter your product name...">
-          <button class="search-btn" type="button">
+        <form class="header-search-container" id="searchForm">
+          <input type="search" name="q" class="search-field" placeholder="Enter your product name..." autocomplete="off">
+          <button class="search-btn" type="submit">
             <ion-icon name="search-outline"></ion-icon>
           </button>
-        </div>
+        </form>
       </div>
     </div>
   
@@ -2906,6 +2906,7 @@ document.addEventListener('DOMContentLoaded', function () {
     showcaseCards = Array.from(document.querySelectorAll('.product-grid > .showcase'));
   }
   let noResultsMessage = null;
+  const searchForm = document.getElementById('searchForm');
   const searchField = document.querySelector('.header-search-container .search-field');
   const searchButton = document.querySelector('.header-search-container .search-btn');
   const filterPanel = document.querySelector('[data-product-filter-panel]');
@@ -3118,20 +3119,21 @@ document.addEventListener('DOMContentLoaded', function () {
       activeFilters.sortBy = sortFilterSelect.value;
       applyFilters();
     });
-
+    
     if (clearFiltersButton) {
       clearFiltersButton.addEventListener('click', function () {
         activeFilters.query = '';
         activeFilters.category = 'all';
         activeFilters.sortBy = 'relevance';
         activeFilters.maxPrice = maxProductPrice;
-
+    
         if (searchField) searchField.value = '';
         categoryFilterSelect.value = 'all';
         sortFilterSelect.value = 'relevance';
         priceFilterRange.value = String(maxProductPrice);
         priceFilterValue.textContent = `Rs ${maxProductPrice.toLocaleString()}`;
-
+    
+        history.pushState({}, '', window.location.pathname);
         applyFilters();
       });
     }
@@ -3194,41 +3196,71 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   configureFilterPanel(productCatalog);
-
+  function syncSearchFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    const rawQuery = params.get('q') || '';
+  
+    if (searchField) {
+      searchField.value = rawQuery;
+    }
+  
+    activeFilters.query = normalizeValue(rawQuery);
+  }
+  
+  function updateSearchUrl(rawQuery) {
+    const url = new URL(window.location.href);
+  
+    if (rawQuery && rawQuery.trim()) {
+      url.searchParams.set('q', rawQuery.trim());
+    } else {
+      url.searchParams.delete('q');
+    }
+  
+    history.pushState({}, '', url);
+  }
+  
   function runSearchFilters() {
-    activeFilters.query = normalizeValue(searchField ? searchField.value : '');
+    const rawQuery = searchField ? searchField.value : '';
+    activeFilters.query = normalizeValue(rawQuery);
+  
     if (activeFilters.query && categoryFilterSelect) {
       activeFilters.category = 'all';
       categoryFilterSelect.value = 'all';
     }
+  
+    updateSearchUrl(rawQuery);
     applyFilters();
   }
-
+  
+  syncSearchFromUrl();
+  
   if (searchField) {
     searchField.addEventListener('input', runSearchFilters);
     searchField.addEventListener('keydown', function (event) {
       if (event.key === 'Escape') {
         searchField.value = '';
         activeFilters.query = '';
+        updateSearchUrl('');
         applyFilters();
         return;
       }
-
-      if (event.key === 'Enter') {
-        event.preventDefault();
-        runSearchFilters();
+    });
+  }
+  
+  if (searchForm) {
+    searchForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+      runSearchFilters();
+      if (filterPanel) {
         filterPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     });
   }
-
-  if (searchButton) {
-    searchButton.addEventListener('click', function (event) {
-      event.preventDefault();
-      runSearchFilters();
-      filterPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-  }
+  
+  window.addEventListener('popstate', function () {
+    syncSearchFromUrl();
+    applyFilters();
+  });
 
   function findCategoryText(triggerEl) {
     if (!triggerEl) return '';
