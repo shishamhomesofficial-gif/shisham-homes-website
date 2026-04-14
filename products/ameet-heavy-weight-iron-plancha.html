@@ -71,7 +71,7 @@
     .product-page-wrap {
       max-width: 1180px;
       margin: 0 auto;
-      padding: 24px 16px 48px;
+      padding: 24px 16px 56px;
     }
 
     .product-page-layout {
@@ -124,7 +124,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
-      margin: 14px 0 0;
+      margin-top: 14px;
     }
 
     .product-page-actions .add-cart-btn,
@@ -251,12 +251,7 @@
         gap: 26px;
       }
 
-      .detail-images {
-        order: 0;
-      }
-
       .detail-info {
-        order: 1;
         text-align: left;
       }
 
@@ -306,11 +301,11 @@
       });
   </script>
 
-  <main>
+  <main data-product-slug="ameet-heavy-weight-iron-plancha.html">
     <section class="ecommerce-section">
       <div class="product-page-wrap">
-        <div class="product-page-layout" data-product-page>
-          <div class="detail-images" data-product-page-images>
+        <div class="product-page-layout">
+          <div class="detail-images">
             <img
               loading="lazy"
               src="../assets/images/products/amee-iron-planch.webp"
@@ -321,16 +316,17 @@
           </div>
 
           <div class="detail-info">
-            <p class="showcase-category" data-product-page-category>Electric Irons</p>
-            <h1 data-product-page-name>AMEET Heavy Weight Iron Plancha</h1>
-            <p class="detail-price" data-product-page-price>Rs 3,545</p>
+            <p class="showcase-category">Electric Irons</p>
+            <h1>AMEET Heavy Weight Iron Plancha</h1>
+            <p class="detail-price">Rs 3,545</p>
 
-            <p class="product-page-description" data-product-page-description>
+            <p class="product-page-description">
               Buy AMEET Heavy Weight Iron Plancha in Nepal at Shisham Homes for reliable performance, strong build quality, and trusted after-sales support for modern homes.
             </p>
 
             <div class="product-page-actions">
-              <button class="add-cart-btn primary-action-btn" type="button" data-product-page-checkout
+              <button class="add-cart-btn primary-action-btn" type="button"
+                data-product-page-checkout
                 data-product-id="ameet-heavy-weight-iron-plancha"
                 data-product-name="AMEET Heavy Weight Iron Plancha"
                 data-product-price="Rs 3,545"
@@ -391,68 +387,11 @@
     </section>
   </main>
 
-  <!-- Load your product catalog -->
-  <script src="../assets/js/category-products.js"></script>
+  <script src="../assets/js/product-catalog.js"></script>
+  <script src="../assets/js/product-page.js"></script>
 
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
   <script src="../assets/js/script.js"></script>
-
-  <script>
-    (function () {
-      const currentName = 'AMEET Heavy Weight Iron Plancha';
-      const currentLink = './products/ameet-heavy-weight-iron-plancha.html';
-      const relatedKeywords = ['iron', 'plancha'];
-      const relatedTags = ['other-products', 'smart-household-appliances'];
-
-      const grid = document.getElementById('related-products-grid');
-      const emptyState = document.getElementById('related-products-empty');
-
-      const catalog = typeof categoryCatalog !== 'undefined' ? categoryCatalog : [];
-
-      const candidates = catalog
-        .filter(product => product.link !== currentLink && product.name !== currentName)
-        .map(product => {
-          let score = 0;
-
-          const lowerName = product.name.toLowerCase();
-          relatedKeywords.forEach(keyword => {
-            if (lowerName.includes(keyword)) score += 4;
-          });
-
-          relatedTags.forEach(tag => {
-            if (product.tags && product.tags.includes(tag)) score += 1;
-          });
-
-          return { ...product, score };
-        })
-        .filter(product => product.score > 0)
-        .sort((a, b) => b.score - a.score || a.price.localeCompare(b.price))
-        .slice(0, 4);
-
-      if (!grid || !emptyState) return;
-
-      if (!candidates.length) {
-        emptyState.hidden = false;
-        return;
-      }
-
-      grid.innerHTML = candidates.map(product => `
-        <div class="showcase">
-          <div class="showcase-banner">
-            <a href="${product.link}" class="showcase-img-box">
-              <img src="${product.image}" alt="${product.name}" class="product-img default" width="300" loading="lazy">
-              <img src="${product.image}" alt="${product.name}" class="product-img hover" width="300" loading="lazy">
-            </a>
-          </div>
-          <div class="showcase-content">
-            <a href="${product.link}" class="showcase-category">Related Product</a>
-            <h3><a href="${product.link}" class="showcase-title">${product.name}</a></h3>
-            <div class="price-box"><p class="price">${product.price}</p></div>
-          </div>
-        </div>
-      `).join('');
-    })();
-  </script>
 </body>
 </html>
