@@ -6,66 +6,56 @@
       .replace(/[^a-z0-9]+/g, ' ')
       .trim();
 
+  const normalizeImage = (src) => {
+    if (!src) return '';
+    const value = String(src).trim();
+    if (value.startsWith('http://') || value.startsWith('https://') || value.startsWith('/')) {
+      return value;
+    }
+    return '/' + value.replace(/^\.\//, '');
+  };
+
   const getCatalog = () => {
     if (Array.isArray(window.categoryCatalog) && window.categoryCatalog.length) return window.categoryCatalog;
     if (Array.isArray(window.productCatalog) && window.productCatalog.length) return window.productCatalog;
     return [];
   };
 
-  const getCurrentPageData = () => {
+  const getPageData = () => {
     const main = document.querySelector('main');
     return {
       slug: normalize(main?.dataset.productSlug || location.pathname.split('/').pop()),
-      title: main?.dataset.productTitle || '',
-      category: main?.dataset.productCategory || '',
+      title: main?.dataset.productTitle || document.querySelector('h1')?.textContent || '',
+      category: main?.dataset.productCategory || document.querySelector('.detail-info .showcase-category')?.textContent || '',
     };
   };
 
-  const buildRelatedPool = (catalog, current) => {
-    const currentTokens = normalize(current.title)
-      .split(' ')
-      .filter((word) => word.length > 2);
+  const scoreProduct = (product, current) => {
+    const name = normalize(product.name);
+    const tags = Array.isArray(product.tags) ? product.tags.map(normalize) : [];
+    const currentTitle = normalize(current.title);
+    const currentCategory = normalize(current.category);
 
-    const scored = catalog
-      .filter((product) => normalize(product.link || '').split('/').pop() !== current.slug)
-      .map((product) => {
-        const title = normalize(product.name);
-        const tags = Array.isArray(product.tags) ? product.tags.map(normalize) : [];
+    let score = 0;
 
-        let score = 0;
+    if (normalize(product.link || '').split('/').pop() === current.slug) return -999;
 
-        if (tags.includes('smart-household-appliances')) score += 2;
-        if (tags.includes('other-products')) score += 1;
+    if (currentCategory && tags.includes(currentCategory)) score += 12;
+    if (currentCategory && name.includes(currentCategory)) score += 8;
 
-        currentTokens.forEach((token) => {
-          if (token && title.includes(token)) score += 5;
-        });
+    const currentTokens = currentTitle.split(' ').filter((w) => w.length > 2);
+    currentTokens.forEach((token) => {
+      if (name.includes(token)) score += 3;
+    });
 
-        if (current.category && title.includes(normalize(current.category))) score += 2;
+    if (currentTitle.includes('iron') && name.includes('iron')) score += 12;
+    if (currentTitle.includes('kettle') && name.includes('kettle')) score += 12;
+    if (currentTitle.includes('microwave') && name.includes('microwave')) score += 12;
+    if (currentTitle.includes('refrigerator') && name.includes('refrigerator')) score += 12;
+    if (currentTitle.includes('vacuum') && name.includes('vacuum')) score += 12;
+    if (currentTitle.includes('water purifier') && name.includes('water purifier')) score += 12;
 
-        if (current.title.toLowerCase().includes('iron') && title.includes('iron')) score += 10;
-        if (current.title.toLowerCase().includes('kettle') && title.includes('kettle')) score += 10;
-        if (current.title.toLowerCase().includes('microwave') && title.includes('microwave')) score += 10;
-        if (current.title.toLowerCase().includes('refrigerator') && title.includes('refrigerator')) score += 10;
-        if (current.title.toLowerCase().includes('vacuum') && title.includes('vacuum')) score += 10;
-        if (current.title.toLowerCase().includes('water purifier') && title.includes('water purifier')) score += 10;
-
-        return { ...product, score };
-      })
-      .filter((product) => product.score > 0)
-      .sort((a, b) => b.score - a.score || a.name.localeCompare(b.name));
-
-    const firstPass = scored.slice(0, 4);
-
-    if (firstPass.length >= 4) return firstPass;
-
-    const used = new Set(firstPass.map((p) => p.link));
-    const fallback = catalog
-      .filter((product) => !used.has(product.link))
-      .filter((product) => normalize(product.link || '').split('/').pop() !== current.slug)
-      .slice(0, 4 - firstPass.length);
-
-    return [...firstPass, ...fallback];
+    return score;
   };
 
   const renderRelatedProducts = () => {
@@ -80,19 +70,13 @@
       return;
     }
 
-    const current = getCurrentPageData();
+    const current = getPageData();
 
-    const currentProduct =
-      catalog.find((product) => normalize(product.link || '').split('/').pop() === current.slug) ||
-      catalog.find((product) => normalize(product.name) === normalize(current.title));
-
-    const related = buildRelatedPool(catalog, {
-      slug: current.slug,
-      title: currentProduct?.name || current.title || document.querySelector('h1')?.textContent || '',
-      category: currentProduct?.tags?.includes('smart-household-appliances')
-        ? 'Smart Household Appliances'
-        : current.category || '',
-    });
+    const related = catalog
+      .map((product) => ({ ...product, score: scoreProduct(product, current) }))
+      .filter((product) => product.score > 0)
+      .sort((a, b) => b.score - a.score || a.name.localeCompare(b.name))
+      .slice(0, 4);
 
     if (!related.length) {
       emptyState.hidden = false;
@@ -102,16 +86,13 @@
 
     grid.innerHTML = related.map((product) => {
       const href = `./${String(product.link || '').split('/').pop()}`;
-      const image = String(product.image || '').startsWith('/')
-        ? product.image
-        : '/' + String(product.image || '').replace(/^\.\//, '');
+      const image = normalizeImage(product.image);
 
       return `
         <div class="showcase">
           <div class="showcase-banner">
             <a href="${href}" class="showcase-img-box">
-              <img src="${image}" alt="${product.name}" class="product-img default" width="300" loading="lazy">
-              <img src="${image}" alt="${product.name}" class="product-img hover" width="300" loading="lazy">
+              <img src="${image}" alt="${product.name}" class="product-img default" width="300" height="300" loading="lazy">
             </a>
           </div>
           <div class="showcase-content">
@@ -130,14 +111,16 @@
         renderRelatedProducts();
         return;
       }
-      if (attempt < 30) {
+
+      if (attempt < 40) {
         setTimeout(() => tryRender(attempt + 1), 100);
-      } else {
-        const emptyState = document.getElementById('related-products-empty');
-        if (emptyState) {
-          emptyState.hidden = false;
-          emptyState.textContent = 'No similar products found right now.';
-        }
+        return;
+      }
+
+      const emptyState = document.getElementById('related-products-empty');
+      if (emptyState) {
+        emptyState.hidden = false;
+        emptyState.textContent = 'No similar products found right now.';
       }
     };
 
