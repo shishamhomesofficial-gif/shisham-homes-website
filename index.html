@@ -82,7 +82,7 @@
   <!--
     - MODAL
   -->
-<!--
+
   <div class="modal" data-modal>
 
     <div class="modal-close-overlay" data-modal-overlay></div>
@@ -123,7 +123,7 @@
 
   </div>
 
--->
+
 
 
 
@@ -131,7 +131,6 @@
     - NOTIFICATION TOAST
   -->
 
-<!--
   <div class="notification-toast" data-toast>
 
     <button class="toast-close-btn" data-toast-close>
@@ -160,17 +159,13 @@
 
   </div>
 
--->
+
 
 
 
   <!--
     - HEADER
   -->
-
-  <div class="overlay" data-overlay></div>
-
- <div class="overlay" data-overlay></div>
 
   <header>
     <div class="header-top">
@@ -200,20 +195,14 @@
   
     <div class="header-main">
       <div class="container">
-        <a href="/index.html" class="header-logo">
-          <img loading="lazy" src="/assets/images/logo/logo.svg" alt="Shisham Homes logo" width="120" height="36">
+        <a href="https://www.www.shishamhomes.com.np/" class="header-logo"
+           onclick="window.location.href='https://www.www.shishamhomes.com.np/'; return false;">
+          <img loading="lazy"  src="./assets/images/logo/logo.svg" alt="Shisham Homes logo" width="120" height="36">
         </a>
   
-        <form class="header-search-container" id="searchForm" action="/index.html" method="GET" role="search">
-          <input
-            type="search"
-            name="q"
-            class="search-field"
-            placeholder="Enter your product name..."
-            autocomplete="off"
-            aria-label="Search products"
-          >
-          <button class="search-btn" type="submit" aria-label="Search">
+        <form class="header-search-container" id="searchForm">
+          <input type="search" name="q" class="search-field" placeholder="Enter your product name..." autocomplete="off">
+          <button class="search-btn" type="submit">
             <ion-icon name="search-outline"></ion-icon>
           </button>
         </form>
@@ -223,20 +212,58 @@
     <nav class="desktop-navigation-menu">
       <div class="container">
         <ul class="desktop-menu-category-list">
-          <li class="menu-category"><a href="/index.html" class="menu-title">Home</a></li>
-          <li class="menu-category"><a href="/category-refrigerators.html" class="menu-title">Refrigerators</a></li>
-          <li class="menu-category"><a href="/category-smart-kitchen-appliances.html" class="menu-title">Cooking</a></li>
-          <li class="menu-category"><a href="/category-microwaves-ovens.html" class="menu-title">Microwaves &amp; Ovens</a></li>
-          <li class="menu-category"><a href="/category-tv.html" class="menu-title">TVs</a></li>
-          <li class="menu-category"><a href="/category-smart-household-appliances.html" class="menu-title">Household Appliances</a></li>
-          <li class="menu-category"><a href="/category-other-products.html" class="menu-title">Other Products</a></li>
           <li class="menu-category">
-            <a
-              href="https://www.google.com/maps/dir/?api=1&destination=27.721556,85.377722"
-              class="menu-title"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a href="https://www.shishamhomes.com.np/" class="menu-title"
+               onclick="window.location.href='https://www.shishamhomes.com.np/'; return false;">
+              Home
+            </a>
+          </li>
+  
+          <li class="menu-category">
+            <a href="https://www.shishamhomes.com.np/category-refrigerators.html" class="menu-title"
+               onclick="window.location.href='https://www.shishamhomes.com.np/category-refrigerators.html'; return false;">
+              Refrigerators
+            </a>
+          </li>
+  
+          <li class="menu-category">
+            <a href="https://www.shishamhomes.com.np/category-smart-kitchen-appliances.html" class="menu-title"
+               onclick="window.location.href='https://www.shishamhomes.com.np/category-smart-kitchen-appliances.html'; return false;">
+              Cooking
+            </a>
+          </li>
+  
+          <li class="menu-category">
+            <a href="https://www.shishamhomes.com.np/category-microwaves-ovens.html" class="menu-title"
+               onclick="window.location.href='https://www.shishamhomes.com.np/category-microwaves-ovens.html'; return false;">
+              Microwaves & Ovens
+            </a>
+          </li>
+
+          <li class="menu-category">
+            <a href="https://www.shishamhomes.com.np/category-tv.html" class="menu-title"
+               onclick="window.location.href='https://www.shishamhomes.com.np/category-tv.html'; return false;">
+              TVs
+            </a>
+          </li>
+
+          <li class="menu-category">
+            <a href="https://www.shishamhomes.com.np/category-smart-household-appliances.html" class="menu-title"
+               onclick="window.location.href='https://www.shishamhomes.com.np/category-smart-household-appliances.html'; return false;">
+              Household Appliances
+            </a>
+          </li>
+
+          <li class="menu-category">
+            <a href="https://www.shishamhomes.com.np/category-other-products.html" class="menu-title"
+               onclick="window.location.href='https://www.shishamhomes.com.np/category-other-products.html'; return false;">
+              Other Products
+            </a>
+          </li>
+  
+          <li class="menu-category">
+            <a href="https://www.google.com/maps/dir/?api=1&destination=27.721556,85.377722"
+               class="menu-title" target="_blank" rel="noopener noreferrer">
               Location
             </a>
           </li>
@@ -245,43 +272,77 @@
     </nav>
   
     <div class="mobile-bottom-navigation">
-      <button class="action-btn" type="button" data-mobile-menu-open-btn aria-label="Open menu">
+      <a class="action-btn" href="#" data-mobile-menu-open-btn>
         <ion-icon name="menu-outline"></ion-icon>
-      </button>
+      </a>
+
   
-      <a class="action-btn" href="/index.html" aria-label="Home">
+      <a class="action-btn" href="https://www.shishamhomes.com.np/"
+         onclick="window.location.href='https://www.shishamhomes.com.np/'; return false;">
         <ion-icon name="home-outline"></ion-icon>
       </a>
-  
-      <button class="action-btn" type="button" data-mobile-menu-open-btn aria-label="Open categories">
+
+      <a class="action-btn" href="#" data-mobile-menu-open-btn>
         <ion-icon name="grid-outline"></ion-icon>
-      </button>
+      </a>
     </div>
   
     <nav class="mobile-navigation-menu has-scrollbar" data-mobile-menu>
       <div class="menu-top">
         <h2 class="menu-title">Menu</h2>
   
-        <button class="menu-close-btn" data-mobile-menu-close-btn type="button" aria-label="Close menu">
+        <button class="menu-close-btn" data-mobile-menu-close-btn type="button">
           <ion-icon name="close-outline"></ion-icon>
         </button>
       </div>
   
       <ul class="mobile-menu-category-list">
-        <li class="menu-category"><a href="/index.html" class="menu-title">Home</a></li>
-        <li class="menu-category"><a href="/category-refrigerators.html" class="menu-title">Refrigerators</a></li>
-        <li class="menu-category"><a href="/category-smart-kitchen-appliances.html" class="menu-title">Cooking</a></li>
-        <li class="menu-category"><a href="/category-microwaves-ovens.html" class="menu-title">Microwaves &amp; Ovens</a></li>
-        <li class="menu-category"><a href="/category-tv.html" class="menu-title">TVs</a></li>
-        <li class="menu-category"><a href="/category-smart-household-appliances.html" class="menu-title">Household Appliances</a></li>
-        <li class="menu-category"><a href="/category-other-products.html" class="menu-title">Other Products</a></li>
         <li class="menu-category">
-          <a
-            href="https://www.google.com/maps/dir/?api=1&destination=27.721556,85.377722"
-            class="menu-title"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <a href="https://www.shishamhomes.com.np/" class="menu-title"
+             onclick="window.location.href='https://www.shishamhomes.com.np/'; return false;">
+            Home
+          </a>
+        </li>
+  
+        <li class="menu-category">
+          <a href="https://www.shishamhomes.com.np/category-refrigerators.html" class="menu-title"
+             onclick="window.location.href='https://www.shishamhomes.com.np/category-refrigerators.html'; return false;">
+            Refrigerators
+          </a>
+        </li>
+  
+        <li class="menu-category">
+          <a href="https://www.shishamhomes.com.np/category-smart-kitchen-appliances.html" class="menu-title"
+             onclick="window.location.href='https://www.shishamhomes.com.np/category-smart-kitchen-appliances.html'; return false;">
+            Cooking
+          </a>
+        </li>
+  
+        <li class="menu-category">
+          <a href="https://www.shishamhomes.com.np/category-microwaves-ovens.html" class="menu-title"
+             onclick="window.location.href='https://www.shishamhomes.com.np/category-microwaves-ovens.html'; return false;">
+            Microwaves & Ovens
+          </a>
+        </li>
+
+        <li class="menu-category">
+          <a href="https://www.shishamhomes.com.np/category-tv.html" class="menu-title"
+             onclick="window.location.href='https://www.shishamhomes.com.np/category-tv.html'; return false;">TVs</a>
+        </li>
+
+        <li class="menu-category">
+          <a href="https://www.shishamhomes.com.np/category-smart-household-appliances.html" class="menu-title"
+             onclick="window.location.href='https://www.shishamhomes.com.np/category-smart-household-appliances.html'; return false;">Household Appliances</a>
+        </li>
+
+        <li class="menu-category">
+          <a href="https://www.shishamhomes.com.np/category-other-products.html" class="menu-title"
+             onclick="window.location.href='https://www.shishamhomes.com.np/category-other-products.html'; return false;">Other Products</a>
+        </li>
+  
+        <li class="menu-category">
+          <a href="https://www.google.com/maps/dir/?api=1&destination=27.721556,85.377722" class="menu-title"
+             target="_blank" rel="noopener noreferrer">
             Location
           </a>
         </li>
@@ -314,6 +375,8 @@
       </div>
     </nav>
   </header>
+
+
 
 
   <!--
