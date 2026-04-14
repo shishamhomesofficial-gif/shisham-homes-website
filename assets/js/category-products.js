@@ -1,3 +1,4 @@
+window.productCatalog = productCatalog;
 'use strict';
 
 const categoryCatalog = [
