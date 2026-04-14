@@ -7,7 +7,6 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-B23JDXE688');
 </script>
 
@@ -69,13 +68,13 @@
     .product-page-wrap {
       max-width: 1180px;
       margin: 0 auto;
-      padding: 24px 16px 56px;
+      padding: 40px 16px 64px;
     }
 
     .product-page-layout {
       display: grid;
       grid-template-columns: minmax(280px, 380px) minmax(0, 1fr);
-      gap: 40px;
+      gap: 48px;
       align-items: start;
       justify-content: center;
     }
@@ -84,7 +83,7 @@
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      padding-top: 10px;
+      padding-top: 8px;
     }
 
     .detail-images img {
@@ -98,6 +97,10 @@
       width: 100%;
       max-width: 760px;
       justify-self: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
     }
 
     .detail-info h1,
@@ -120,14 +123,15 @@
       max-width: 70ch;
       line-height: 1.8;
       color: #444;
-      margin-bottom: 18px;
+      margin-bottom: 22px;
     }
 
     .product-page-actions {
       display: flex;
       flex-wrap: wrap;
+      justify-content: center;
       gap: 12px;
-      margin-top: 14px;
+      margin-top: 8px;
     }
 
     .product-page-actions .add-cart-btn,
@@ -138,9 +142,9 @@
 
     .product-page-extra {
       max-width: 920px;
-      margin: 42px auto 0;
+      margin: 58px auto 0;
       display: grid;
-      gap: 22px;
+      gap: 24px;
     }
 
     .product-page-description-block,
@@ -149,7 +153,7 @@
       background: #fff;
       border: 1px solid #e5e5e5;
       border-radius: 16px;
-      padding: 20px;
+      padding: 22px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.03);
     }
 
@@ -157,7 +161,7 @@
     .related-products-section h2 {
       font-size: 1.15rem;
       font-weight: 700;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
       color: #111;
       text-align: center;
     }
@@ -257,7 +261,11 @@
     @media (max-width: 980px) {
       .product-page-layout {
         grid-template-columns: 1fr;
-        gap: 26px;
+        gap: 28px;
+      }
+
+      .detail-info {
+        max-width: 100%;
       }
 
       .related-products-grid {
@@ -272,6 +280,7 @@
 
       .product-page-actions {
         display: grid;
+        width: 100%;
       }
 
       .product-page-actions .add-cart-btn,
@@ -284,38 +293,46 @@
         width: 100%;
         max-width: 320px;
       }
+
+      .product-page-extra {
+        margin-top: 48px;
+      }
     }
 
     @media (max-width: 540px) {
       .related-products-grid {
         grid-template-columns: 1fr;
       }
+
+      .product-page-wrap {
+        padding-top: 28px;
+      }
     }
   </style>
 </head>
 <body>
-  <div id="navbar"></div>
+ <div id="navbar"></div>
   <script>
-    fetch('/components/navbar.html')
-      .then(res => res.text())
-      .then(data => {
-        const host = document.getElementById('navbar');
-        host.innerHTML = data;
-        if (typeof initNavbar === 'function') {
-          initNavbar(host);
-        }
-      });
+  fetch('/components/navbar.html')
+    .then(res => res.text())
+    .then(data => {
+      const host = document.getElementById('navbar');
+      host.innerHTML = data;
+      if (typeof initNavbar === 'function') {
+        initNavbar(host);
+      }
+    });
   </script>
 
   <main data-product-slug="bosch-truemixx-bold-mixer-grinder.html" data-product-title="Bosch TrueMixx Bold Mixer Grinder" data-product-category="Mixer Grinders">
     <section class="ecommerce-section">
       <div class="product-page-wrap">
-        <div class="product-page-layout">
+        <div class="product-page-layout" data-product-page>
           <div class="detail-images" data-product-page-images>
-            <img loading="lazy" src="../assets/images/products/bosh-truemixx.webp" alt="Bosch TrueMixx Bold Mixer Grinder" class="detail-image" width="360" height="360">
+            <img loading="lazy" src="../assets/images/products/bosh-truemixx.webp" alt="Bosch TrueMixx Bold Mixer Grinder" class="detail-image" width="260" height="260">
           </div>
 
-          <div class="detail-info" data-product-page>
+          <div class="detail-info">
             <p class="showcase-category" data-product-page-category>Mixer Grinders</p>
             <h1 data-product-page-name>Bosch TrueMixx Bold Mixer Grinder</h1>
             <p class="detail-price" data-product-page-price>Rs 15,390</p>
@@ -331,10 +348,7 @@
                 data-product-sku="BOSCHTRUEMIXXB"
                 data-product-warranty="1 year brand warranty"
                 data-product-delivery="2-4 business days"
-                data-product-image="../assets/images/products/bosh-truemixx.webp">
-                Continue to Checkout
-              </button>
-
+                data-product-image="../assets/images/products/bosh-truemixx.webp">Continue to Checkout</button>
               <button class="add-cart-btn primary-action-btn" type="button" onclick="window.location.href='https://wa.me/9779841503716?text=Hello%2C%20I%20am%20interested%20in%20buying%20the%20Bosch%20TrueMixx%20Bold%20Mixer%20Grinder%20could%20you%20provide%20details%3F'">Contact us on WhatsApp</button>
               <a class="add-cart-btn primary-action-btn" href="../index.html">Back to Products</a>
             </div>
