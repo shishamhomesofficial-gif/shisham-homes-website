@@ -2906,10 +2906,26 @@ document.addEventListener('DOMContentLoaded', function () {
     showcaseCards = Array.from(document.querySelectorAll('.product-grid > .showcase'));
   }
   let noResultsMessage = null;
+
   const searchForm = document.getElementById('searchForm');
   const searchField = document.querySelector('.header-search-container .search-field');
-  const searchForm = document.querySelector('.header-search-container.search-form');
-
+  const searchButton = document.querySelector('.header-search-container .search-btn');
+  const filterPanel = document.querySelector('[data-product-filter-panel]');
+  const categoryFilterSelect = document.querySelector('[data-filter-category]');
+  const sortFilterSelect = document.querySelector('[data-filter-sort]');
+  const priceFilterRange = document.querySelector('[data-filter-max-price]');
+  const priceFilterValue = document.querySelector('[data-filter-max-price-value]');
+  const clearFiltersButton = document.querySelector('[data-filter-clear]');
+  const productResultsStatus = document.querySelector('[data-filter-results-status]');
+  const homeMain = document.querySelector('main');
+  
+  const activeFilters = {
+    query: '',
+    category: 'all',
+    sortBy: 'relevance',
+    maxPrice: Number.POSITIVE_INFINITY
+  };
+  
   function syncSearchFromUrl() {
     const params = new URLSearchParams(window.location.search);
     const rawQuery = params.get('q') || '';
@@ -2945,8 +2961,21 @@ document.addEventListener('DOMContentLoaded', function () {
     updateSearchUrl(rawQuery);
     applyFilters();
   }
-  
+
   syncSearchFromUrl();
+  
+  if (searchField) {
+    searchField.addEventListener('input', runSearchFilters);
+    searchField.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') {
+        searchField.value = '';
+        activeFilters.query = '';
+        updateSearchUrl('');
+        applyFilters();
+        return;
+      }
+    });
+  }
   
   if (searchForm) {
     searchForm.addEventListener('submit', function (event) {
@@ -2959,37 +2988,10 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
   
-  if (searchField) {
-    searchField.addEventListener('input', runSearchFilters);
-    searchField.addEventListener('keydown', function (event) {
-      if (event.key === 'Escape') {
-        searchField.value = '';
-        activeFilters.query = '';
-        updateSearchUrl('');
-        applyFilters();
-      }
-    });
-  }
-  
   window.addEventListener('popstate', function () {
     syncSearchFromUrl();
     applyFilters();
   });
-  const searchButton = document.querySelector('.header-search-container .search-btn');
-  const filterPanel = document.querySelector('[data-product-filter-panel]');
-  const categoryFilterSelect = document.querySelector('[data-filter-category]');
-  const sortFilterSelect = document.querySelector('[data-filter-sort]');
-  const priceFilterRange = document.querySelector('[data-filter-max-price]');
-  const priceFilterValue = document.querySelector('[data-filter-max-price-value]');
-  const clearFiltersButton = document.querySelector('[data-filter-clear]');
-  const productResultsStatus = document.querySelector('[data-filter-results-status]');
-  const homeMain = document.querySelector('main');
-  const activeFilters = {
-    query: '',
-    category: 'all',
-    sortBy: 'relevance',
-    maxPrice: Number.POSITIVE_INFINITY
-  };
 
   function normalizeValue(value) {
     return (value || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
