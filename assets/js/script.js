@@ -28,21 +28,51 @@ const mobileMenu = document.querySelectorAll('[data-mobile-menu]');
 const mobileMenuCloseBtn = document.querySelectorAll('[data-mobile-menu-close-btn]');
 const overlay = document.querySelector('[data-overlay]');
 
-if (mobileMenuOpenBtn.length && mobileMenu.length && mobileMenuCloseBtn.length && overlay) {
-  for (let i = 0; i < mobileMenuOpenBtn.length; i++) {
-    const mobileMenuCloseFunc = function () {
-      mobileMenu[i].classList.remove('active');
-      overlay.classList.remove('active');
-    };
-
-    mobileMenuOpenBtn[i].addEventListener('click', function () {
-      mobileMenu[i].classList.add('active');
-      overlay.classList.add('active');
+if (mobileMenu.length && overlay) {
+  const openMobileMenu = function () {
+    mobileMenu.forEach(function (menuElement) {
+      menuElement.classList.add('active');
     });
 
-    mobileMenuCloseBtn[i].addEventListener('click', mobileMenuCloseFunc);
-    overlay.addEventListener('click', mobileMenuCloseFunc);
-  }
+    overlay.classList.add('active');
+    document.body.classList.add('no-scroll');
+  };
+
+  const closeMobileMenu = function () {
+    mobileMenu.forEach(function (menuElement) {
+      menuElement.classList.remove('active');
+    });
+
+    overlay.classList.remove('active');
+    document.body.classList.remove('no-scroll');
+  };
+
+  mobileMenuOpenBtn.forEach(function (buttonElement) {
+    buttonElement.addEventListener('click', function (event) {
+      event.preventDefault();
+      openMobileMenu();
+    });
+  });
+
+  mobileMenuCloseBtn.forEach(function (buttonElement) {
+    buttonElement.addEventListener('click', function () {
+      closeMobileMenu();
+    });
+  });
+
+  overlay.addEventListener('click', closeMobileMenu);
+
+  window.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') {
+      closeMobileMenu();
+    }
+  });
+
+  window.addEventListener('resize', function () {
+    if (window.innerWidth > 768) {
+      closeMobileMenu();
+    }
+  });
 }
 
 // accordion variables
@@ -102,11 +132,14 @@ const setGlobalNavigationLinks = function () {
   const placeholderLinks = document.querySelectorAll('a[href="#"], a[href=""], a[href="javascript:void(0)"]');
 
   placeholderLinks.forEach(function (linkElement) {
-    
     if (linkElement.closest('.desktop-navigation-menu')) {
       return;
     }
-    
+
+    if (linkElement.closest('[data-mobile-menu-open-btn], [data-mobile-menu-close-btn]')) {
+      return;
+    }
+
     if (linkElement.classList.contains('social-link')) {
       return;
     }
@@ -186,7 +219,6 @@ const optimiseImageLoading = function () {
 setGlobalNavigationLinks();
 setGlobalNavigationButtons();
 optimiseImageLoading();
-
 
 // ecommerce helpers
 const CHECKOUT_PRODUCT_KEY = 'shishamHomesDirectCheckoutItem';
@@ -300,6 +332,7 @@ const openProductPage = function (product) {
     overlay.classList.remove('active');
   }
 
+  document.body.classList.remove('no-scroll');
   window.location.href = getProductPageUrl(product);
 };
 
@@ -584,9 +617,8 @@ if (window.emailjs && typeof window.emailjs.init === 'function') {
   window.emailjs.init(EMAILJS_USER_ID);
 }
 
-
 document.querySelectorAll('.desktop-navigation-menu a').forEach(link => {
   link.addEventListener('click', function (e) {
-    e.stopPropagation(); // prevent JS interference
+    e.stopPropagation();
   });
 });
