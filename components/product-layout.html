@@ -1,0 +1,69 @@
+<div class="product-page-wrap">
+  <div class="product-page-layout">
+    <div class="detail-images">
+      <img
+        loading="lazy"
+        src="{{imageSrc}}"
+        alt="{{imageAlt}}"
+        class="detail-image"
+        width="360"
+        height="360">
+    </div>
+
+    <div class="detail-info">
+      <p class="showcase-category">{{category}}</p>
+      <h1>{{title}}</h1>
+      <p class="detail-price">{{priceDisplay}}</p>
+
+      <p class="product-page-description">{{shortDescription}}</p>
+
+      <div class="product-page-actions">
+        <button class="add-cart-btn primary-action-btn" type="button"
+          data-product-page-checkout
+          data-product-id="{{productId}}"
+          data-product-name="{{title}}"
+          data-product-price="{{priceDisplay}}"
+          data-product-category="{{category}}"
+          data-product-description="{{shortDescription}}"
+          data-product-sku="{{sku}}"
+          data-product-warranty="{{warranty}}"
+          data-product-delivery="{{delivery}}"
+          data-product-image="{{imageSrc}}">
+          Continue to Checkout
+        </button>
+
+        <button class="add-cart-btn primary-action-btn" type="button"
+          onclick="window.location.href='{{whatsappLink}}'">
+          Contact us on WhatsApp
+        </button>
+
+        <a class="add-cart-btn primary-action-btn" href="../index.html">Back to Products</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="product-page-extra">
+    <div class="product-page-description-block">
+      <h2>Product Description</h2>
+      {{{descriptionHtml}}}
+    </div>
+
+    <div class="product-page-specs">
+      <h2>Specifications</h2>
+      <div class="product-page-specs-grid">
+        {{#specs}}
+        <div class="product-spec-item">
+          <span class="product-spec-label">{{label}}</span>
+          <span class="product-spec-value">{{value}}</span>
+        </div>
+        {{/specs}}
+      </div>
+    </div>
+
+    <div class="related-products-section" aria-labelledby="similar-products-title">
+      <h2 id="similar-products-title">See Similar Products</h2>
+      <div id="related-products-grid" class="related-products-grid"></div>
+      <p id="related-products-empty" class="related-products-empty" hidden>No similar products found right now.</p>
+    </div>
+  </div>
+</div>
