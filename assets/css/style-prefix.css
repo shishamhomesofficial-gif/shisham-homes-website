@@ -3748,3 +3748,13 @@ footer {
     grid-template-columns: 1fr;
   }
 }
+
+
+.related-products-section .showcase-category,
+.related-products-section .showcase-title,
+.related-products-section .showcase-title:visited,
+.related-products-section .showcase-title:hover,
+.related-products-section .showcase-title:focus,
+.related-products-section .price {
+  color: #000 !important;
+}
