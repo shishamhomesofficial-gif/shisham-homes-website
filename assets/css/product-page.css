@@ -214,3 +214,12 @@
     grid-template-columns: 1fr;
   }
 }
+
+
+.detail-info a,
+.related-products-section .showcase-title,
+.related-products-section .showcase-title:visited,
+.related-products-section .showcase-title:hover,
+.related-products-section .showcase-title:focus {
+  color: #000;
+}

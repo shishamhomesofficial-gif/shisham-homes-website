@@ -1622,6 +1622,13 @@
               <li><a href="./category-smart-kitchen-appliances.html">Smart Kitchen Appliances</a></li>
               <li><a href="./category-smart-household-appliances.html">Smart Household Appliances</a></li>
               <li><a href="./category-other-products.html">Other Home Appliance Products</a></li>
+              <li><a href="./category-washing-machines.html">Washing Machines</a></li>
+              <li><a href="./category-water-purifiers-and-dispensers.html">Water Purifiers & Dispensers</a></li>
+              <li><a href="./category-samsung-refrigerators.html">Samsung Refrigerators</a></li>
+              <li><a href="./category-samsung-microwaves-ovens.html">Samsung Microwaves & Ovens</a></li>
+              <li><a href="./category-irons.html">Irons</a></li>
+              <li><a href="./category-vacuum-cleaners.html">Vacuum Cleaners</a></li>
+              <li><a href="./category-chimneys.html">Chimneys</a></li>
             </ul>
           </article>
 
@@ -1815,6 +1822,13 @@
     cursor: pointer;
   }
   .assistant-grid { display:flex; gap:1rem; align-items:flex-start; }
+
+  /* Homepage card cleanup requested */
+  .product-grid .showcase-rating,
+  .product-grid .showcase-actions {
+    display: none !important;
+  }
+
   @media (max-width:720px) { .assistant-grid { flex-direction: column; } }
   .assistant-btn { padding: .5rem .8rem; border-radius: 6px; border: 1px solid #ddd; background: #fff; cursor: pointer; }
   .assistant-btn.primary { background:#007bff; color:#fff; border-color:#007bff; }
