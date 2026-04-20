@@ -23,6 +23,7 @@ if (notificationToast && toastCloseBtn) {
 }
 
 function initNavbar(root = document) {
+  const rootElement = root === document ? document.documentElement : root;
   const mobileMenu = root.querySelector('[data-mobile-menu]');
   const overlay = root.querySelector('[data-overlay]');
   const openBtns = root.querySelectorAll('[data-mobile-menu-open-btn]');
@@ -31,6 +32,9 @@ function initNavbar(root = document) {
   const accordion = root.querySelectorAll('[data-accordion]');
 
   if (mobileMenu && overlay) {
+    if (rootElement && rootElement.dataset.mobileMenuBound === 'true') {
+      return;
+    }
     const openMenu = function () {
       mobileMenu.classList.add('active');
       overlay.classList.add('active');
@@ -73,9 +77,16 @@ function initNavbar(root = document) {
         closeMenu();
       }
     });
+
+    if (rootElement) {
+      rootElement.dataset.mobileMenuBound = 'true';
+    }
   }
 
   if (accordionBtn.length && accordion.length) {
+    if (rootElement && rootElement.dataset.accordionBound === 'true') {
+      return;
+    }
     for (let i = 0; i < accordionBtn.length; i++) {
       accordionBtn[i].addEventListener('click', function () {
         const clickedBtn = this.nextElementSibling.classList.contains('active');
@@ -93,10 +104,38 @@ function initNavbar(root = document) {
         this.classList.toggle('active');
       });
     }
+
+    if (rootElement) {
+      rootElement.dataset.accordionBound = 'true';
+    }
   }
 }
 
 initNavbar(document);
+
+const watchAsyncNavbarInjection = function () {
+  const navbarMount = document.getElementById('navbar');
+
+  if (!navbarMount || typeof MutationObserver === 'undefined') {
+    return;
+  }
+
+  const initFromMount = function () {
+    if (navbarMount.querySelector('[data-mobile-menu]')) {
+      initNavbar(navbarMount);
+    }
+  };
+
+  initFromMount();
+
+  const observer = new MutationObserver(function () {
+    initFromMount();
+  });
+
+  observer.observe(navbarMount, { childList: true, subtree: true });
+};
+
+watchAsyncNavbarInjection();
 
 // mobile menu variables
 const mobileMenuOpenBtn = document.querySelectorAll('[data-mobile-menu-open-btn]');
