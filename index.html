@@ -20,14 +20,22 @@
   <title>Shisham Homes Kathmandu | Home Appliances & Kitchen Electronics</title>
   <meta name="description" content="Buy home appliances at Shisham Homes. Explore refrigerators, microwaves, washing machines, TVs, and kitchen essentials with trusted service and value deals in Kathmandu.">
   <meta name="robots" content="index, follow">
+  <meta name="author" content="Shisham Homes">
+  <meta name="theme-color" content="#111111">
+  <meta name="format-detection" content="telephone=yes">
   <meta name="keywords" content="home appliances Kathmandu, kitchen electronics Nepal, refrigerators, microwaves, washing machines, TVs, Shisham Homes">
   <link rel="canonical" href="https://www.shishamhomes.com.np/">
   <meta property="og:title" content="Shisham Homes Kathmandu | Home Appliances & Kitchen Electronics">
   <meta property="og:description" content="Discover top home appliances in Kathmandu including refrigerators, microwaves, TVs, and washers at Shisham Homes with great prices and dependable support.">
   <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Shisham Homes">
+  <meta property="og:locale" content="en_NP">
   <meta property="og:url" content="https://www.shishamhomes.com.np/">
   <meta property="og:image" content="https://www.shishamhomes.com.np/assets/images/banner-1.jpg">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Shisham Homes Kathmandu | Home Appliances & Kitchen Electronics">
+  <meta name="twitter:description" content="Explore refrigerators, microwaves, washing machines, TVs, and more from Shisham Homes in Kathmandu.">
+  <meta name="twitter:image" content="https://www.shishamhomes.com.np/assets/images/banner-1.jpg">
   <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
   <link rel="dns-prefetch" href="//www.googletagmanager.com">
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -59,18 +67,44 @@
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Store",
-      "name": "Shisham Homes",
-      "description": "Home appliances and kitchen electronics store in Jorpati, Kathmandu",
-      "url": "https://www.shishamhomes.com.np/",
-      "image": "https://www.shishamhomes.com.np/assets/images/banner-1.jpg",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Jorpati, Kathmandu",
-        "addressCountry": "NP"
-      },
-      "areaServed": "Kathmandu Valley",
-      "keywords": "home appliances, kitchen electronics, microwaves, refrigerators, washing machines, TVs"
+      "@graph": [
+        {
+          "@type": "Store",
+          "@id": "https://www.shishamhomes.com.np/#store",
+          "name": "Shisham Homes",
+          "description": "Home appliances and kitchen electronics store in Jorpati, Kathmandu",
+          "url": "https://www.shishamhomes.com.np/",
+          "image": "https://www.shishamhomes.com.np/assets/images/banner-1.jpg",
+          "telephone": "+9779841503716",
+          "priceRange": "$$",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Jorpati",
+            "addressLocality": "Kathmandu",
+            "addressCountry": "NP"
+          },
+          "areaServed": "Kathmandu Valley",
+          "keywords": "home appliances, kitchen electronics, microwaves, refrigerators, washing machines, TVs"
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://www.shishamhomes.com.np/#website",
+          "url": "https://www.shishamhomes.com.np/",
+          "name": "Shisham Homes",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://www.shishamhomes.com.np/index.html?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://www.shishamhomes.com.np/#organization",
+          "name": "Shisham Homes",
+          "url": "https://www.shishamhomes.com.np/",
+          "logo": "https://www.shishamhomes.com.np/assets/images/logo/logo.svg"
+        }
+      ]
     }
   </script>
 
@@ -179,6 +213,10 @@
       const el = document.getElementById('navbar');
       el.innerHTML = data;
       initNavbar(el);   // THIS is the critical fix
+    })
+    .catch(() => {
+      const el = document.getElementById('navbar');
+      if (el) el.innerHTML = '';
     });
   </script>
   <!--
@@ -380,45 +418,6 @@
         -->
 
         <div class="sidebar  has-scrollbar" data-mobile-menu>
-          <div class="sidebar-category">
-          
-            <div class="sidebar-top">
-              <h2 class="sidebar-title" style="font-family: 'Poppins', sans-serif; color: #555;"><a href="./popular-appliances.html" style="color: inherit; text-decoration: none;">Our Popular Product Categories</a></h2>
-          
-              <button class="sidebar-close-btn" data-mobile-menu-close-btn>
-                <ion-icon name="close-outline"></ion-icon>
-              </button>
-            </div>
-          
-            <ul class="sidebar-menu-category-list">
-
-              <li class="sidebar-menu-category">
-                <div class="sidebar-accordion-menu" data-accordion-btn>
-                  <a href="./category-refrigerators.html" style="text-decoration: none; color: #666; display: flex; align-items: center; font-size: 14px; font-family: 'Poppins', sans-serif;">
-                    <div class="menu-title-flex">
-                      <img loading="lazy" src="./assets/images/icons/refrigiratoricon.webp" alt="Refrigerators category icon" class="menu-title-img" width="20" height="20">
-                      <p class="menu-title">Refrigerators</p>
-                    </div>
-                  </a>
-                </div>
-              </li>
-
-              <li class="sidebar-menu-category"><div class="sidebar-accordion-menu" data-accordion-btn><a href="./category-washing-machines.html" style="text-decoration: none; color: #666; display: flex; align-items: center; font-size: 14px; font-family: 'Poppins', sans-serif;"><div class="menu-title-flex"><img loading="lazy" src="./assets/images/icons/washicon.png" alt="Washing machines category icon" class="menu-title-img" width="20" height="20"><p class="menu-title">Washing Machines</p></div></a></div></li>
-              <li class="sidebar-menu-category"><div class="sidebar-accordion-menu" data-accordion-btn><a href="./category-microwaves-ovens.html" style="text-decoration: none; color: #666; display: flex; align-items: center; font-size: 14px; font-family: 'Poppins', sans-serif;"><div class="menu-title-flex"><img loading="lazy" src="./assets/images/icons/microwaveicon.png" alt="Microwaves and ovens category icon" class="menu-title-img" width="20" height="20"><p class="menu-title">Microwaves and Ovens</p></div></a></div></li>
-              <li class="sidebar-menu-category"><div class="sidebar-accordion-menu" data-accordion-btn><a href="./category-tv.html" style="text-decoration: none; color: #666; display: flex; align-items: center; font-size: 14px; font-family: 'Poppins', sans-serif;"><div class="menu-title-flex"><img loading="lazy" src="./assets/images/icons/tvicon.png" alt="TV category icon" class="menu-title-img" width="20" height="20"><p class="menu-title">TV</p></div></a></div></li>
-              <li class="sidebar-menu-category"><div class="sidebar-accordion-menu" data-accordion-btn><a href="./category-smart-kitchen-appliances.html" style="text-decoration: none; color: #666; display: flex; align-items: center; font-size: 14px; font-family: 'Poppins', sans-serif;"><div class="menu-title-flex"><img loading="lazy" src="./assets/images/icons/stufficon.png" alt="Smart kitchen appliances category icon" class="menu-title-img" width="20" height="20"><p class="menu-title">Smart Kitchen Appliances</p></div></a></div></li>
-              <li class="sidebar-menu-category"><div class="sidebar-accordion-menu" data-accordion-btn><a href="./category-smart-household-appliances.html" style="text-decoration: none; color: #666; display: flex; align-items: center; font-size: 14px; font-family: 'Poppins', sans-serif;"><div class="menu-title-flex"><img loading="lazy" src="./assets/images/icons/morestufficon.png" alt="Smart household appliances category icon" class="menu-title-img" width="20" height="20"><p class="menu-title">Smart Household Appliances</p></div></a></div></li>
-              <li class="sidebar-menu-category"><div class="sidebar-accordion-menu" data-accordion-btn><a href="./category-water-purifiers-and-dispensers.html" style="text-decoration: none; color: #666; display: flex; align-items: center; font-size: 14px; font-family: 'Poppins', sans-serif;"><div class="menu-title-flex"><img loading="lazy" src="./assets/images/icons/clean.png" alt="Water purifiers category icon" class="menu-title-img" width="20" height="20"><p class="menu-title">Water Purifiers &amp; Dispensers</p></div></a></div></li>
-              <li class="sidebar-menu-category"><div class="sidebar-accordion-menu" data-accordion-btn><a href="./category-samsung-refrigerators.html" style="text-decoration: none; color: #666; display: flex; align-items: center; font-size: 14px; font-family: 'Poppins', sans-serif;"><div class="menu-title-flex"><img loading="lazy" src="./assets/images/icons/refrigiratoricon.webp" alt="Samsung refrigerators category icon" class="menu-title-img" width="20" height="20"><p class="menu-title">Samsung Refrigerators</p></div></a></div></li>
-              <li class="sidebar-menu-category"><div class="sidebar-accordion-menu" data-accordion-btn><a href="./category-samsung-microwaves-ovens.html" style="text-decoration: none; color: #666; display: flex; align-items: center; font-size: 14px; font-family: 'Poppins', sans-serif;"><div class="menu-title-flex"><img loading="lazy" src="./assets/images/icons/microwaveicon.png" alt="Samsung microwaves category icon" class="menu-title-img" width="20" height="20"><p class="menu-title">Samsung Microwaves &amp; Ovens</p></div></a></div></li>
-              <li class="sidebar-menu-category"><div class="sidebar-accordion-menu" data-accordion-btn><a href="./category-irons.html" style="text-decoration: none; color: #666; display: flex; align-items: center; font-size: 14px; font-family: 'Poppins', sans-serif;"><div class="menu-title-flex"><img loading="lazy" src="./assets/images/icons/morestufficon.png" alt="Irons category icon" class="menu-title-img" width="20" height="20"><p class="menu-title">Irons</p></div></a></div></li>
-              <li class="sidebar-menu-category"><div class="sidebar-accordion-menu" data-accordion-btn><a href="./category-vacuum-cleaners.html" style="text-decoration: none; color: #666; display: flex; align-items: center; font-size: 14px; font-family: 'Poppins', sans-serif;"><div class="menu-title-flex"><img loading="lazy" src="./assets/images/icons/clean.png" alt="Vacuum cleaners category icon" class="menu-title-img" width="20" height="20"><p class="menu-title">Vacuum Cleaners</p></div></a></div></li>
-              <li class="sidebar-menu-category"><div class="sidebar-accordion-menu" data-accordion-btn><a href="./category-chimneys.html" style="text-decoration: none; color: #666; display: flex; align-items: center; font-size: 14px; font-family: 'Poppins', sans-serif;"><div class="menu-title-flex"><img loading="lazy" src="./assets/images/icons/stufficon.png" alt="Chimneys category icon" class="menu-title-img" width="20" height="20"><p class="menu-title">Chimneys</p></div></a></div></li>
-              <li class="sidebar-menu-category"><div class="sidebar-accordion-menu" data-accordion-btn><a href="./category-other-products.html" style="text-decoration: none; color: #666; display: flex; align-items: center; font-size: 14px; font-family: 'Poppins', sans-serif;"><div class="menu-title-flex"><img loading="lazy" src="./assets/images/icons/bag.svg" alt="Other products category icon" class="menu-title-img" width="20" height="20"><p class="menu-title">Other Products</p></div></a></div></li>
-
-            </ul>
-          
-          </div>
           <div class="product-showcase">
 
             <h3 class="showcase-heading">best sellers</h3>
@@ -1801,7 +1800,7 @@
   -->
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-  <script src="./assets/js/script.js"></script>
+  <script src="./assets/js/script.js" defer></script>
 
   <!--
     - ionicon link
