@@ -72,11 +72,17 @@ function initNavbar(root = document) {
       }
     });
 
+    let resizeRaf = null;
     window.addEventListener('resize', function () {
-      if (window.innerWidth > 768) {
-        closeMenu();
+      if (resizeRaf) {
+        window.cancelAnimationFrame(resizeRaf);
       }
-    });
+      resizeRaf = window.requestAnimationFrame(function () {
+        if (window.innerWidth > 768) {
+          closeMenu();
+        }
+      });
+    }, { passive: true });
 
     if (rootElement) {
       rootElement.dataset.mobileMenuBound = 'true';
@@ -130,6 +136,9 @@ const watchAsyncNavbarInjection = function () {
 
   const observer = new MutationObserver(function () {
     initFromMount();
+    if (navbarMount.querySelector('[data-mobile-menu]')) {
+      observer.disconnect();
+    }
   });
 
   observer.observe(navbarMount, { childList: true, subtree: true });
@@ -242,10 +251,15 @@ const setGlobalNavigationButtons = function () {
 
 const optimiseImageLoading = function () {
   const allImages = document.querySelectorAll('img');
+  const priorityImage = document.querySelector('.banner-img, .detail-image, .detail-images img, .showcase-banner img, .product-img');
 
   allImages.forEach(function (imageElement, imageIndex) {
     if (!imageElement.getAttribute('loading')) {
-      imageElement.setAttribute('loading', imageIndex === 0 ? 'eager' : 'lazy');
+      const shouldPrioritise = imageElement === priorityImage || imageIndex === 0;
+      imageElement.setAttribute('loading', shouldPrioritise ? 'eager' : 'lazy');
+      if (!shouldPrioritise && !imageElement.getAttribute('fetchpriority')) {
+        imageElement.setAttribute('fetchpriority', 'low');
+      }
     }
 
     if (!imageElement.getAttribute('decoding')) {
@@ -375,12 +389,31 @@ const optimiseRenderingPerformance = function () {
   });
 };
 
-setGlobalNavigationLinks();
-setGlobalNavigationButtons();
-optimiseImageLoading();
-enhanceSeoMetadata();
-injectWebsiteSchema();
-optimiseRenderingPerformance();
+const runWhenIdle = function (callback, timeout) {
+  if (typeof window.requestIdleCallback === 'function') {
+    window.requestIdleCallback(callback, { timeout: timeout || 1000 });
+    return;
+  }
+  window.setTimeout(callback, Math.min(timeout || 1000, 300));
+};
+
+const runCoreEnhancements = function () {
+  setGlobalNavigationLinks();
+  setGlobalNavigationButtons();
+  optimiseImageLoading();
+  optimiseRenderingPerformance();
+};
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', runCoreEnhancements, { once: true });
+} else {
+  runCoreEnhancements();
+}
+
+runWhenIdle(function () {
+  enhanceSeoMetadata();
+  injectWebsiteSchema();
+}, 2000);
 
 // ecommerce helpers
 const CHECKOUT_PRODUCT_KEY = 'shishamHomesDirectCheckoutItem';
@@ -486,12 +519,14 @@ const getProductPageUrl = function (product) {
 };
 
 const openProductPage = function (product) {
-  mobileMenu.forEach(function (menuElement) {
+  const openMenus = document.querySelectorAll('[data-mobile-menu].active');
+  openMenus.forEach(function (menuElement) {
     menuElement.classList.remove('active');
   });
 
-  if (overlay) {
-    overlay.classList.remove('active');
+  const globalOverlay = document.querySelector('[data-overlay]');
+  if (globalOverlay) {
+    globalOverlay.classList.remove('active');
   }
 
   document.body.classList.remove('no-scroll');
