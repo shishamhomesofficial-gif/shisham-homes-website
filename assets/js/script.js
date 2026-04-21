@@ -331,9 +331,133 @@ const optimiseImageLoading = function () {
   });
 };
 
+const ensureCanonicalUrl = function () {
+  const canonicalLink = document.querySelector('link[rel="canonical"]') || document.createElement('link');
+  canonicalLink.setAttribute('rel', 'canonical');
+
+  const currentUrl = new URL(window.location.href);
+  currentUrl.hash = '';
+  currentUrl.search = '';
+
+  if (!canonicalLink.getAttribute('href')) {
+    canonicalLink.setAttribute('href', currentUrl.toString());
+  }
+
+  if (!canonicalLink.parentNode) {
+    document.head.appendChild(canonicalLink);
+  }
+
+  return canonicalLink.getAttribute('href') || currentUrl.toString();
+};
+
+const upsertMetaTag = function (selector, attrs) {
+  let tag = document.querySelector(selector);
+  if (!tag) {
+    tag = document.createElement('meta');
+    Object.keys(attrs).forEach(function (key) {
+      if (key !== 'content') tag.setAttribute(key, attrs[key]);
+    });
+    document.head.appendChild(tag);
+  }
+  if (attrs.content && !tag.getAttribute('content')) {
+    tag.setAttribute('content', attrs.content);
+  }
+};
+
+const enhanceSeoMetadata = function () {
+  if (!document.head) {
+    return;
+  }
+
+  const canonicalUrl = ensureCanonicalUrl();
+  const title = (document.title || 'Shisham Homes').trim();
+  const h1 = document.querySelector('h1');
+  const fallbackDescription = h1
+    ? `${h1.textContent.trim()} at Shisham Homes Kathmandu with genuine appliances and trusted service in Nepal.`
+    : 'Shop genuine home appliances with trusted local support in Kathmandu at Shisham Homes.';
+
+  upsertMetaTag('meta[name="description"]', { name: 'description', content: fallbackDescription });
+  upsertMetaTag('meta[name="robots"]', { name: 'robots', content: 'index, follow, max-image-preview:large' });
+  upsertMetaTag('meta[property="og:type"]', { property: 'og:type', content: 'website' });
+  upsertMetaTag('meta[property="og:site_name"]', { property: 'og:site_name', content: 'Shisham Homes' });
+  upsertMetaTag('meta[property="og:title"]', { property: 'og:title', content: title });
+  upsertMetaTag('meta[property="og:description"]', { property: 'og:description', content: fallbackDescription });
+  upsertMetaTag('meta[property="og:url"]', { property: 'og:url', content: canonicalUrl });
+  upsertMetaTag('meta[name="twitter:card"]', { name: 'twitter:card', content: 'summary_large_image' });
+  upsertMetaTag('meta[name="twitter:title"]', { name: 'twitter:title', content: title });
+  upsertMetaTag('meta[name="twitter:description"]', { name: 'twitter:description', content: fallbackDescription });
+
+  const ogImageTag = document.querySelector('meta[property="og:image"]');
+  const twitterImageTag = document.querySelector('meta[name="twitter:image"]');
+  const bestImage = document.querySelector('img[src]');
+  if (bestImage) {
+    const imageUrl = new URL(bestImage.getAttribute('src'), window.location.origin).toString();
+    if (!ogImageTag) {
+      upsertMetaTag('meta[property="og:image"]', { property: 'og:image', content: imageUrl });
+    }
+    if (!twitterImageTag) {
+      upsertMetaTag('meta[name="twitter:image"]', { name: 'twitter:image', content: imageUrl });
+    }
+  }
+};
+
+const injectWebsiteSchema = function () {
+  if (!document.head || document.querySelector('script[data-schema="website-search"]')) {
+    return;
+  }
+
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Shisham Homes',
+    url: 'https://www.shishamhomes.com.np/',
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: 'https://www.shishamhomes.com.np/?q={search_term_string}',
+      'query-input': 'required name=search_term_string',
+    },
+  };
+
+  const schemaTag = document.createElement('script');
+  schemaTag.type = 'application/ld+json';
+  schemaTag.dataset.schema = 'website-search';
+  schemaTag.textContent = JSON.stringify(schema);
+  document.head.appendChild(schemaTag);
+};
+
+const optimiseRenderingPerformance = function () {
+  const heavySections = document.querySelectorAll('.product-main, .product-container, .blog, .category, .testimonial, footer');
+  heavySections.forEach(function (section) {
+    if (!section.style.contentVisibility) {
+      section.style.contentVisibility = 'auto';
+      section.style.containIntrinsicSize = '1px 800px';
+    }
+  });
+
+  const firstMeaningfulImage = document.querySelector('.banner-img, .detail-image, .detail-images img, .showcase-banner img, .product-img');
+  if (firstMeaningfulImage) {
+    firstMeaningfulImage.setAttribute('loading', 'eager');
+    firstMeaningfulImage.setAttribute('fetchpriority', 'high');
+    firstMeaningfulImage.setAttribute('decoding', 'async');
+  }
+
+  const lazyFrames = document.querySelectorAll('iframe');
+  lazyFrames.forEach(function (frame) {
+    if (!frame.getAttribute('loading')) {
+      frame.setAttribute('loading', 'lazy');
+    }
+    if (!frame.getAttribute('referrerpolicy')) {
+      frame.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+    }
+  });
+};
+
 setGlobalNavigationLinks();
 setGlobalNavigationButtons();
 optimiseImageLoading();
+enhanceSeoMetadata();
+injectWebsiteSchema();
+optimiseRenderingPerformance();
 
 // ecommerce helpers
 const CHECKOUT_PRODUCT_KEY = 'shishamHomesDirectCheckoutItem';
