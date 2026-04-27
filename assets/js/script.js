@@ -819,3 +819,105 @@ document.querySelectorAll('.desktop-navigation-menu a').forEach(link => {
     e.stopPropagation();
   });
 });
+
+(function enhanceHomeAndCategoryUi() {
+  const style = document.createElement('style');
+  style.textContent = `
+    .category-ui-panel{margin:18px 0 24px;padding:16px;border:1px solid #f0e7da;border-radius:14px;background:#fffaf3;box-shadow:0 10px 26px rgba(0,0,0,.06)}
+    .category-ui-top{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+    .category-range-wrap{margin-top:10px}
+    .category-range-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .category-range-grid input{width:100%;accent-color:#c46d17}
+    .category-range-labels{display:flex;justify-content:space-between;color:#555;font-size:.86rem;margin-top:6px}
+    .category-page-wrapper .showcase{border:1px solid #f0f0f0;border-radius:12px;overflow:hidden;transition:.2s}
+    .category-page-wrapper .showcase:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(0,0,0,.1)}
+    .home-bottom-cta{margin:28px 0 10px}
+  `;
+  document.head.appendChild(style);
+
+  const categoryPage = document.querySelector('[data-category-page]');
+  if (!categoryPage) return;
+
+  const sortBar = document.getElementById('sortBarContainer') || document.querySelector('.sort-bar');
+  const grid = document.querySelector('[data-category-grid]');
+  if (!sortBar || !grid) return;
+
+  const parsePrice = (text) => Number((text || '').replace(/[^\d.]/g, '')) || 0;
+
+  const getCards = () => Array.from(grid.querySelectorAll('.showcase'));
+  const getPriceFromCard = (card) => parsePrice(card.querySelector('.price') ? card.querySelector('.price').textContent : '0');
+
+  const setup = () => {
+    const cards = getCards();
+    if (!cards.length || document.querySelector('.category-ui-panel')) return;
+
+    const prices = cards.map(getPriceFromCard).filter(Boolean);
+    const min = Math.min(...prices);
+    const max = Math.max(...prices);
+    let minSelected = min;
+    let maxSelected = max;
+
+    const panel = document.createElement('div');
+    panel.className = 'category-ui-panel';
+    panel.innerHTML = `
+      <div class="category-ui-top">
+        <strong>Filter by Price</strong>
+        <span id="categoryVisibleCount"></span>
+      </div>
+      <div class="category-range-wrap">
+        <div class="category-range-grid">
+          <input type="range" id="categoryMinPrice" min="${min}" max="${max}" step="100" value="${min}">
+          <input type="range" id="categoryMaxPrice" min="${min}" max="${max}" step="100" value="${max}">
+        </div>
+        <div class="category-range-labels">
+          <span id="categoryMinLabel">Rs ${min.toLocaleString()}</span>
+          <span id="categoryMaxLabel">Rs ${max.toLocaleString()}</span>
+        </div>
+      </div>
+    `;
+
+    sortBar.parentNode.insertBefore(panel, sortBar.nextSibling);
+    const minInput = panel.querySelector('#categoryMinPrice');
+    const maxInput = panel.querySelector('#categoryMaxPrice');
+    const minLabel = panel.querySelector('#categoryMinLabel');
+    const maxLabel = panel.querySelector('#categoryMaxLabel');
+    const visibleCount = panel.querySelector('#categoryVisibleCount');
+
+    const apply = () => {
+      let visible = 0;
+      getCards().forEach((card) => {
+        const p = getPriceFromCard(card);
+        const show = p >= minSelected && p <= maxSelected;
+        card.style.display = show ? '' : 'none';
+        if (show) visible += 1;
+      });
+      minLabel.textContent = `Rs ${minSelected.toLocaleString()}`;
+      maxLabel.textContent = `Rs ${maxSelected.toLocaleString()}`;
+      visibleCount.textContent = `${visible} items`;
+    };
+
+    minInput.addEventListener('input', () => {
+      minSelected = Math.min(Number(minInput.value), maxSelected);
+      minInput.value = String(minSelected);
+      apply();
+    });
+
+    maxInput.addEventListener('input', () => {
+      maxSelected = Math.max(Number(maxInput.value), minSelected);
+      maxInput.value = String(maxSelected);
+      apply();
+    });
+
+    apply();
+
+    const observer = new MutationObserver(() => {
+      if (!document.body.contains(panel)) return;
+      apply();
+    });
+    observer.observe(grid, { childList: true, subtree: true });
+  };
+
+  setup();
+  const gridObserver = new MutationObserver(setup);
+  gridObserver.observe(grid, { childList: true });
+})();
