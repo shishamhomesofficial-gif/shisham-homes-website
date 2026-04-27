@@ -3901,3 +3901,78 @@ footer {
   text-decoration: underline;
   text-underline-offset: 2px;
 }
+
+
+/* Category text-description UI overhaul */
+main[data-category-page] .category-page-subtitle {
+  margin: 14px 0 26px !important;
+  padding: 16px 20px !important;
+  border-radius: 14px !important;
+  border: 1px solid #f0dec2 !important;
+  background: linear-gradient(120deg, #fffaf1 0%, #ffffff 65%, #fff7ea 100%) !important;
+  color: #3f2b1b !important;
+  font-size: 1.02rem !important;
+  line-height: 1.75 !important;
+  box-shadow: 0 10px 24px rgba(17, 24, 39, 0.07) !important;
+}
+
+main[data-category-page] .seo-rich-content {
+  margin-top: 56px !important;
+  padding: 34px 30px !important;
+  border: 1px solid #ecdcc3 !important;
+  border-top: 1px solid #ecdcc3 !important;
+  border-radius: 20px !important;
+  background: radial-gradient(circle at top right, #fff4df 0%, #ffffff 42%, #fffdfa 100%) !important;
+  box-shadow: 0 18px 38px rgba(17, 24, 39, 0.09) !important;
+}
+
+main[data-category-page] .seo-rich-content h2 {
+  color: #7c2d12 !important;
+  font-size: clamp(1.45rem, 2.1vw, 2rem) !important;
+  line-height: 1.25 !important;
+  margin-bottom: 14px !important;
+}
+
+main[data-category-page] .seo-rich-content h3 {
+  color: #9a3412 !important;
+  margin-top: 24px !important;
+  margin-bottom: 10px !important;
+  font-size: clamp(1.08rem, 1.5vw, 1.35rem) !important;
+}
+
+main[data-category-page] .seo-rich-content p,
+main[data-category-page] .seo-rich-content li {
+  color: #334155 !important;
+  line-height: 1.8 !important;
+  font-size: 0.98rem !important;
+}
+
+main[data-category-page] .seo-rich-content ul,
+main[data-category-page] .seo-rich-content ol {
+  margin: 0 0 18px 1.2rem !important;
+}
+
+main[data-category-page] .seo-rich-content li {
+  margin-bottom: 8px !important;
+  padding-left: 2px !important;
+}
+
+main[data-category-page] .seo-rich-content .info-highlight {
+  background: linear-gradient(135deg, #fff8ec 0%, #fff2d8 100%) !important;
+  border: 1px solid #f3d6a3 !important;
+  border-left: 5px solid #d97706 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 24px rgba(217, 119, 6, 0.14) !important;
+}
+
+@media (max-width: 768px) {
+  main[data-category-page] .category-page-subtitle {
+    padding: 14px 15px !important;
+    font-size: 0.96rem !important;
+  }
+
+  main[data-category-page] .seo-rich-content {
+    padding: 24px 18px !important;
+    border-radius: 16px !important;
+  }
+}

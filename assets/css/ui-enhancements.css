@@ -142,8 +142,8 @@
 .banner .banner-title,
 .banner .banner-text,
 .banner .banner-keyword-support {
-  color: #ffffff;
-  text-shadow: 0 2px 12px rgba(15, 23, 42, 0.42);
+  color: #111111;
+  text-shadow: 0 1px 4px rgba(255, 255, 255, 0.35);
 }
 
 /* Curated quick links UI refresh */
