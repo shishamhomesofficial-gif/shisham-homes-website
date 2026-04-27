@@ -77,33 +77,87 @@ const categoryCatalog = [
 
 const categoryPage = document.querySelector('[data-category-page]');
 
+function getNumericPrice(priceStr) {
+  if (!priceStr) return 0;
+  const numeric = priceStr.replace(/Rs\s*/i, '').replace(/,/g, '').trim();
+  return parseFloat(numeric) || 0;
+}
+
 if (categoryPage) {
   const categoryKey = categoryPage.dataset.categoryKey || '';
   const categoryName = categoryPage.dataset.categoryName || 'Category';
   const categoryHeading = document.querySelector('[data-category-heading]');
   const grid = document.querySelector('[data-category-grid]');
   const emptyState = document.querySelector('[data-empty-state]');
+  const sortSelect = document.getElementById('sortSelect');
+  const productCountDisplay = document.getElementById('productCountDisplay');
+  const sortBar = document.getElementById('sortBarContainer') || document.querySelector('.sort-bar') || document.querySelector('.product-main');
 
-  if (categoryHeading) {
-    categoryHeading.textContent = `${categoryName} Products`;
+  if (categoryHeading && !categoryHeading.dataset.preserveTitle) {
+    categoryHeading.textContent = `${categoryName} Products in Nepal`;
   }
 
-  const filtered = categoryCatalog.filter(function (product) {
-    return product.tags.includes(categoryKey);
+  const keyAliases = {
+    'water-purifiers-dispensers': 'water-purifiers-and-dispensers'
+  };
+
+  const resolvedCategoryKey = keyAliases[categoryKey] || categoryKey;
+  const baseFiltered = categoryCatalog.filter(function (product) {
+    return product.tags.includes(resolvedCategoryKey);
   });
 
-  if (!grid || !emptyState) {
-    console.warn('Category page grid or empty state is missing.');
-  } else if (!filtered.length) {
-    emptyState.hidden = false;
-  } else {
-    const cards = filtered.map(function (product) {
+  const prices = baseFiltered.map((product) => getNumericPrice(product.price)).filter(Boolean);
+  const minCatalogPrice = prices.length ? Math.min(...prices) : 0;
+  const maxCatalogPrice = prices.length ? Math.max(...prices) : 0;
+  const state = {
+    sort: 'default',
+    min: minCatalogPrice,
+    max: maxCatalogPrice
+  };
+
+  function updateCount(count) {
+    if (!productCountDisplay) return;
+    productCountDisplay.textContent = `${count} ${categoryName.toLowerCase()} item${count === 1 ? '' : 's'} available`;
+  }
+
+  function sortProducts(list) {
+    const sorted = [...list];
+    if (state.sort === 'price_low_high') {
+      sorted.sort((a, b) => getNumericPrice(a.price) - getNumericPrice(b.price));
+    } else if (state.sort === 'price_high_low') {
+      sorted.sort((a, b) => getNumericPrice(b.price) - getNumericPrice(a.price));
+    }
+    return sorted;
+  }
+
+  function applyFilters() {
+    const filtered = baseFiltered.filter((product) => {
+      const price = getNumericPrice(product.price);
+      return price >= state.min && price <= state.max;
+    });
+
+    const output = sortProducts(filtered);
+
+    if (!grid || !emptyState) {
+      console.warn('Category page grid or empty state is missing.');
+      return;
+    }
+
+    if (!output.length) {
+      grid.innerHTML = '';
+      emptyState.hidden = false;
+      updateCount(0);
+      return;
+    }
+
+    emptyState.hidden = true;
+    const cards = output.map(function (product) {
       return `
         <div class="showcase">
           <div class="showcase-banner">
             <a href="${product.link}" class="showcase-img-box">
-              <img src="${product.image}" alt="${product.name}" class="product-img default" width="300">
-              <img src="${product.image}" alt="${product.name}" class="product-img hover" width="300">
+              <img src="${product.image}" alt="${product.name}" class="product-img default" width="300" loading="lazy">
+              <img src="${product.image}" alt="${product.name}" class="product-img hover" width="300" loading="lazy">
             </a>
           </div>
           <div class="showcase-content">
@@ -116,7 +170,112 @@ if (categoryPage) {
     }).join('');
 
     grid.innerHTML = cards;
+    updateCount(output.length);
   }
+
+  function renderRangeControl() {
+    if (!sortBar || !prices.length) return;
+
+    const panel = document.createElement('div');
+    panel.className = 'category-control-panel';
+    panel.innerHTML = `
+      <div class="category-control-grid">
+        <div class="range-filter-wrap">
+          <label for="minPriceRange">Price range (NPR)</label>
+          <div class="price-range-inputs">
+            <input id="minPriceRange" type="range" min="${minCatalogPrice}" max="${maxCatalogPrice}" step="100" value="${minCatalogPrice}">
+            <input id="maxPriceRange" type="range" min="${minCatalogPrice}" max="${maxCatalogPrice}" step="100" value="${maxCatalogPrice}">
+          </div>
+          <div class="price-range-labels">
+            <span id="priceMinLabel">Rs ${minCatalogPrice.toLocaleString()}</span>
+            <span id="priceMaxLabel">Rs ${maxCatalogPrice.toLocaleString()}</span>
+          </div>
+        </div>
+        <div class="sort-control">
+          <label for="sortSelect">Sort by:</label>
+          <select id="sortSelectProxy" class="sort-select">
+            <option value="default">Most Relevant</option>
+            <option value="price_low_high">Price: Low to High</option>
+            <option value="price_high_low">Price: High to Low</option>
+          </select>
+        </div>
+      </div>
+      <div class="product-count" id="productCountDisplayProxy"></div>
+    `;
+
+    sortBar.parentNode.insertBefore(panel, sortBar);
+    if (sortBar.id === 'sortBarContainer') sortBar.style.display = 'none';
+
+    const minRange = panel.querySelector('#minPriceRange');
+    const maxRange = panel.querySelector('#maxPriceRange');
+    const minLabel = panel.querySelector('#priceMinLabel');
+    const maxLabel = panel.querySelector('#priceMaxLabel');
+    const sortProxy = panel.querySelector('#sortSelectProxy');
+    const countProxy = panel.querySelector('#productCountDisplayProxy');
+
+    const updateLabels = () => {
+      minLabel.textContent = `Rs ${state.min.toLocaleString()}`;
+      maxLabel.textContent = `Rs ${state.max.toLocaleString()}`;
+      if (countProxy && productCountDisplay) countProxy.textContent = productCountDisplay.textContent;
+    };
+
+    minRange.addEventListener('input', function () {
+      state.min = Math.min(Number(this.value), state.max);
+      this.value = String(state.min);
+      updateLabels();
+      applyFilters();
+      updateLabels();
+    });
+
+    maxRange.addEventListener('input', function () {
+      state.max = Math.max(Number(this.value), state.min);
+      this.value = String(state.max);
+      updateLabels();
+      applyFilters();
+      updateLabels();
+    });
+
+    sortProxy.addEventListener('change', function () {
+      state.sort = this.value;
+      applyFilters();
+      updateLabels();
+    });
+
+    updateLabels();
+  }
+
+  if (sortSelect) {
+    sortSelect.addEventListener('change', function (event) {
+      state.sort = event.target.value;
+      applyFilters();
+    });
+  }
+
+  applyFilters();
+  renderRangeControl();
+  applyFilters();
+
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: `${categoryName} in Nepal | Shisham Homes`,
+    description: `Explore ${categoryName.toLowerCase()} at Shisham Homes with live price filtering and trusted local support in Kathmandu.`,
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: baseFiltered.length,
+      itemListElement: baseFiltered.slice(0, 12).map((product, idx) => ({
+        '@type': 'ListItem',
+        position: idx + 1,
+        name: product.name,
+        url: `https://www.shishamhomes.com.np/${product.link.replace(/^\.\//, '')}`
+      }))
+    }
+  };
+
+  const script = document.createElement('script');
+  script.type = 'application/ld+json';
+  script.textContent = JSON.stringify(structuredData);
+  document.head.appendChild(script);
 }
 
 window.categoryCatalog = categoryCatalog;
