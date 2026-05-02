@@ -181,7 +181,7 @@ if (categoryPage) {
     panel.innerHTML = `
       <div class="category-control-grid">
         <div class="range-filter-wrap">
-          <label for="minPriceRange">Price range (NPR)</label>
+          <label for="minPriceRange">Filter by price</label>
           <div class="price-range-inputs">
             <input id="minPriceRange" type="range" min="${minCatalogPrice}" max="${maxCatalogPrice}" step="100" value="${minCatalogPrice}">
             <input id="maxPriceRange" type="range" min="${minCatalogPrice}" max="${maxCatalogPrice}" step="100" value="${maxCatalogPrice}">
