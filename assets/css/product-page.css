@@ -84,7 +84,7 @@
 .product-page-extra h2,
 .related-products-section h2 {
   font-size: 1.15rem;
-  font-weight: 700;
+  font-weight: 400;
   margin-bottom: 14px;
   color: #111;
   text-align: center;
@@ -240,4 +240,11 @@
 .related-products-section .showcase-title:hover,
 .related-products-section .showcase-title:focus {
   color: #000;
+}
+
+
+@media (min-width: 981px) {
+  .related-products-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .related-products-section .showcase-banner { height: 260px; display:flex; align-items:center; justify-content:center; padding:12px; }
+  .related-products-section .showcase-banner .product-img { width:100%; height:100%; object-fit:contain; }
 }

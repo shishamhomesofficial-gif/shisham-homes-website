@@ -176,6 +176,9 @@ if (categoryPage) {
   function renderRangeControl() {
     if (!sortBar || !prices.length) return;
 
+    const existing = document.querySelector('.category-control-panel');
+    if (existing) existing.remove();
+
     const panel = document.createElement('div');
     panel.className = 'category-control-panel';
     panel.innerHTML = `
@@ -191,32 +194,19 @@ if (categoryPage) {
             <span id="priceMaxLabel">Rs ${maxCatalogPrice.toLocaleString()}</span>
           </div>
         </div>
-        <div class="sort-control">
-          <label for="sortSelect">Sort by:</label>
-          <select id="sortSelectProxy" class="sort-select">
-            <option value="default">Most Relevant</option>
-            <option value="price_low_high">Price: Low to High</option>
-            <option value="price_high_low">Price: High to Low</option>
-          </select>
-        </div>
       </div>
-      <div class="product-count" id="productCountDisplayProxy"></div>
     `;
 
-    sortBar.parentNode.insertBefore(panel, sortBar);
-    if (sortBar.id === 'sortBarContainer') sortBar.style.display = 'none';
+    sortBar.insertAdjacentElement('afterend', panel);
 
     const minRange = panel.querySelector('#minPriceRange');
     const maxRange = panel.querySelector('#maxPriceRange');
     const minLabel = panel.querySelector('#priceMinLabel');
     const maxLabel = panel.querySelector('#priceMaxLabel');
-    const sortProxy = panel.querySelector('#sortSelectProxy');
-    const countProxy = panel.querySelector('#productCountDisplayProxy');
 
     const updateLabels = () => {
       minLabel.textContent = `Rs ${state.min.toLocaleString()}`;
       maxLabel.textContent = `Rs ${state.max.toLocaleString()}`;
-      if (countProxy && productCountDisplay) countProxy.textContent = productCountDisplay.textContent;
     };
 
     minRange.addEventListener('input', function () {
@@ -224,7 +214,6 @@ if (categoryPage) {
       this.value = String(state.min);
       updateLabels();
       applyFilters();
-      updateLabels();
     });
 
     maxRange.addEventListener('input', function () {
@@ -232,13 +221,6 @@ if (categoryPage) {
       this.value = String(state.max);
       updateLabels();
       applyFilters();
-      updateLabels();
-    });
-
-    sortProxy.addEventListener('change', function () {
-      state.sort = this.value;
-      applyFilters();
-      updateLabels();
     });
 
     updateLabels();
