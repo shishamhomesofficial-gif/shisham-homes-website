@@ -838,6 +838,9 @@ document.querySelectorAll('.desktop-navigation-menu a').forEach(link => {
   const categoryPage = document.querySelector('[data-category-page]');
   if (!categoryPage) return;
 
+  const usesCategoryCatalogScript = Boolean(document.querySelector('script[src*="category-products.js"]'));
+  if (usesCategoryCatalogScript) return;
+
   const sortBar = document.getElementById('sortBarContainer') || document.querySelector('.sort-bar');
   const grid = document.querySelector('[data-category-grid]');
   if (!sortBar || !grid) return;
