@@ -111,7 +111,6 @@ if (categoryPage) {
   const maxCatalogPrice = prices.length ? Math.max(...prices) : 0;
   const state = {
     sort: 'default',
-    min: minCatalogPrice,
     max: maxCatalogPrice
   };
 
@@ -133,7 +132,7 @@ if (categoryPage) {
   function applyFilters() {
     const filtered = baseFiltered.filter((product) => {
       const price = getNumericPrice(product.price);
-      return price >= state.min && price <= state.max;
+      return price <= state.max;
     });
 
     const output = sortProducts(filtered);
@@ -184,14 +183,13 @@ if (categoryPage) {
     panel.innerHTML = `
       <div class="category-control-grid">
         <div class="range-filter-wrap">
-          <label for="minPriceRange">Filter by price</label>
+          <label for="priceRange">Filter by price</label>
           <div class="price-range-inputs">
-            <input id="minPriceRange" type="range" min="${minCatalogPrice}" max="${maxCatalogPrice}" step="100" value="${minCatalogPrice}">
-            <input id="maxPriceRange" type="range" min="${minCatalogPrice}" max="${maxCatalogPrice}" step="100" value="${maxCatalogPrice}">
+            <input id="priceRange" type="range" min="${minCatalogPrice}" max="${maxCatalogPrice}" step="100" value="${maxCatalogPrice}">
           </div>
           <div class="price-range-labels">
-            <span id="priceMinLabel">Rs ${minCatalogPrice.toLocaleString()}</span>
-            <span id="priceMaxLabel">Rs ${maxCatalogPrice.toLocaleString()}</span>
+            <span>Rs ${minCatalogPrice.toLocaleString()}</span>
+            <span id="priceMaxLabel">Up to Rs ${maxCatalogPrice.toLocaleString()}</span>
           </div>
         </div>
       </div>
@@ -199,26 +197,15 @@ if (categoryPage) {
 
     sortBar.insertAdjacentElement('afterend', panel);
 
-    const minRange = panel.querySelector('#minPriceRange');
-    const maxRange = panel.querySelector('#maxPriceRange');
-    const minLabel = panel.querySelector('#priceMinLabel');
+    const priceRange = panel.querySelector('#priceRange');
     const maxLabel = panel.querySelector('#priceMaxLabel');
 
     const updateLabels = () => {
-      minLabel.textContent = `Rs ${state.min.toLocaleString()}`;
-      maxLabel.textContent = `Rs ${state.max.toLocaleString()}`;
+      maxLabel.textContent = `Up to Rs ${state.max.toLocaleString()}`;
     };
 
-    minRange.addEventListener('input', function () {
-      state.min = Math.min(Number(this.value), state.max);
-      this.value = String(state.min);
-      updateLabels();
-      applyFilters();
-    });
-
-    maxRange.addEventListener('input', function () {
-      state.max = Math.max(Number(this.value), state.min);
-      this.value = String(state.max);
+    priceRange.addEventListener('input', function () {
+      state.max = Number(this.value);
       updateLabels();
       applyFilters();
     });
