@@ -196,12 +196,6 @@ if (categoryPage) {
 
     sortBar.insertAdjacentElement('afterend', panel);
 
-    // Defensive guard: keep exactly one range input in the panel even if stale markup/scripts duplicate it.
-    const allRangeInputs = panel.querySelectorAll('.price-range-inputs input[type="range"]');
-    allRangeInputs.forEach((input, index) => {
-      if (index > 0) input.remove();
-    });
-
     const priceRange = panel.querySelector('#priceRange');
     const maxLabel = panel.querySelector('#priceMaxLabel');
 
