@@ -175,8 +175,7 @@ if (categoryPage) {
   function renderRangeControl() {
     if (!sortBar || !prices.length) return;
 
-    const existing = document.querySelector('.category-control-panel');
-    if (existing) existing.remove();
+    document.querySelectorAll('.category-control-panel').forEach((node) => node.remove());
 
     const panel = document.createElement('div');
     panel.className = 'category-control-panel';
@@ -213,6 +212,19 @@ if (categoryPage) {
     updateLabels();
   }
 
+
+  const dedupePanels = () => {
+    const panels = Array.from(document.querySelectorAll('.category-control-panel'));
+    panels.slice(1).forEach((panel) => panel.remove());
+
+    const firstPanel = panels[0] || document.querySelector('.category-control-panel');
+    if (!firstPanel) return;
+    const ranges = firstPanel.querySelectorAll('.price-range-inputs input[type="range"]');
+    ranges.forEach((rangeInput, idx) => {
+      if (idx > 0) rangeInput.remove();
+    });
+  };
+
   if (sortSelect) {
     sortSelect.addEventListener('change', function (event) {
       state.sort = event.target.value;
@@ -222,7 +234,11 @@ if (categoryPage) {
 
   applyFilters();
   renderRangeControl();
+  dedupePanels();
   applyFilters();
+
+  const panelObserver = new MutationObserver(dedupePanels);
+  panelObserver.observe(document.body, { childList: true, subtree: true });
 
   const structuredData = {
     '@context': 'https://schema.org',
