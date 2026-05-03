@@ -838,9 +838,8 @@ document.querySelectorAll('.desktop-navigation-menu a').forEach(link => {
   const categoryPage = document.querySelector('[data-category-page]');
   if (!categoryPage) return;
 
-  // Category pages use assets/js/category-products.js for sorting and price filtering.
-  // Avoid injecting a second filter panel from this fallback UI module.
-  return;
+  const usesCategoryCatalogScript = Boolean(document.querySelector('script[src*="category-products.js"]'));
+  if (usesCategoryCatalogScript) return;
 
   const sortBar = document.getElementById('sortBarContainer') || document.querySelector('.sort-bar');
   const grid = document.querySelector('[data-category-grid]');
