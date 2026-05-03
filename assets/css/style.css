@@ -101,6 +101,7 @@ span { display: inline-block; }
 html {
   font-family: "Poppins", sans-serif;
   overscroll-behavior: contain;
+  scroll-behavior: smooth;
 }
 
 input {
@@ -721,6 +722,14 @@ body::-webkit-scrollbar-thumb:hover { background: hsl(0, 0%, 70%); }
 }
 
 .banner-btn:hover { background: var(--eerie-black); }
+
+.banner-scroll-btn {
+  margin-top: 12px;
+  max-width: min(100%, 340px);
+  text-wrap: balance;
+  line-height: 1.4;
+  padding: 10px 14px;
+}
 
 
 
