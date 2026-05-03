@@ -216,6 +216,24 @@
 }
 
 
+@media (max-width: 640px) {
+  .product-page-wrap {
+    padding: 18px 12px 48px;
+  }
+
+  .product-page-description {
+    line-height: 1.65;
+  }
+
+  .product-page-description-block,
+  .product-page-specs,
+  .related-products-section {
+    padding: 16px;
+    border-radius: 12px;
+  }
+}
+
+
 .detail-info a,
 .related-products-section .showcase-title,
 .related-products-section .showcase-title:visited,

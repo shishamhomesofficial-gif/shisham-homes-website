@@ -3091,3 +3091,47 @@ footer {
 .related-products-section .price {
   color: #000;
 }
+
+
+/* Mobile hero and related-products refinements */
+.banner .banner-keyword-support {
+  margin-top: 8px;
+  font-size: var(--fs-8);
+  line-height: 1.45;
+}
+
+.related-products-section .showcase-img-box {
+  display: block;
+  aspect-ratio: 1 / 1;
+  background: #fff;
+}
+
+.related-products-section .showcase-img-box .product-img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+}
+
+.related-products-section .showcase-title {
+  font-weight: 500 !important;
+  line-height: 1.45;
+}
+
+@media (max-width: 768px) {
+  .banner-content {
+    left: 14px;
+    right: 14px;
+    padding: 14px;
+    max-width: none;
+  }
+
+  .banner-title {
+    font-size: clamp(1.1rem, 6vw, 1.45rem);
+    line-height: 1.2;
+    text-transform: none;
+  }
+
+  .banner .banner-keyword-support {
+    display: none;
+  }
+}
