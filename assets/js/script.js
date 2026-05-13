@@ -838,8 +838,8 @@ document.querySelectorAll('.desktop-navigation-menu a').forEach(link => {
   const categoryPage = document.querySelector('[data-category-page]');
   if (!categoryPage) return;
 
-  const usesCategoryCatalogScript = Boolean(document.querySelector('script[src*="category-products.js"]'));
-  if (usesCategoryCatalogScript) return;
+  const hasCategoryCatalogScript = () => Boolean(document.querySelector('script[src*="category-products.js"]'));
+  if (hasCategoryCatalogScript()) return;
 
   const sortBar = document.getElementById('sortBarContainer') || document.querySelector('.sort-bar');
   const grid = document.querySelector('[data-category-grid]');
@@ -851,6 +851,8 @@ document.querySelectorAll('.desktop-navigation-menu a').forEach(link => {
   const getPriceFromCard = (card) => parsePrice(card.querySelector('.price') ? card.querySelector('.price').textContent : '0');
 
   const setup = () => {
+    if (hasCategoryCatalogScript()) return;
+
     const cards = getCards();
     if (!cards.length || document.querySelector('.category-ui-panel')) return;
 
