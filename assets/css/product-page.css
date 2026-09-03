@@ -248,3 +248,65 @@
   .related-products-section .showcase-banner { height: 260px; display:flex; align-items:center; justify-content:center; padding:12px; }
   .related-products-section .showcase-banner .product-img { width:100%; height:100%; object-fit:contain; }
 }
+
+/* Purchase actions: clear visual hierarchy and comfortable mobile tap targets. */
+.product-page-actions .primary-action-btn {
+  align-items: center;
+  background: linear-gradient(135deg, #c55113, #e78031);
+  border: 0;
+  border-radius: 12px;
+  box-shadow: 0 7px 16px rgba(197, 81, 19, 0.24);
+  color: #fff !important;
+  display: inline-flex;
+  font-size: 0.84rem;
+  font-weight: 700;
+  justify-content: center;
+  letter-spacing: 0.02em;
+  min-height: 52px;
+  padding: 13px 18px;
+  position: relative;
+  text-transform: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.product-page-actions .primary-action-btn:hover,
+.product-page-actions .primary-action-btn:focus-visible {
+  box-shadow: 0 10px 22px rgba(197, 81, 19, 0.32);
+  color: #fff !important;
+  filter: brightness(1.04);
+  transform: translateY(-2px);
+}
+
+.product-page-actions .primary-action-btn:first-child {
+  background: linear-gradient(135deg, #101828, #344054);
+  box-shadow: 0 7px 16px rgba(16, 24, 40, 0.22);
+}
+
+.product-page-actions .primary-action-btn:nth-child(2) {
+  background: linear-gradient(135deg, #128c4d, #25d366);
+  box-shadow: 0 7px 16px rgba(18, 140, 77, 0.25);
+}
+
+.product-page-actions .primary-action-btn:last-child {
+  background: #fff;
+  border: 1px solid #d0d5dd;
+  box-shadow: none;
+  color: #344054 !important;
+}
+
+.product-page-actions .primary-action-btn:last-child:hover,
+.product-page-actions .primary-action-btn:last-child:focus-visible {
+  background: #f8fafc;
+  box-shadow: 0 5px 12px rgba(16, 24, 40, 0.1);
+  color: #101828 !important;
+}
+
+@media (max-width: 540px) {
+  .product-page-wrap { padding-bottom: calc(92px + env(safe-area-inset-bottom)); }
+  .detail-info h1 { font-size: clamp(1.35rem, 6vw, 1.75rem); }
+  .detail-price { font-size: 1.35rem; }
+  .related-products-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .related-products-section .showcase-content { padding: 10px; }
+  .related-products-section .showcase-title { font-size: 0.76rem; line-height: 1.35; }
+  .related-products-section .price-box { font-size: 0.8rem; }
+}
